@@ -13,6 +13,7 @@
     "test:journey": "node scripts/verify-journey.mjs && node scripts/verify-journey-scenes.mjs",
     "test:compound": "node scripts/verify-walk.mjs && node scripts/verify-compound-scene.mjs && node scripts/verify-compound-lighting.mjs",
     "test:movement": "node scripts/verify-movement.mjs",
+    "test:joystick": "node scripts/verify-touch-joystick.mjs",
     "test:playability": "node scripts/verify-journey-interiors.mjs && node scripts/verify-occlusion.mjs",
     "test:hero-detail": "node scripts/verify-hero-detail.mjs",
     "test:atlas": "node scripts/verify-atlas-routes.mjs",

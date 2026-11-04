@@ -18,6 +18,7 @@ import {WALK_SPEED,RUN_SPEED,frameDelta,substepMove} from './movement.js';
 import {createSceneMapUI} from './scene-map-ui.js';
 import {createJourneyMapData,createCompoundMapData,createCourtyardMapData} from './scene-map-data.js';
 import {createMobileControls} from './mobile-controls.js';
+import {createTouchJoystick} from './touch-joystick.js';
 
 const $=id=>document.getElementById(id),loader=new GLTFLoader();
 const stops=[
@@ -40,9 +41,11 @@ const compoundLighting=createCompoundLighting(sun);
 const rim=new THREE.DirectionalLight('#e2eeff',1.1);rim.position.set(10,12,-20);scene.add(rim);
 const environment=createReferenceEnvironment(scene);
 const cloud=createCloudFlight({scene,getHero:()=>hero,toast});
-let touchVertical=0;
+let touchVertical=0,joystick=null;
+const joystickInput={x:0,z:0};
 const cloudUI=createCloudFlightUI({onToggle:toggleCloud,onVertical:value=>{touchVertical=value;}});
-function clearMovementInput(){keys.clear();touchVertical=0;}
+function clearMovementInput(){keys.clear();touchVertical=0;joystick?.reset();joystickInput.x=0;joystickInput.z=0;}
+function joystickAllowed(){return Boolean(hero&&!loading&&!document.hidden&&!journey?.opening&&!document.querySelector('dialog[open]')&&(!compound?.active||compound.mode==='walk')&&document.body.classList.contains('mobile-game'));}
 function toggleCloud(){
  if(loading||!hero||document.querySelector('dialog[open]'))return;
  clearMovementInput();const wasActive=cloud.active;
@@ -64,7 +67,7 @@ const library=createModelLibrary({onLoad:loadLibraryAsset,onReady:()=>atlas.refr
 const atlas=createHeritageAtlas({onTravel:i=>{$('map').close();destination(i);},getModels:id=>library.forSite(id),onModel:loadLibraryAsset,getJourney:()=>journey,onJourneyTravel:travelJourney,onRoutes:()=>journey.ui.openRoutes()});
 async function loadLibraryAsset(a,site){
  if(loading||!hero){toast('请等待当前场景加载完成');return false;}
- keys.clear();$('library').close();$('map').close();loading=true;toast('正在加载 '+a.name+'……',0);
+ clearMovementInput();$('library').close();$('map').close();loading=true;toast('正在加载 '+a.name+'……',0);
  try{const gltf=await loader.loadAsync(a.url);installBuilding(gltf,true,a.name.includes('塔')?{width:10,height:24}:{width:16,height:8});await ensureCourtyard();activeAsset=a.id;$('stationNumber').textContent='古建模型库';$('stationName').textContent=a.name;$('stationType').textContent=site?`${site.province} · ${site.name} · 候选展示`:'MC 轻量场景 · '+a.category;$('factTitle').textContent=site?'该站候选 · 尚待考证':'从资料走进场景';const match=site?a.matches.find(m=>m.siteId===site.id):a.matches[0];$('fact').textContent=(match?match.reason:'暂未识别真实地点，可作为场景搭建素材。')+' 可绕行观察，当前尚不支持进入建筑内部。';$('source').hidden=true;$('modelDisclosure').textContent=`MC 轻量 GLB · ${(a.bytes/1048576).toFixed(1)} MB。${a.missingColorMaterials?'部分材质缺少贴图。':''}MC 版本依据你提供的资料制作，候选对应未确认。`;frameView();showCourtyardMap(a.name+' · 模型庭院');toast('已载入 '+a.name+' · 拖动查看建筑细节');return true;}catch(e){toast('模型加载失败：'+e.message,0);return false;}finally{loading=false;}
 }
 async function ensureCourtyard(){
@@ -108,9 +111,10 @@ function enterCompound(){
  localMap.setScene(createCompoundMapData(compound.world),compound.world.root);
  toast('穿过山门，走进殿堂与回廊 · V 细看古建，C 俯瞰建筑群');
 }
-compound=createCompoundPlay({scene,camera,controls,renderer,cameraRig,canvas,environment,getHero:()=>hero,clearInput:()=>keys.clear(),onEnter:enterCompound,onExit:()=>travelJourney(journey.state.activeId),toast});
+compound=createCompoundPlay({scene,camera,controls,renderer,cameraRig,canvas,environment,getHero:()=>hero,clearInput:clearMovementInput,onEnter:enterCompound,onExit:()=>travelJourney(journey.state.activeId),toast});
 const localMap=createSceneMapUI({onOpen:clearMovementInput,onAtlas:openMap});
 createMobileControls({clearInput:clearMovementInput});
+joystick=createTouchJoystick({element:$('moveJoystick'),onMove:({x,z})=>{joystickInput.x=x;joystickInput.z=z;},isEnabled:joystickAllowed});
 let mapElapsed=0;
 function showCourtyardMap(title){
  if(!building)return;
@@ -138,13 +142,12 @@ addEventListener('keydown',e=>{
 });
 addEventListener('keyup',e=>keys.delete(e.code));addEventListener('blur',clearMovementInput);
 document.addEventListener('visibilitychange',()=>{if(document.hidden)clearMovementInput();});
-document.querySelectorAll('[data-key]').forEach(b=>{b.onpointerdown=e=>{e.preventDefault();b.setPointerCapture(e.pointerId);keys.add(b.dataset.key);};b.onpointerup=b.onpointercancel=b.onlostpointercapture=()=>keys.delete(b.dataset.key);});
 $('stamp').onclick=()=>{if(!hero||hero.position.distanceTo(ring.position)>2.4||custom)return;visited.add(current);try{localStorage.setItem('wukong-heritage-v1',JSON.stringify([...visited]));}catch{toast('已打卡；浏览器未允许保存进度');return;}renderDestinations();toast(visited.size===3?'三程已过，山河入册。恭喜完成首批访古之旅！':'已收藏「'+stops[current].name+'」足迹');};
 $('photo').onclick=()=>{renderer.render(scene,camera);const a=document.createElement('a');a.download='悟空访古-'+$('stationName').textContent+'.png';a.href=canvas.toDataURL('image/png');a.click();toast('留影已保存');};
 const architecturePhotoButton=document.createElement('button');architecturePhotoButton.type='button';architecturePhotoButton.id='architecturePhotoButton';architecturePhotoButton.textContent='建筑写实纪念照';
 architecturePhotoButton.onclick=()=>{if(!journey.knowledge.openPhoto())toast('请先从访古地图进入一条主题建筑路线');};
 $('photo').before(architecturePhotoButton);
-$('importButton').onclick=()=>{keys.clear();$('glbFile').click();};
+$('importButton').onclick=()=>{clearMovementInput();$('glbFile').click();};
 $('glbFile').onchange=async e=>{const file=e.target.files[0];if(!file)return;if(loading){toast('请等待当前场景加载完成');e.target.value='';return;}loading=true;toast('正在读取建筑模型……',0);try{if(file.size>96*1024*1024)throw Error('试玩版单个 GLB 限制为 96 MB');const buf=await file.arrayBuffer(),v=new DataView(buf);if(buf.byteLength<20||v.getUint32(0,true)!==0x46546c67||v.getUint32(4,true)!==2||v.getUint32(8,true)!==buf.byteLength)throw Error('请选择有效的 GLB 2.0 文件');const len=v.getUint32(12,true);if(v.getUint32(16,true)!==0x4e4f534a||20+len>buf.byteLength)throw Error('GLB JSON 数据不完整');const doc=JSON.parse(new TextDecoder().decode(buf.slice(20,20+len)));for(const resource of [...(doc.images||[]),...(doc.buffers||[])])if(resource.uri&&!resource.uri.startsWith('data:'))throw Error('请导出贴图全部内嵌的 GLB');const gltf=await loader.parseAsync(buf,'');installBuilding(gltf,true);$('stationName').textContent='我的古建';$('stationType').textContent=file.name;$('factTitle').textContent='模型预览庭院';$('fact').textContent='已按庭院大小自动缩放并落地。当前使用包围盒碰撞，无法进入模型内部；可在访古地图中返回示范场景。';$('source').hidden=true;frameView();showCourtyardMap('我的古建 · 模型庭院');toast('模型已导入 · 只在本次浏览器会话中展示');}catch(err){toast('导入失败：'+err.message,0);}finally{loading=false;e.target.value='';}};
 let mobileView;
 function frameView(){
@@ -188,14 +191,17 @@ function frame(){
  cameraRig.restore(camera);
  let moving=false;const running=keys.has('ShiftLeft')||keys.has('ShiftRight');
  const paused=loading||document.hidden||journey.opening||Boolean(document.querySelector('dialog[open]'));
+ const movementAllowed=Boolean(hero&&!paused&&(!compound.active||compound.mode==='walk'));
+ joystick.setEnabled(movementAllowed&&document.body.classList.contains('mobile-game'));
  move.set(0,0,0);
- if(hero&&!paused&&(!compound.active||compound.mode==='walk')){
-  const x=Number(keys.has('KeyD')||keys.has('ArrowRight'))-Number(keys.has('KeyA')||keys.has('ArrowLeft'));
-  const z=Number(keys.has('KeyW')||keys.has('ArrowUp'))-Number(keys.has('KeyS')||keys.has('ArrowDown'));
+ if(movementAllowed){
+  const x=Number(keys.has('KeyD')||keys.has('ArrowRight'))-Number(keys.has('KeyA')||keys.has('ArrowLeft'))+joystickInput.x;
+  const z=Number(keys.has('KeyW')||keys.has('ArrowUp'))-Number(keys.has('KeyS')||keys.has('ArrowDown'))+joystickInput.z;
   camera.getWorldDirection(forward);forward.y=0;forward.normalize();right.crossVectors(forward,THREE.Object3D.DEFAULT_UP);
   move.copy(forward).multiplyScalar(z).addScaledVector(right,x);
   if(move.lengthSq()>0){
-   move.normalize();const speed=(running?RUN_SPEED:WALK_SPEED)*dt,oldX=hero.position.x,oldZ=hero.position.z;
+   // Keep the stick's analogue speed, while capping combined/diagonal input.
+   if(move.lengthSq()>1)move.normalize();const speed=(running?RUN_SPEED:WALK_SPEED)*dt,oldX=hero.position.x,oldZ=hero.position.z;
    if(cloud.active){/* Cloud motion resolves below in all three dimensions. */}
    else if(compound.active)moveWalker(compound.world,hero.position,move.x*speed,move.z*speed);
    else if(journey.active)moveWalker(journey.world,hero.position,move.x*speed,move.z*speed);
@@ -256,6 +262,6 @@ async function start(){try{
  window.__heritage={scene,hero,stops,renderer,camera,controls,occlusion,toggleView,journey,travelJourney,compound,enterCompound,get viewMode(){return viewMode;},destination,get current(){return current;},get visited(){return [...visited];},get collider(){return collider;},get custom(){return custom;},library,loadLibraryAsset,get activeAsset(){return activeAsset;},get building(){return building;},get courtyard(){return courtyard;}};
 }catch(e){toast('启动失败：'+e.message,0);}}
 document.querySelectorAll('dialog').forEach(d=>d.addEventListener('close',clearMovementInput));
-$('libraryButton').addEventListener('click',()=>keys.clear());
+$('libraryButton').addEventListener('click',clearMovementInput);
 start();
 

@@ -1,5 +1,5 @@
 /* Phone HUD: leave the centre of the scene clear, with reading on demand. */
-.mobile-game-bar,.mobile-action-dock { display:none; }
+.mobile-game-bar,.mobile-action-dock,.touch-joystick { display:none; }
 body.mobile-game {
   --mobile-left:max(12px,env(safe-area-inset-left));
   --mobile-right:max(12px,env(safe-area-inset-right));
@@ -57,16 +57,30 @@ body.mobile-game {
   display:block; position:fixed; right:var(--mobile-right); bottom:calc(var(--mobile-bottom) + 54px);
   width:142px; min-height:44px; height:auto; font-size:11px; padding:9px 5px; z-index:4;
 }
-.mobile-game .touch {
-  display:grid; position:fixed; left:var(--mobile-left); bottom:var(--mobile-bottom);
-  grid-template-columns:repeat(3,44px); gap:4px; z-index:4;
+.mobile-game .touch-joystick {
+  --joystick-size:124px; --joystick-x:0px; --joystick-y:0px;
+  display:flex; flex-direction:column; align-items:center; gap:8px; position:fixed;
+  left:var(--mobile-left); bottom:var(--mobile-bottom); width:var(--joystick-size); z-index:4; pointer-events:none;
+  user-select:none; -webkit-user-select:none;
 }
-.mobile-game .touch button { min-width:44px; min-height:44px; padding:9px 0; font-size:17px; user-select:none; }
-.mobile-game .touch button:first-child { grid-column:2; grid-row:1; }
-.mobile-game .touch button:nth-child(2) { grid-column:1; grid-row:2; }
-.mobile-game .touch button:nth-child(3) { grid-column:2; grid-row:2; }
-.mobile-game .touch button:nth-child(4) { grid-column:3; grid-row:2; }
-.mobile-game.compound-mode[data-compound-view=overview] .touch,.mobile-game.compound-mode[data-compound-view=inspect] .touch { display:none; }
+.touch-joystick .joystick-pad {
+  position:relative; display:block; width:var(--joystick-size); height:var(--joystick-size); padding:0;
+  border:1px solid #fff6; border-radius:50%; background:#edf1e508; box-shadow:0 0 0 1px #21393226;
+  touch-action:none; overscroll-behavior:contain; pointer-events:auto; cursor:grab; opacity:.72; transition:opacity .15s;
+}
+.touch-joystick .joystick-pad:hover { background:#edf1e508; transform:none; }
+.touch-joystick .joystick-pad:focus-visible { outline:2px solid #fff9; outline-offset:4px; }
+.joystick-ring { position:absolute; inset:18%; border:1px solid #fff3; border-radius:50%; pointer-events:none; }
+.joystick-thumb {
+  position:absolute; left:50%; top:50%; width:46px; height:46px; border-radius:50%; pointer-events:none;
+  border:1px solid #fff9; background:#f5f0da26; box-shadow:0 2px 10px #19312620,inset 0 0 0 3px #fff1;
+  transform:translate(-50%,-50%) translate(var(--joystick-x),var(--joystick-y)); transition:transform .14s ease-out;
+}
+.touch-joystick[data-active=true] .joystick-pad { opacity:1; cursor:grabbing; border-color:#fffb; }
+.touch-joystick[data-active=true] .joystick-thumb { transition:none; background:#f5f0da40; }
+.touch-joystick .joystick-pad:disabled { opacity:.3; cursor:default; pointer-events:none; }
+.joystick-hint { font-size:10px; line-height:1.4; color:#fffdf0c9; white-space:nowrap; text-shadow:0 1px 3px #14291c,0 0 8px #14291c88; }
+.mobile-game.compound-mode[data-compound-view=overview] .touch-joystick,.mobile-game.compound-mode[data-compound-view=inspect] .touch-joystick { display:none; }
 .mobile-game .scene-minimap {
   top:auto; left:auto; right:var(--mobile-right); bottom:var(--mobile-bottom); width:142px; z-index:4;
 }
@@ -86,18 +100,20 @@ body.mobile-game {
 .mobile-game .cloud-flight-vertical { display:grid; grid-template-columns:1fr 1fr; gap:4px; margin-top:5px; }
 .mobile-game .cloud-flight-vertical button { min-height:44px; padding:8px 2px; font-size:11px; touch-action:none; }
 .mobile-game #status {
-  top:auto; bottom:calc(var(--mobile-bottom) + 106px); left:var(--mobile-left); transform:none;
+  top:auto; bottom:calc(var(--mobile-bottom) + 154px); left:var(--mobile-left); transform:none;
   max-width:calc(100vw - 180px - env(safe-area-inset-left) - env(safe-area-inset-right));
   padding:7px 9px; font-size:10px; line-height:1.6; text-align:left; z-index:5;
 }
 @media(orientation:landscape) and (max-height:500px) {
+  .mobile-game .touch-joystick { --joystick-size:104px; }
+  .mobile-game #status { bottom:calc(var(--mobile-bottom) + 134px); }
   .mobile-game .cloud-flight-panel { bottom:calc(var(--mobile-bottom) + 54px); }
   .mobile-game.cloud-flight-enabled .mobile-action-dock #journeyInteract { right:calc(var(--mobile-right) + 150px); bottom:var(--mobile-bottom); }
   .mobile-game #mobileGameMenu { max-height:calc(100dvh - 16px); }
 }
 @media(max-width:360px) {
-  .mobile-game .touch { grid-template-columns:repeat(3,40px); }
-  .mobile-game .touch button { min-width:40px; }
+  .mobile-game .touch-joystick { --joystick-size:112px; }
   .mobile-game.journey-mode:not(.compound-mode) .mobile-action-dock #journeyInteract,.mobile-game .scene-minimap,.mobile-game .cloud-flight-panel { width:136px; }
 }
+@media(prefers-reduced-motion:reduce) { .touch-joystick .joystick-pad,.joystick-thumb { transition:none; } }
 .mobile-game #mobileGameMenu .header-actions #photo{display:inline-flex}
