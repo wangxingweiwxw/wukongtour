@@ -1,0 +1,91 @@
+.scene-minimap { position:fixed; left:max(28px,env(safe-area-inset-left)); bottom:106px; z-index:3; width:168px; border:1px solid #d0bd96; border-radius:12px; background:#f7efddf2; box-shadow:0 6px 24px #26372924; overflow:hidden; color:#4b513c; }
+.scene-minimap[hidden] { display:none; }
+.scene-minimap-head { display:flex; align-items:center; justify-content:space-between; padding:0 8px 0 12px; height:34px; border-bottom:1px solid #ddcfb4; color:#897046; font-size:11px; }
+.scene-minimap-collapse { width:30px; min-height:30px; padding:0; background:transparent; border:0; font-size:18px; }
+.scene-minimap-open { display:block; width:100%; border:0; border-radius:0; padding:0 0 10px; background:transparent; text-align:left; }
+.scene-minimap-open:hover { transform:none; background:#fff6e2; }
+.scene-minimap .scene-map-art { display:block; width:100%; height:auto; aspect-ratio:1; }
+.scene-minimap-title { display:block; font:600 13px 'SimSun',serif; margin:0 12px 5px; }
+.scene-minimap-status { display:block; font-size:10px; margin:0 12px; color:#7d7d65; }
+.scene-minimap-hint { display:block; margin:6px 12px 0; font-size:9px; color:#9b7d4b; }
+.scene-minimap.is-collapsed .scene-map-art { display:none; }
+.scene-minimap.is-collapsed .scene-minimap-title { margin-top:10px; }
+.scene-map-dialog { width:min(970px,calc(94dvh + 90px)); max-width:calc(100vw - 16px); max-height:94dvh; padding:24px; background:#f5edda; color:#46503a; overflow:auto; }
+.scene-map-header { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; border-bottom:1px solid #d9cbb0; padding-bottom:14px; margin-bottom:18px; }
+.scene-map-eyebrow { font-size:10px; color:#917445; letter-spacing:2px; }
+.scene-map-header h2 { font:600 27px 'SimSun',serif; letter-spacing:3px; margin:8px 0; }
+.scene-map-header p { font-size:12px; color:#7b7b63; line-height:1.7; margin:0; }
+.scene-map-close { width:44px; min-height:44px; padding:0; border-radius:50%; font-size:25px; flex-shrink:0; }
+.scene-map-layout { display:grid; grid-template-columns:minmax(0,1fr) 260px; gap:22px; align-items:start; }
+.scene-map-illustration > .scene-map-art { max-height:calc(94dvh - 240px); }
+.scene-map-index { max-height:calc(94dvh - 240px); overflow:auto; padding-right:4px; }
+.scene-map-illustration { min-width:0; background:#c5d9df; border:1px solid #cbbb97; border-radius:12px; overflow:hidden; }
+.scene-map-art { width:100%; height:auto; display:block; }
+.scene-map-landmark-label { pointer-events:none; }
+.scene-map-landmark-label path { stroke:#988365; stroke-width:1.5; fill:none; }
+.scene-map-landmark-label rect { fill:#fff3dbe8; stroke:#b7a07b; stroke-width:1; }
+.scene-map-landmark-label text { fill:#594c34; font:15px 'Microsoft YaHei',sans-serif; }
+.scene-map-art .scene-map-point { cursor:pointer; }
+.scene-map-art .scene-map-point circle { fill:#f9edcb; stroke:#826e44; stroke-width:3; }
+.scene-map-art .scene-map-point text { font:bold 15px 'Microsoft YaHei',sans-serif; fill:#675035; pointer-events:none; }
+.scene-minimap .scene-map-point text { font-size:25px; }
+.scene-map-art .scene-map-point.is-target circle { fill:#bd7833; stroke:#fff1ae; stroke-width:5; }
+.scene-map-art .scene-map-point.is-target text { fill:#fff8e4; }
+.scene-map-art .scene-map-point.is-done circle { fill:#4b7753; stroke:#f2e7b5; }
+.scene-map-art .scene-map-point.is-done text { fill:#fff8df; }
+.scene-map-art .scene-map-point:is(.is-selected,:focus-visible) circle { stroke:#fff; stroke-width:6; }
+.scene-map-art .scene-map-player circle { fill:#fff4d7; stroke:#ac4936; stroke-width:3; }
+.scene-map-art .scene-map-player path { fill:#ac4936; stroke:#fff4d7; stroke-width:1; }
+.scene-map-current { font-size:13px; line-height:1.7; padding:12px; margin:0 0 17px; border:1px solid #c5cdb0; border-radius:8px; background:#e6e9d3; color:#526445; }
+.scene-map-index h3 { font:600 17px 'SimSun',serif; margin:18px 0 10px; }
+.scene-map-points { display:grid; gap:6px; padding:3px; }
+.scene-map-stop { display:flex; align-items:center; gap:10px; padding:10px; width:100%; min-height:44px; font-size:12px; background:#fcf5e6; border-color:#d7c8aa; text-align:left; }
+.scene-map-stop b { font:17px Georgia,serif; color:#a27c3d; }
+.scene-map-stop span { flex:1; }
+.scene-map-stop small { font-size:9px; color:#7f826a; }
+.scene-map-stop.is-selected { background:#e5e8d1; border-color:#909d73; }
+.scene-map-landmarks { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
+.scene-map-landmarks p { display:flex; gap:6px; font-size:11px; margin:0; line-height:1.5; }
+.scene-map-landmarks p>span:first-child { color:#b19b6a; font-size:9px; }
+.scene-map-atlas { margin-top:20px; width:100%; min-height:44px; font-size:12px; background:#425b41; color:#fff1cf; border-color:#425b41; }
+.scene-map-atlas:hover { background:#566d4c; }
+.scene-map-empty { font-size:12px; color:#7b7d67; line-height:1.8; }
+.scene-map-legend { display:flex; flex-wrap:wrap; gap:14px; margin:16px 0 0; font-size:11px; color:#81765a; }
+.scene-map-legend .legend-player { color:#a14635; }
+.scene-map-legend .legend-target { color:#9e6a2f; }
+.scene-map-legend .legend-done { color:#4e7752; }
+.scene-map-note { margin:10px 0 0; font-size:10px; color:#8a826c; line-height:1.8; }
+.scene-minimap :focus-visible,.scene-map-dialog :focus-visible { outline:3px solid #bc8544; outline-offset:2px; }
+@media(max-width:800px) {
+ .scene-minimap { left:auto; right:max(15px,env(safe-area-inset-right)); bottom:calc(164px + env(safe-area-inset-bottom)); width:142px; border-radius:9px; }
+ .scene-minimap-head { display:none; }
+ .scene-minimap .scene-map-art { display:none; }
+ .scene-minimap-open { padding:10px 0; min-height:66px; }
+ .scene-minimap-title { margin-top:0; font-size:13px; }
+ .scene-minimap-hint { font-size:10px; margin-top:5px; }
+ .scene-minimap-status { display:none; }
+ .scene-map-dialog { padding:16px; width:96vw; }
+ .scene-map-header { position:sticky; top:-16px; background:#f5edda; z-index:3; padding:10px 0 12px; margin-top:-10px; }
+ .scene-map-header h2 { font-size:23px; letter-spacing:2px; }
+ .scene-map-header p { font-size:11px; }
+ .scene-map-layout { grid-template-columns:1fr; gap:15px; }
+ .scene-map-illustration > .scene-map-art { max-height:none; }
+ .scene-map-index { max-height:none; overflow:visible; padding-right:0; }
+ .scene-map-current { margin-bottom:12px; }
+ .scene-map-points { max-height:none; grid-template-columns:repeat(2,minmax(0,1fr)); }
+ .scene-map-stop { padding:9px; gap:6px; flex-wrap:wrap; }
+ .scene-map-stop small { flex-basis:100%; padding-left:23px; }
+ .scene-map-landmarks { grid-template-columns:repeat(3,minmax(0,1fr)); }
+ .scene-map-legend { font-size:10px; gap:10px; }
+}
+@media(max-height:680px) and (min-width:801px) {
+ .scene-minimap { width:150px; bottom:100px; }
+ .scene-minimap .scene-map-art { display:none; }
+ .scene-minimap .scene-minimap-status { display:none; }
+ .scene-minimap-head { height:28px; }
+ .scene-minimap-title { margin-top:10px; }
+}
+@media(max-height:500px) and (max-width:800px) {
+ .scene-minimap { bottom:90px; right:15px; width:125px; }
+ .scene-minimap-open { min-height:50px; padding:7px 0; }
+}

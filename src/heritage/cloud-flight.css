@@ -1,0 +1,59 @@
+.cloud-flight-panel {
+  position:fixed; top:110px; right:max(28px,env(safe-area-inset-right));
+  z-index:4; width:224px; padding:13px; color:#4a513d;
+  background:#fff8e8ed; border:1px solid #dbc79d; border-radius:12px;
+  box-shadow:0 6px 24px #3d40201c; backdrop-filter:blur(7px);
+}
+.cloud-flight-panel [hidden],.cloud-flight-panel[hidden] { display:none !important; }
+.cloud-flight-heading { display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:9px; font-size:10px; color:#8a6b3e; }
+.cloud-flight-altitude { white-space:nowrap; font:600 13px Georgia,'Microsoft YaHei',sans-serif; font-variant-numeric:tabular-nums; color:#6e623d; }
+.cloud-flight-toggle { width:100%; min-height:44px; padding:10px 12px; background:#9b703d; border-color:#9b703d; color:#fff8e5; font-size:13px; }
+.cloud-flight-toggle:hover { background:#b18449; transform:none; }
+.cloud-flight-toggle kbd { margin-right:5px; border-color:#e3c998; }
+.cloud-flight-toggle:disabled { color:#6b705e; background:#e6dfcb; border-color:#cfc4a7; opacity:1; }
+.cloud-flight-intro { font-size:11px; color:#7d7b64; margin:9px 0 0; line-height:1.6; text-align:center; }
+.cloud-flight-keys { display:grid; gap:7px; margin:12px 0 1px; color:#707a64; font-size:10px; line-height:1.7; }
+.cloud-flight-keys span { display:block; }
+.cloud-flight-keys kbd { padding:1px 4px; font-size:10px; }
+.cloud-flight-vertical { display:none; }
+.cloud-flight-panel button:focus-visible { outline:3px solid #b16f38; outline-offset:3px; }
+@media(max-width:800px) {
+  .cloud-flight-panel {
+    top:auto; bottom:calc(246px + env(safe-area-inset-bottom));
+    right:max(15px,env(safe-area-inset-right)); width:164px; padding:9px;
+    border-radius:10px; backdrop-filter:none;
+  }
+  .cloud-flight-heading { margin-bottom:6px; font-size:9px; gap:4px; }
+  .cloud-flight-altitude { font-size:12px; }
+  .cloud-flight-toggle { min-height:44px; font-size:12px; padding:8px 6px; }
+  .cloud-flight-toggle kbd { margin-right:2px; }
+  .cloud-flight-intro,.cloud-flight-keys { display:none; }
+  .cloud-flight-vertical { display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-top:7px; }
+  .cloud-flight-vertical button { min-height:44px; padding:8px 2px; font-size:11px; color:#556049; background:#fff9ec; border-color:#d4c5a6; touch-action:none; user-select:none; }
+  .cloud-flight-vertical button:hover { transform:none; }
+  .cloud-flight-vertical button[aria-pressed=true] { background:#6e815e; border-color:#6e815e; color:#fff9df; }
+}
+/* Landscape phones need a side dock; the ground objective stays accessible on
+   the left and its action button retains the existing bottom-right anchor. */
+@media(max-height:600px) and (max-width:800px) {
+  .cloud-flight-panel { top:78px; bottom:auto; width:154px; padding:8px; }
+  .cloud-flight-heading { font-size:8px; }
+  .cloud-flight-enabled .journey-location { right:184px; }
+  .cloud-flight-enabled .journey-hud { right:184px; top:150px; }
+  .cloud-flight-enabled .journey-hud h3 { font-size:14px; }
+  .cloud-flight-enabled .journey-hud .journey-bearing { font-size:9px; }
+  .cloud-flight-enabled .journey-hud .journey-primary { bottom:calc(14px + env(safe-area-inset-bottom)); width:154px; z-index:2; }
+  .cloud-flight-enabled .scene-minimap { bottom:calc(67px + env(safe-area-inset-bottom)); width:154px; }
+  .cloud-flight-enabled .scene-minimap-open { min-height:50px; padding:7px 0; }
+  .cloud-flight-enabled footer { right:184px; }
+  .cloud-flight-enabled footer #importButton { display:none; }
+  .cloud-flight-enabled .touch { bottom:calc(80px + env(safe-area-inset-bottom)); }
+}
+@media(max-height:600px) and (min-width:801px) {
+  .cloud-flight-panel { top:88px; width:224px; }
+  .cloud-flight-keys,.cloud-flight-intro { display:none; }
+  .cloud-flight-enabled .journey-hint { display:none; }
+}
+@media(prefers-reduced-motion:reduce) {
+  .cloud-flight-panel button { transition:none; }
+}

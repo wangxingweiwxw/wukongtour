@@ -1,0 +1,32 @@
+{
+  "name": "wukong-china-lite",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview --host",
+    "build:track": "node _tmp/materialize-event-tracking-ticket.cjs",
+    "assets:bake": "node scripts/bake-courtyard.mjs",
+    "test:heritage": "node scripts/verify-heritage.mjs && node scripts/verify-camera.mjs",
+    "test:journey": "node scripts/verify-journey.mjs && node scripts/verify-journey-scenes.mjs",
+    "test:compound": "node scripts/verify-walk.mjs && node scripts/verify-compound-scene.mjs && node scripts/verify-compound-lighting.mjs",
+    "test:movement": "node scripts/verify-movement.mjs",
+    "test:playability": "node scripts/verify-journey-interiors.mjs && node scripts/verify-occlusion.mjs",
+    "test:hero-detail": "node scripts/verify-hero-detail.mjs",
+    "test:atlas": "node scripts/verify-atlas-routes.mjs",
+    "test:scene-map": "node scripts/verify-scene-map.mjs",
+    "test:cliff": "node scripts/verify-cliff.mjs && node scripts/verify-cloud-flight.mjs"
+  },
+  "dependencies": {
+    "three": "^0.170.0"
+  },
+  "devDependencies": {
+    "vite": "^6.2.0"
+  },
+  "engines": {
+    "node": "22.x"
+  },
+  "aiworksEventTrackingBuild": 1
+}

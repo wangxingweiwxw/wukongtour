@@ -1,0 +1,34 @@
+{
+  "provenance": "Original demonstration assets, no extracted game content",
+  "models": [
+    {
+      "file": "wukong-voxel.glb",
+      "bytes": 512916,
+      "triangles": 8316,
+      "nodes": 70,
+      "animations": 1
+    },
+    {
+      "file": "heritage-hall.glb",
+      "bytes": 45368,
+      "triangles": 648,
+      "nodes": 7,
+      "animations": 0
+    },
+    {
+      "file": "heritage-tower.glb",
+      "bytes": 117364,
+      "triangles": 1848,
+      "nodes": 7,
+      "animations": 0
+    },
+    {
+      "file": "heritage-pavilion.glb",
+      "bytes": 33964,
+      "triangles": 468,
+      "nodes": 6,
+      "animations": 0
+    }
+  ],
+  "characterRevision": "Refined MC character: segmented hair, face highlights, fingers, cloth stitches, armor rivets and beveled edges; walking animation retained."
+}

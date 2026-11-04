@@ -1,0 +1,13 @@
+node_modules
+dist
+.tools
+arnis-reference
+.DS_Store
+*.local
+_tmp
+.wrangler
+.dev.vars*
+.env*
+!.env.example
+artifacts/
+.cursor/
