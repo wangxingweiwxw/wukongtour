@@ -4,7 +4,7 @@ import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
 import {createHeritageAtlas} from './atlas.js';
 import {createModelLibrary} from './model-library.js';
 import {createReferenceEnvironment} from './reference-environment.js';
-import {createHero} from './hero.js';
+import {createGLBHero,HERO_MODEL_URL} from './glb-hero.js';
 import {createCourtyard} from './courtyard.js';
 import {HeritageCameraRig} from './camera-rig.js';
 import {HeroOcclusion} from './hero-occlusion.js';
@@ -254,17 +254,18 @@ function frame(){
   qaElapsed=0;if(!qaPanel){qaPanel=document.createElement('pre');qaPanel.id='qa-report';qaPanel.style.cssText='position:fixed;left:8px;top:250px;background:#fffD;font:11px monospace;max-width:440px;max-height:180px;overflow:auto;z-index:99';document.body.append(qaPanel);}
   qaPanel.textContent=JSON.stringify({position:hero?.position.toArray(),flight:cloud.available?{status:cloud.status,active:cloud.active}:null,movement:{walk:WALK_SPEED,run:RUN_SPEED},frameMs:qaFrames?Math.round(qaFrameSeconds/qaFrames*10000)/10:null,cameraDistance:cameraRig.distance,calls:renderer.info.render.calls,triangles:renderer.info.render.triangles,compound:compound.active?{mode:compound.mode,selected:compound.selected,indoor:compound.indoorId,guide:compound.guideIndex,reached:compound.reached}:null,journey:journey.active?journey.state.activeId:null,completed:journey.state.completed,target:journey.target?.id,courtyard:journey.active?null:courtyard?.report},null,2);
   qaFrames=0;qaFrameSeconds=0;
+  qaPanel.dataset.heroModel=hero?.userData.modelUrl||'';qaPanel.dataset.heroAnimation=hero?.userData.animation||'';
  }
 }
 async function start(){try{
- // The hero factory owns per-surface shadow settings, including the solid hair.
- hero=createHero();scene.add(hero);let experience;try{experience=localStorage.getItem('wukong-experience-v1');}catch{}if(experience==='journey')travelJourney(journey.state.activeId);else enterCompound();frame();
+ // The supplied GLB owns the protagonist's appearance and animation clips.
+ loading=true;hero=createGLBHero(await loader.loadAsync(HERO_MODEL_URL));scene.add(hero);loading=false;let experience;try{experience=localStorage.getItem('wukong-experience-v1');}catch{}if(experience==='journey')travelJourney(journey.state.activeId);else enterCompound();frame();
  // Always begin with destination selection, including visits with saved progress.
  openMap();
  // Model-library refreshes replace route buttons; keep initial focus stable.
  $('atlasTitle').tabIndex=-1;$('atlasTitle').focus({preventScroll:true});
  window.__heritage={scene,hero,stops,renderer,camera,controls,occlusion,toggleView,journey,travelJourney,compound,enterCompound,get viewMode(){return viewMode;},destination,get current(){return current;},get visited(){return [...visited];},get collider(){return collider;},get custom(){return custom;},library,loadLibraryAsset,get activeAsset(){return activeAsset;},get building(){return building;},get courtyard(){return courtyard;}};
-}catch(e){toast('启动失败：'+e.message,0);}}
+}catch(e){loading=false;toast('启动失败：'+e.message,0);}}
 document.querySelectorAll('dialog').forEach(d=>d.addEventListener('close',clearMovementInput));
 $('libraryButton').addEventListener('click',clearMovementInput);
 start();

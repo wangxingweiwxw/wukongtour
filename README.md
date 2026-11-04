@@ -54,6 +54,8 @@ node scripts/update-zhihu-knowledge.mjs --cli "<官方 setup 返回的 binary_pa
 - 四十项古建与构件模型：搜索、筛选、加载查看、下载 GLB；支持导入本地内嵌资源 GLB。
 - 三处通用示范场景打卡、PNG 留影、浏览器进度保存与手机透明摇杆。
 
+主角直接加载 `public/models/wukong-current-hero.glb`，使用文件内的 `Idle`、`Walk`、`Run` 动画，并在停止、行走与奔跑之间平滑切换。游戏统一按 1.8 米角色高度处理台阶、视角和乘云；模型的顶点色、金箍棒与关节层级保留。`src/heritage/hero.js` 是早期程序建模源，当前网页使用 GLB 资产。
+
 ## 操作
 
 打开或刷新网页时默认显示中国漫游地图。点击建筑地名选择目的地，再点“出发”进入对应路线；已有游记进度继续保留。
@@ -111,6 +113,7 @@ npm run test:journey
 npm run test:compound
 npm run test:movement
 npm run test:joystick
+npm run test:hero-glb
 npm run test:playability
 npm run test:atlas
 npm run test:scene-map

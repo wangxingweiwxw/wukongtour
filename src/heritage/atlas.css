@@ -3,6 +3,7 @@
 :root #map { width:min(1250px,96vw); max-width:calc(100vw - 16px); padding:24px; max-height:94dvh; background:#f6f0e1; overflow:auto; scrollbar-width:thin; }
 #map .dialog-head { gap:16px; align-items:flex-start; }
 #map .dialog-head h2 { font-size:30px; margin:8px 0; letter-spacing:4px; }
+#atlasTitle:focus { outline:none; }
 #map .eyebrow { color:#8d6b43; letter-spacing:2px; }
 #map #atlasStats { font-size:12px; color:#66705b; margin:0 0 12px; }
 .atlas-head-actions { display:flex; align-items:center; gap:10px; }
