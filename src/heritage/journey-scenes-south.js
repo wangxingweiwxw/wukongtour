@@ -1,4 +1,5 @@
 import { enterablePlatform, interiorObstacle } from './journey-interiors.js';
+import { addPlaqueFace } from './architectural-plaque.js';
 
 // Map-inspired observation spaces, intentionally authored as original scenes.
 // Each opens toward +Z; the three observation stops remain on the valley floor.
@@ -41,7 +42,7 @@ function hillGarden(b, variant = 0) {
   for (const [x,z] of [[-11,13],[12,13],[-21,5],[21,5]]) b.garden(x,z,4,3);
 }
 
-function openHall(b, {id, x=0, z=-13, width=22, depth=10, height=8, red=true}) {
+function openHall(b, {id, name, x=0, z=-13, width=22, depth=10, height=8, red=true}) {
   // Open side bays and three stairways connect the courtyard to the exhibition
   // floor. Collision follows the actual posts, railings and sculpture plinths.
   const base=.94, sideOffset=depth/4, sideOpening=3;
@@ -72,7 +73,7 @@ function openHall(b, {id, x=0, z=-13, width=22, depth=10, height=8, red=true}) {
   }
   b.box(x,height+.16,front,width+.8,.45,.55,C.wood,'wood');
   b.box(x,height-.38,front+.28,3.2,.72,.18,C.dark,'wood');
-  for(let i=-3;i<=3;i++)b.box(x+i*.32,height-.38,front+.39,.13,.32,.06,C.gold[1],'metal');
+  addPlaqueFace(b.root, {text: name, position: [x, height-.38, front+.385], width: 3.2, height: .72});
   b.roof(x,height+.5,z,width+3,depth+3,2.1,C.roof);
   interior.solidSamples.push([x,base,z-depth/2+.25],[x+width/2,base,z]);
   return interior;
@@ -127,7 +128,7 @@ function littlePalace(b,x,y,z,scale) {
 
 export function xiaoxitianTemple(b) {
   approach(b);hillGarden(b,1);
-  const interior=openHall(b,{id:'xiaoxitian-hall',width:23,depth:10,height:9.2,z:-13.5,red:true});
+  const interior=openHall(b,{id:'xiaoxitian-hall',name:'小西天',width:23,depth:10,height:9.2,z:-13.5,red:true});
   // Earth-red side plinths and an open front frame an entire golden sculptural
   // mountain: figures in front, cloud shelves, then tiny celestial pavilions.
   b.box(0,4.3,-17.8,20,6.8,.7,'#65452d','sculpture');
@@ -189,7 +190,7 @@ export function shuiluTemple(b) {
   approach(b);hillGarden(b,3);
   // The long, open gallery expresses a wall-sculpture collection, rather than
   // repeating the freestanding golden statues of the Xiaoxitian composition.
-  const interior=openHall(b,{id:'shuilu-hall',width:27,depth:8,height:8.5,z:-13,red:true});
+  const interior=openHall(b,{id:'shuilu-hall',name:'水陆庵',width:27,depth:8,height:8.5,z:-13,red:true});
   for(const [x,variant] of [[-8.6,0],[0,1],[8.6,2]])reliefPanel(b,x,-15.8,7.7,6.8,variant);
   interior.solidSamples.push([0,.94,-15.8],[-8.6,.94,-15.8]);
   // Red perimeter walls frame a cool-grey roofline. Side lookout passages at
@@ -265,7 +266,7 @@ export function kaiyuanTowers(b) {
   stonePagoda(b,10.2,-12.2,.94,1);
   // A calm axial garden links the paired towers without blocking the cross-path.
   b.path([[0,7],[0,-19]],3.4);
-  b.hall(0,-24.5,10,5,0,3.3,true);
+  b.hall(0,-24.5,10,5,0,3.3,true,'开元寺');
   b.obstacle(0,-24.5,11.4,6.4,0,6.7);
   for(const side of [-1,1]){
     b.tree(side*22,-16,1.05);

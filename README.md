@@ -33,6 +33,18 @@ npx wrangler deploy
 
 `wrangler.jsonc` 包含静态文件目录和域名配置；部署账户须有 `chipai.cc` 的管理权限。若在 Cloudflare 控制台连接 GitHub 自动构建，构建命令使用 `npm run build`，部署命令使用 `npx wrangler deploy`，仓库根目录为项目根目录。
 
+## 知乎建筑回答快照
+
+建筑知识面板读取 `public/knowledge/zhihu.json`。使用已完成授权的知乎官方 CLI 更新：
+
+```sh
+node scripts/update-zhihu-knowledge.mjs --cli "<官方 setup 返回的 binary_path 绝对路径>"
+```
+
+可追加 `--site shisi` 只更新单个场景并保留其余数据。支持 `shisi`、`yungang`、`xuankong`、`yingxian`、`dule`、`foguang`、`xiaoxitian`、`shuilu`、`kaiyuan`。每处进行一次搜索（最多 10 项），过滤回答、去重后按返回的赞同数取最多 3 条，保留作者、短摘要、原文链接与抓取时间。这是检索结果中的高赞回答快照，不代表全站最高赞，也不实时刷新。无有效回答时显示空状态，不生成替代回答。
+
+查询失败不会覆盖已发布快照。Access Secret 由本机官方 CLI 管理，不写入 JSON、Git 仓库或浏览器资源。更新后执行 `npm run build` 和 `npx wrangler deploy` 发布。
+
 ## 主要功能
 
 - 古建群漫游：九座建筑、庭院、可进入的殿堂与十二处行走地标；支持侧门进出、全景、单体观察和手动揭开屋顶。
@@ -43,6 +55,12 @@ npx wrangler deploy
 - 三处通用示范场景打卡、PNG 留影、浏览器进度保存与手机方向按钮。
 
 ## 操作
+
+手机端默认收起路线说明与建筑设置，点右上角“菜单”展开；方向键、观察与场景地图保留在底部。横屏同样使用紧凑布局。
+
+九条路线靠近主建筑入口后会自动开门并显示知乎回答摘要。可进入的五座主殿使用实体门扇动画，石窟、悬空寺及实体塔模型使用导览门扉过场；原有通行范围不变。每次进入路线仅自动弹出一次，关闭后可在门前点“重看”或按 E 查看。
+
+开门后的面板可点“拍建筑纪念照”；“更多”或手机菜单内也可直接打开当前路线的“建筑写实纪念照”。九处建筑各有一张独立生成的 1672×941 写实画面，呈现黑神话氛围，并可保存 PNG 原图。图片按需加载，不占用初始场景的下载带宽。它们是预制 AI 场景演绎，非实时模型生成、游戏截图或文物测绘复原；完整提示词见 `docs/architecture-photo-prompts.json`。原“留影”仍保存当前 3D 视角。
 
 | 操作 | 功能 |
 | --- | --- |
@@ -93,6 +111,7 @@ npm run test:playability
 npm run test:atlas
 npm run test:scene-map
 npm run test:cliff
+npm run test:knowledge
 ```
 
 `test:cliff` 检查真实山体表面与碰撞一致性、顶底闭合、前后纵深，以及高速飞行防穿透。实机截图位于 `artifacts/xuankong-overview-updated.png`、`artifacts/xuankong-flight-updated.png` 和 `artifacts/xuankong-mobile-updated.png`。

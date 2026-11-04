@@ -4,10 +4,14 @@ import {createJourneyState} from './journey-state.js';
 import {createJourneyScene} from './journey-scenes.js';
 import {createJourneyUI} from './journey-ui.js';
 import {findWalkPath,groundHeight} from './walk-controller.js';
+import {createKnowledgeDoorUI} from './knowledge-door.js';
+import './knowledge-door.css';
+import './architecture-photo.css';
 
 export function createJourneyPlay({scene,getHero,isFlying=()=>false,blocked,onTravel,clearInput,toast,onOpenMap}) {
  let storage;try{storage=window.localStorage;}catch{}
  const state=createJourneyState(storage);
+ const knowledge=createKnowledgeDoorUI({clearInput});
  let active=false,world=null,markers=null,observation=null,target=null,pathTime=0,lastTarget='',lastHud='';
  const matrix=new THREE.Object3D(),forward=new THREE.Vector3(),right=new THREE.Vector3();
  const ui=createJourneyUI({journeys:JOURNEYS,state,onTravel,onOpenMap,onInteract:interact,onReturn:()=>onTravel(state.activeId),onOpen:clearInput,onAnswer(index){
@@ -29,12 +33,14 @@ export function createJourneyPlay({scene,getHero,isFlying=()=>false,blocked,onTr
   world.points.forEach((p,i)=>{const ring=new THREE.Mesh(geometry,new THREE.MeshStandardMaterial({color:'#ffc55e',emissive:'#7d571f',roughness:.8}));ring.rotation.x=-Math.PI/2;ring.position.set(p.position[0],.09,p.position[2]);ring.userData.pointId=p.id;markers.add(ring);const badge=label(String(i+1));badge.position.set(p.position[0],1.6,p.position[2]);markers.add(badge);});
   const dots=new THREE.InstancedMesh(new THREE.BoxGeometry(.15,.035,.3),new THREE.MeshBasicMaterial({color:'#f9d27f'}),100);dots.name='GuideDots';dots.count=0;dots.frustumCulled=false;markers.add(dots);
   getHero().position.fromArray(world.spawn);getHero().rotation.y=Math.PI;
+  knowledge.enter(world.knowledgeEntrance);
   pathTime=1;target=null;ui.setMode(true);ui.refresh();refreshMarkers();return {data,world};
  }
- function leave(){active=false;ui.closeObservation();ui.setMode(false);dispose(world?.root);dispose(markers);world=null;markers=null;observation=null;target=null;}
+ function leave(){active=false;knowledge.leave();ui.closeObservation();ui.setMode(false);dispose(world?.root);dispose(markers);world=null;markers=null;observation=null;target=null;}
  function interact(){
   if(!active||!getHero()||document.querySelector('dialog[open]'))return;
   if(isFlying()){toast('先按 G 在空旷地面落地，再靠近观察点');return;}
+  if(knowledge.interact())return;
   const hero=getHero(),near=world.points.map(p=>({p,d:Math.hypot(hero.position.x-p.position[0],hero.position.z-p.position[2])})).sort((a,b)=>a.d-b.d)[0];
   if(!near||near.d>2.4){if(!state.nextPoint())ui.openRoutes();else toast('沿金色光点靠近观察圆环，再按 E');return;}
   observation=JOURNEYS.find(j=>j.id===state.activeId).points.find(p=>p.id===near.p.id);
@@ -43,6 +49,7 @@ export function createJourneyPlay({scene,getHero,isFlying=()=>false,blocked,onTr
  function update(dt,camera){
   if(!active||!world||!getHero())return;
   const hero=getHero(),data=JOURNEYS.find(j=>j.id===state.activeId),next=state.nextPoint();
+  knowledge.update(dt,hero.position,isFlying());
   const near=world.points.map(p=>({p,d:Math.hypot(hero.position.x-p.position[0],hero.position.z-p.position[2])})).filter(p=>!state.has(p.p.id)).sort((a,b)=>a.d-b.d)[0];
   target=near?.d<=2.4?near.p:world.points.find(p=>p.id===next?.id);
   const point=data.points.find(p=>p.id===target?.id),distance=target?Math.hypot(hero.position.x-target.position[0],hero.position.z-target.position[2]):0;
@@ -56,5 +63,5 @@ export function createJourneyPlay({scene,getHero,isFlying=()=>false,blocked,onTr
    if(!airborne&&target&&distance>2.4){const path=findWalkPath(world,hero.position,{x:target.position[0],z:target.position[2]});let count=0;for(let i=1;i<path.length;i++){const a=path[i-1],b=path[i],length=Math.hypot(b.x-a.x,b.z-a.z);for(let d=.9;d<length&&count<100;d+=1.15){const x=a.x+(b.x-a.x)*d/length,z=a.z+(b.z-a.z)*d/length;matrix.position.set(x,groundHeight(world,x,z)+.07,z);matrix.rotation.y=Math.atan2(b.x-a.x,b.z-a.z);matrix.updateMatrix();dots.setMatrixAt(count++,matrix.matrix);}}dots.count=count;dots.instanceMatrix.needsUpdate=true;}
   }
  }
- return {state,ui,enter,leave,interact,update,get active(){return active;},get world(){return world;},get target(){return target;}};
+ return {state,ui,knowledge,enter,leave,interact,update,get opening(){return knowledge.opening;},get active(){return active;},get world(){return world;},get target(){return target;}};
 }

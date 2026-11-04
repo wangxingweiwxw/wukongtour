@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { enterablePlatform, interiorObstacle } from './journey-interiors.js';
+import { addPlaqueFace } from './architectural-plaque.js';
 
 // Map-inspired architectural compositions, not surveyed replicas. Courtyard
 // routes connect to the ground-storey halls through modelled stone stairways.
@@ -147,7 +148,7 @@ function gate(b,z,width=12) {
   }
   b.box(0,5.05,z,width,.45,.65,C.wood[0],'wood');
   b.box(0,4.58,z+.4,2.8,.9,.16,C.wood[3],'wood');
-  for(let i=-1;i<=1;i++) b.box(i*.65,4.58,z+.5,.24,.4,.06,'#c5a55e','metal');
+  addPlaqueFace(b.root, {text: '独乐寺', position: [0, 4.58, z+.495], width: 2.8, height: .9});
   b.roof(0,5.4,z,width+2.5,5.4,1.5,C.roof);
   cameraBox(b,0,4.7,z,width+3,2.7,5.8);
 }
@@ -211,6 +212,8 @@ export function duleTemple(b) {
     }
   }
   b.roof(0,6.8,z,w+4.5,d+4.3,1.3,C.roof);
+  b.box(0,5.85,z+d/2+.4,3.1,.7,.16,C.wood[3],'wood');
+  addPlaqueFace(b.root, {text: '观音阁', position: [0, 5.85, z+d/2+.495], width: 3.1, height: .7});
   b.roof(0,13.1,z,w+4,d+4,2.6,C.roof);
   // Warm silhouette behind the ground-level column screen, an observation cue
   // for the pavilion's central space, rather than a claimed faithful statue.
@@ -272,7 +275,7 @@ export function foguangTemple(b) {
     if(bay===0) {
       // Open leaves stand along the jambs, leaving the central approach clear.
       for(const s of [-1,1]) {
-        b.box(s*1.7,3.1,z+d/2-.8,.18,3.8,1.4,C.wood[1],'wood');
+        // Animated leaves are attached independently after the scene batches.
         interiorObstacle(b,s*1.7,z+d/2-.8,.18,1.4,base,5);
       }
     } else {
@@ -286,6 +289,8 @@ export function foguangTemple(b) {
     brackets(b,side*w/2,5.8,z+depth,1.15);
   }
   b.box(0,6.15,z+d/2,w+1,.5,.75,C.wood[0],'wood');
+  b.box(0,5.6,z+d/2+.44,3.5,.7,.16,C.wood[3],'wood');
+  addPlaqueFace(b.root, {text: '佛光寺', position: [0, 5.6, z+d/2+.535], width: 3.5, height: .7});
   b.box(0,6.44,z,w+1,.22,d+1,C.wood[0],'wood');
   b.roof(0,6.65,z,w+6,d+6,2.65,['#545c53','#657062','#7b846e','#444f47']);
   // Deep overhang brackets and layered cornice remain visible from either side.

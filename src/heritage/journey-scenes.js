@@ -3,6 +3,8 @@ import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { duleTemple, foguangTemple } from './journey-scenes-north.js';
 import { xiaoxitianTemple, shuiluTemple, kaiyuanTowers } from './journey-scenes-south.js';
 import { enterablePlatform, interiorObstacle } from './journey-interiors.js';
+import { addPlaqueFace } from './architectural-plaque.js';
+import { createKnowledgeEntrance } from './knowledge-door.js';
 
 // Authored sightseeing spaces, inspired by architectural references rather than
 // measured reconstructions. One unit is one metre; hall floors and their stairs
@@ -120,7 +122,7 @@ class SceneBuilder {
     }
   }
 
-  hall(x, z, w = 14, d = 8, y = 0, height = 4.5, red = false) {
+  hall(x, z, w = 14, d = 8, y = 0, height = 4.5, red = false, name = '配殿') {
     this.box(x, y + .3, z, w + .7, .6, d + .7, PALETTE.stone[2]);
     this.box(x, y + .63, z, w + 1.2, .16, d + 1.2, PALETTE.stone[1]);
     this.box(x, y + height / 2 + .6, z - .45, w - .7, height, d - 1.5,
@@ -145,7 +147,7 @@ class SceneBuilder {
     }
     this.box(x, y + height + .78, front, w + .5, .42, .6, PALETTE.wood[0], 'wood');
     this.box(x, y + height + .43, front + .33, 2.35, .58, .16, PALETTE.wood[3], 'wood');
-    for (let i = -2; i <= 2; i++) this.box(x + i * .34, y + height + .43, front + .43, .12, .25, .04, PALETTE.gold, 'metal');
+    addPlaqueFace(this.root, {text: name, position: [x, y + height + .43, front + .425], width: 2.35, height: .58});
     this.roof(x, y + height + 1, z, w + 3, d + 3, 2.2);
   }
 
@@ -247,7 +249,8 @@ function shisiHall(b) {
     b.box(panelX,base+2.5,front+.16,2.7,2.4,.13,PALETTE.wood[3],'wood');
     for(let slat=-1.1;slat<=1.1;slat+=.27)
       b.box(panelX+slat,base+2.5,front+.27,.08,2.2,.12,PALETTE.wood[2],'wood');
-    b.box(side*1.75,base+1.6,front-.6,.15,3.2,1.2,PALETTE.wood[1],'wood');
+    // The independent knowledge door animates at this opening; retain the
+    // existing open-jamb collider so side approaches keep their clearance.
     interiorObstacle(b,side*1.75,front-.6,.15,1.2,base,base+3.2);
     for(const zz of [z-d/2,z,front]) {
       b.pillar(side*w/2,base,zz,height,.48);
@@ -258,7 +261,7 @@ function shisiHall(b) {
   }
   b.box(0,base+height-.1,front,w+.5,.42,.6,PALETTE.wood[0],'wood');
   b.box(0,base+height-.47,front+.33,2.35,.58,.16,PALETTE.wood[3],'wood');
-  for(let i=-2;i<=2;i++)b.box(i*.34,base+height-.47,front+.43,.12,.25,.04,PALETTE.gold,'metal');
+  addPlaqueFace(b.root, {text: '时思寺', position: [0, base+height-.47, front+.425], width: 2.35, height: .58});
   // Interior beams and a rear altar remain physical objects under the roof.
   for(const xx of [-3.75,3.75])b.box(xx,base+height-.12,z,.24,.28,d-.4,PALETTE.wood[1],'wood');
   b.box(0,base+.45,z-2.7,5.4,.9,1,PALETTE.wood[0],'wood');
@@ -383,6 +386,11 @@ function sandstoneGrotto(b) {
     b.box(x, .4, 7, 1, .8, 1, PALETTE.sand[2]);
     b.obstacle(x, 7, 1, 1, 0, .8);
   }
+  // A site name on the existing approach plinth keeps lettering off the carving.
+  b.box(8, 1, 7, .25, .4, .25, PALETTE.wood[0], 'wood');
+  b.box(8, 1.55, 7, 3.2, .85, .18, PALETTE.wood[3], 'wood');
+  addPlaqueFace(b.root, {text: '云冈石窟', position: [8, 1.55, 7.105], width: 3.2, height: .85});
+  b.obstacle(8, 7, 3.2, .3, .8, 2);
 }
 
 function hangingCliff(b) {
@@ -582,6 +590,10 @@ function hangingTemple(b) {
         }
       }
       b.railing(x, y, z + 2.1, w, true, true);
+      if (x === 0 && level === 0) {
+        b.box(x, y + 2.35, z + 2.28, 2.7, .55, .16, PALETTE.wood[3], 'wood');
+        addPlaqueFace(b.root, {text: '悬空寺', position: [x, y + 2.35, z + 2.375], width: 2.7, height: .55});
+      }
       b.roof(x, y + 2.9, z, w + 1.8, 5.6, 1.1, level === levels - 1
         ? ['#7e7160', '#9b8866', '#b6a079', '#655e51'] : PALETTE.roof);
       b.cameraBounds.push(new THREE.Box3(new THREE.Vector3(x - w / 2 - 1.3, y - .4, z - 6),
@@ -694,6 +706,9 @@ function timberPagoda(b) {
     if (level === 0) {
       // Ground porch has no walkable stairs: the visiting route circles its plinth.
       b.box(0, 2.15, z + radius * Math.cos(Math.PI / 8) + .12, 1.7, 2.6, .18, PALETTE.wood[3], 'wood');
+      const plaqueZ = z + radius * Math.cos(Math.PI / 8) + .24;
+      b.box(0, 4.03, plaqueZ, 2.8, .6, .16, PALETTE.wood[3], 'wood');
+      addPlaqueFace(b.root, {text: '应县木塔', position: [0, 4.03, plaqueZ + .095], width: 2.8, height: .6});
     }
   }
   b.octagon(0, 24.3, z, .55, 1.6, 1.2, PALETTE.roof[1], 'roof');
@@ -706,7 +721,7 @@ function timberPagoda(b) {
     b.lantern(side * 7, 12);
     b.garden(side * 12.5, 10, 4, 5);
     // Low auxiliary shrine frames the pagoda without competing with its height.
-    b.hall(side * 20, -20, 6, 4, 0, 2.5, true);
+    b.hall(side * 20, -20, 6, 4, 0, 2.5, true, side < 0 ? '西配殿' : '东配殿');
     b.obstacle(side * 20, -20, 7, 5, 0, 6);
   }
 }
@@ -743,6 +758,7 @@ export function createJourneyScene(id) {
   const builder = new SceneBuilder(id);
   config.build(builder);
   builder.finish();
+  const knowledgeEntrance=createKnowledgeEntrance(builder,id);
   // New map compositions include authored hills outside the walking courtyard.
   // Frame the whole diorama in the local map; movement keeps its own bounds.
   const extent = builder.landmarks ? new THREE.Box3().setFromObject(builder.root) : null;
@@ -750,6 +766,7 @@ export function createJourneyScene(id) {
     maxX: Math.max(24, Math.ceil(extent.max.x)), minZ: Math.min(-25, Math.floor(extent.min.z)),
     maxZ: Math.max(25, Math.ceil(extent.max.z))} : null;
   return { root: builder.root, colliders: builder.colliders, cameraBounds: builder.cameraBounds,
+    knowledgeEntrance,
     surfaces: builder.surfaces, interiors: builder.interiors,
     bounds: {minX:-24,maxX:24,minZ:-25,maxZ:25},
     spawn: [0, 0, 20], points: config.points.map((position, i) => ({ id: `${id}-${i + 1}`, position: [...position] })),

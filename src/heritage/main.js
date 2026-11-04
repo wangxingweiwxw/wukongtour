@@ -17,6 +17,7 @@ import {moveWalker,canStand,groundHeight} from './walk-controller.js';
 import {WALK_SPEED,RUN_SPEED,frameDelta,substepMove} from './movement.js';
 import {createSceneMapUI} from './scene-map-ui.js';
 import {createJourneyMapData,createCompoundMapData,createCourtyardMapData} from './scene-map-data.js';
+import {createMobileControls} from './mobile-controls.js';
 
 const $=id=>document.getElementById(id),loader=new GLTFLoader();
 const stops=[
@@ -109,6 +110,7 @@ function enterCompound(){
 }
 compound=createCompoundPlay({scene,camera,controls,renderer,cameraRig,canvas,environment,getHero:()=>hero,clearInput:()=>keys.clear(),onEnter:enterCompound,onExit:()=>travelJourney(journey.state.activeId),toast});
 const localMap=createSceneMapUI({onOpen:clearMovementInput,onAtlas:openMap});
+createMobileControls({clearInput:clearMovementInput});
 let mapElapsed=0;
 function showCourtyardMap(title){
  if(!building)return;
@@ -139,6 +141,9 @@ document.addEventListener('visibilitychange',()=>{if(document.hidden)clearMoveme
 document.querySelectorAll('[data-key]').forEach(b=>{b.onpointerdown=e=>{e.preventDefault();b.setPointerCapture(e.pointerId);keys.add(b.dataset.key);};b.onpointerup=b.onpointercancel=b.onlostpointercapture=()=>keys.delete(b.dataset.key);});
 $('stamp').onclick=()=>{if(!hero||hero.position.distanceTo(ring.position)>2.4||custom)return;visited.add(current);try{localStorage.setItem('wukong-heritage-v1',JSON.stringify([...visited]));}catch{toast('已打卡；浏览器未允许保存进度');return;}renderDestinations();toast(visited.size===3?'三程已过，山河入册。恭喜完成首批访古之旅！':'已收藏「'+stops[current].name+'」足迹');};
 $('photo').onclick=()=>{renderer.render(scene,camera);const a=document.createElement('a');a.download='悟空访古-'+$('stationName').textContent+'.png';a.href=canvas.toDataURL('image/png');a.click();toast('留影已保存');};
+const architecturePhotoButton=document.createElement('button');architecturePhotoButton.type='button';architecturePhotoButton.id='architecturePhotoButton';architecturePhotoButton.textContent='建筑写实纪念照';
+architecturePhotoButton.onclick=()=>{if(!journey.knowledge.openPhoto())toast('请先从访古地图进入一条主题建筑路线');};
+$('photo').before(architecturePhotoButton);
 $('importButton').onclick=()=>{keys.clear();$('glbFile').click();};
 $('glbFile').onchange=async e=>{const file=e.target.files[0];if(!file)return;if(loading){toast('请等待当前场景加载完成');e.target.value='';return;}loading=true;toast('正在读取建筑模型……',0);try{if(file.size>96*1024*1024)throw Error('试玩版单个 GLB 限制为 96 MB');const buf=await file.arrayBuffer(),v=new DataView(buf);if(buf.byteLength<20||v.getUint32(0,true)!==0x46546c67||v.getUint32(4,true)!==2||v.getUint32(8,true)!==buf.byteLength)throw Error('请选择有效的 GLB 2.0 文件');const len=v.getUint32(12,true);if(v.getUint32(16,true)!==0x4e4f534a||20+len>buf.byteLength)throw Error('GLB JSON 数据不完整');const doc=JSON.parse(new TextDecoder().decode(buf.slice(20,20+len)));for(const resource of [...(doc.images||[]),...(doc.buffers||[])])if(resource.uri&&!resource.uri.startsWith('data:'))throw Error('请导出贴图全部内嵌的 GLB');const gltf=await loader.parseAsync(buf,'');installBuilding(gltf,true);$('stationName').textContent='我的古建';$('stationType').textContent=file.name;$('factTitle').textContent='模型预览庭院';$('fact').textContent='已按庭院大小自动缩放并落地。当前使用包围盒碰撞，无法进入模型内部；可在访古地图中返回示范场景。';$('source').hidden=true;frameView();showCourtyardMap('我的古建 · 模型庭院');toast('模型已导入 · 只在本次浏览器会话中展示');}catch(err){toast('导入失败：'+err.message,0);}finally{loading=false;e.target.value='';}};
 let mobileView;
@@ -182,7 +187,7 @@ function frame(){
  if(qaEnabled&&rawDt>0&&rawDt<1){qaFrameSeconds+=rawDt;qaFrames++;}
  cameraRig.restore(camera);
  let moving=false;const running=keys.has('ShiftLeft')||keys.has('ShiftRight');
- const paused=loading||document.hidden||Boolean(document.querySelector('dialog[open]'));
+ const paused=loading||document.hidden||journey.opening||Boolean(document.querySelector('dialog[open]'));
  move.set(0,0,0);
  if(hero&&!paused&&(!compound.active||compound.mode==='walk')){
   const x=Number(keys.has('KeyD')||keys.has('ArrowRight'))-Number(keys.has('KeyA')||keys.has('ArrowLeft'));
@@ -206,6 +211,7 @@ function frame(){
   moving=moving||flightStep.moved;
  }
  if(moving)shadowSettling=.6;shadowSettling=Math.max(0,shadowSettling-dt);
+ if(journey.opening)renderer.shadowMap.needsUpdate=true;
  if(shadowSettling>0)renderer.shadowMap.needsUpdate=true;
  hero?.userData.animate?.(paused?0:dt,moving&&!cloud.active,running&&!cloud.active);
  if(hero){

@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "generator": "Built-in image_gen.imagegen",
+  "description": "九处古建筑的 AI 写实氛围演绎纪念照，采用黑神话悟空式静谧庄重氛围；不是游戏实际截图，也不是建筑、文物或历史场景的精确史实复原。",
+  "isGameScreenshot": false,
+  "isExactHistoricalReconstruction": false,
+  "generationMethod": "每资产使用其完整提示词独立生成；保留原始 PNG，不拼图。",
+  "assets": [
+    {
+      "id": "shisi",
+      "name": "时思寺",
+      "asset": "public/photos/shisi.png",
+      "width": 1672,
+      "height": 941,
+      "bytes": 3365010,
+      "prompt": "Use case: photorealistic-natural.\nAsset type: a high-quality landscape architectural souvenir photograph for the Wukong Tour game, 16:9 horizontal composition.\nSubject: Shisi Temple (时思寺), a secluded old timber temple in the green mountains of Zhejiang, China. Distinctive modest, ancient Jiangnan mountain temple: weathered dark timber gate and low wooden hall, grey curved clay-tile eaves, an enormous aged leaning tree beside the gate, moss-covered irregular stone courtyard and low stone retaining wall. This must feel like Shisi Temple, not a grand imperial palace or a pagoda.\nScene: empty stone path leads through the timeworn open gateway toward the quiet wooden hall, dense old forest and a misty green hillside behind. Only architecture and landscape.\nStyle: cinematic photorealism with the solemn, atmospheric environmental art mood of Black Myth: Wukong; real architectural proportions and physically convincing surfaces. Fine wood grain, cracked grey roof tiles, tree bark, moss between wet flagstones. A natural documentary architectural camera viewpoint, 28mm lens, three-quarter frontal view, no extreme distortion.\nLighting: dawn after light rain, muted jade-green foliage, dark umber timber, soft silver mist, restrained warm sunlight grazing one eave. Quiet and sacred, high detail but natural rather than oversharpened. Preserve readable shadows and a clearly recognizable temple.\nConstraints: one single finished landscape image, no collage, no split screen, no border. No people, no monkeys, no Wukong or other characters, no weapons, no additional fantasy creatures. No words, calligraphy, signage lettering, logos, watermark, UI, subtitles or modern tourist facilities."
+    },
+    {
+      "id": "yungang",
+      "name": "云冈石窟",
+      "asset": "public/photos/yungang.png",
+      "width": 1672,
+      "height": 941,
+      "bytes": 3196815,
+      "prompt": "Use case: photorealistic-natural.\nAsset type: a high-quality landscape architectural souvenir photograph for the Wukong Tour game, 16:9 horizontal composition.\nSubject: Yungang Grottoes (云冈石窟), Datong, China. An immense seated Northern Wei stone Buddha carved into warm weathered sandstone, broad serene face, monastic robe with deeply carved parallel folds, surviving rock niche and cliff facade surrounding it; smaller ancient carved Buddhist niches and weathered reliefs in the neighboring sandstone. A recognizable open-air grotto composition inspired by Yungang Cave 20, architectural monumental scale, not a freestanding metal statue, not Longmen's tall narrow niche, and not a timber temple.\nScene: empty stone forecourt and rough sandstone ledges in the lower foreground; the monumental seated Buddha and rock-cut facade dominate the frame. Only architectural heritage and landscape, with no living figures.\nStyle: cinematic photorealism with the solemn environmental atmosphere of Black Myth: Wukong. Highly convincing porous sandstone, subtle chisel traces, eroded carving edges, precise robe folds, dark mineral streaks in the rock, fine surface texture. 28mm architectural photography from a restrained low viewpoint, enough width to see the flanking cliff and the immense statue, no extreme lens distortion.\nLighting: overcast morning after light rain, warm sandstone against cool silver atmospheric haze, faint dampness on the stone forecourt, soft light modelling the serene face, deep but legible shadows. Quiet, majestic and sacred.\nConstraints: single 16:9 landscape image, no collage or border. No people, monks, tourists, monkeys, Wukong, weapons or fantasy creatures. No text, calligraphy, title, logos, watermark, UI or subtitles. Avoid modern railings and tourist installations."
+    },
+    {
+      "id": "xuankong",
+      "name": "悬空寺",
+      "asset": "public/photos/xuankong.png",
+      "width": 1672,
+      "height": 941,
+      "bytes": 3276473,
+      "prompt": "Use case: photorealistic-natural.\nAsset type: a high-quality landscape architectural souvenir photograph for the Wukong Tour game, 16:9 horizontal composition.\nSubject: Hanging Temple, Xuankong Si (悬空寺), Hengshan, Shanxi, China. Distinctive compact clusters of two- and three-storey Chinese timber halls fixed into a tall near-vertical striated rock cliff, narrow connected wooden balconies and galleries, delicate red-brown latticework, grey and warm ochre tiled roofs with small upturned eaves. Long extremely slender dark timber support posts extend down from the projecting galleries toward the rocky shelf below. Timber ties disappear into the cliff; the buildings visibly hug the rock instead of floating freely or sitting on a mountain summit.\nScene: wide three-quarter frontal view from the valley, enough cliff above and beneath to reveal the improbable cantilever and sheer height; all temple clusters are recognizable and connected. Fine mist hangs in the valley. Only building and mountainous landscape.\nStyle: cinematic photorealistic architectural photograph with the mysterious, solemn environmental mood of Black Myth: Wukong. Natural ancient proportions, extraordinary fine wood grain, sun-worn faded red paint, precise timber brackets and railing details, rough fissured stone and mineral streaks. 35mm lens, no fisheye or exaggerated fantasy scale.\nLighting: cool early-morning mist after light rain, damp darkened stone, soft golden edge light tracing a few roofs against a monumental charcoal-grey cliff. Strong depth, quiet reverence, realistic material detail and readable shadows.\nConstraints: one finished horizontal 16:9 image, no collage, split screen or border. No people, tourists, monks, monkeys, Wukong, weapons, dragons or other creatures. No signage words, calligraphy, text, watermark, logo, UI, subtitles, cables or modern tourist equipment."
+    },
+    {
+      "id": "yingxian",
+      "name": "应县木塔",
+      "asset": "public/photos/yingxian.png",
+      "width": 1672,
+      "height": 941,
+      "bytes": 2674185,
+      "prompt": "Use case: historical-scene. Asset type: standalone landscape souvenir photograph for a Chinese architecture exploration game, wide 16:9 composition.\nCreate one cinematic photorealistic image of Yingxian Wooden Pagoda (应县木塔), a monumental ancient Chinese octagonal timber pagoda. The single unmistakable focal building is tall with five visible principal storeys, a deep double-eaved base, many receding broad grey tiled eaves, extremely intricate exposed wooden dougong brackets, weathered dark brown timber columns and balustrades, a stone plinth and stone steps. Keep the octagonal structure, timber construction, and tall layered silhouette recognizable. Show the entire tower including its top finial with breathing room around it, viewed from a low three-quarter angle across a worn stone courtyard. Sparse ancient pines frame the sides.\nStyle: premium cinematic environmental realism with the solemn ancient-Chinese-fantasy atmosphere of Black Myth: Wukong; realistic rather than voxel, painterly, illustration, or plastic CGI. Soft mountain mist, a dramatic clouded sky and restrained warm sunbeams grazing the richly detailed wood and tiles. Natural muted stone, aged brown wood, cool mist, exquisite physically plausible textures and lighting. Quiet, majestic, contemplative. Only architecture and landscape. No people, no hero, no monkey, no creatures, no interface, no captions, no lettering or legible signs, no logo, no watermark, no collage, no split panels. Not a stone tower, not a generic temple hall."
+    },
+    {
+      "id": "dule",
+      "name": "独乐寺",
+      "asset": "public/photos/dule.png",
+      "width": 1672,
+      "height": 941,
+      "bytes": 2806130,
+      "prompt": "Use case: historical-scene. Asset type: standalone landscape souvenir photograph for a Chinese architecture exploration game, wide 16:9 composition.\nCreate one cinematic photorealistic image of Dule Temple (独乐寺) centered on its Guanyin Pavilion and front mountain gate. The defining composition is an ancient two-storey Chinese timber pavilion beyond a modest low gate, connected by a paved stone courtyard. The Guanyin Pavilion is a substantial rectangular double-storey wooden hall, two broad grey tiled roof tiers, monumental weathered reddish-brown columns, intricate dougong brackets, timber railings along the upper storey and tall lattice doors. Preserve the two-storey pavilion silhouette, clearly distinct from a many-storey pagoda or a single low hall. Show the pavilion fully, with the lower gate offset in the foreground so it does not obscure the main building. A tranquil walled courtyard, aged stone paving and a few old pines. Low human-eye-level three-quarter architectural photography, moderate wide lens, convincing scale.\nStyle: premium cinematic photoreal environmental image with the solemn mystical atmosphere of Black Myth: Wukong. Finest realistic wood grain, worn stone, dark glazed grey roof tiles, light wisps of ground mist, soft rays of warm morning light through cool haze. Muted natural colors, quiet and dignified ancient temple. No people, no hero, no monkey, no creatures, no interface, no text, no legible signs, no logos or watermarks. No voxel blocks, no Minecraft appearance, no cartoon, no collage or split panels."
+    },
+    {
+      "id": "foguang",
+      "name": "佛光寺",
+      "asset": "public/photos/foguang.png",
+      "width": 1672,
+      "height": 941,
+      "bytes": 3220962,
+      "prompt": "Use case: historical-scene. Asset type: standalone landscape souvenir photograph for a Chinese architecture exploration game, wide 16:9 composition.\nCreate one cinematic photorealistic image of Foguang Temple (佛光寺), defined by its low, wide, single-storey Tang-style timber Great East Hall in a wooded mountain courtyard. The hall is broad and horizontal, seven bays of weathered red-brown timber columns, one enormous hipped grey-tile roof with exceptionally deep overhanging eaves, massive exposed dougong brackets, gently rising roof corners, dark wooden lattice doors and a raised aged stone terrace. Keep the roof mass and generous horizontal span dominant and unmistakable: one single main roof, not a tall pagoda and not a two-storey pavilion. View from a low three-quarter angle along the worn stone courtyard so the heavy eaves, columns, bracket structure and human-scale steps can be seen. Subtle ancient stone pillars in the courtyard, mature pines and forested hills behind.\nStyle: premium cinematic photoreal environmental realism with the contemplative ancient-Chinese-mythic atmosphere of Black Myth: Wukong. Delicate forest mist, diagonal soft sunbeams through the trees, aged wood grain, moss in the joints of stone slabs, richly detailed roof tiles, natural muted brown/grey/forest-green colors and convincing diffuse light. Only the architecture and landscape; no people, no hero, no monkey, no creatures. No text, no legible signs, no logos, no watermark, no UI, no voxel or Minecraft look, no illustration, no collage, no split panels."
+    },
+    {
+      "id": "xiaoxitian",
+      "name": "小西天",
+      "asset": "public/photos/xiaoxitian.png",
+      "width": 1672,
+      "height": 941,
+      "bytes": 3359428,
+      "prompt": "Use case: historical-scene. Asset type: a high-quality photorealistic architectural souvenir photograph for a Chinese heritage exploration game. Create one cinematic wide landscape image, 16:9. Subject: the INTERIOR of Xiaoxitian temple in Xixian, Shanxi, inspired by its dense suspended clay sculptures. A grand dark timber hall overflowing with intricate gilded Buddhist statuary, tiny heavenly pavilions, cloud-scroll clay reliefs and elaborate suspended sculpture climbing all the way up the side walls and rear wall. Larger serene golden Buddhist statues sit within this astonishing layered sculptural world. Composition: human eye-height wide-angle architectural photography looking into the hall; include dark aged wooden beams above and a little worn stone floor below for scale, the sculpture-filled interior dominates the frame. Style: genuinely photorealistic cinematic architectural image, grounded intricate craft, the mysterious solemn dark-fantasy atmosphere of Black Myth: Wukong. Materials: extraordinary fine worn gilding, aged clay sculpture, dark wood grain, delicately weathered stone. Lighting: restrained warm gold highlights against deep warm shadows, soft oblique shafts of daylight in a very thin haze; rich detail remains readable, no pitch-black crush. This is an AI-created artistic interpretation, not a documentary replica. Only architecture and its religious sculptures. No living people, no game hero, no modern objects, no writing, no plaque text, no logo, no watermark. Not an exterior temple, not voxel, not cartoon, not low-poly, not a collage."
+    },
+    {
+      "id": "shuilu",
+      "name": "水陆庵",
+      "asset": "public/photos/shuilu.png",
+      "width": 1672,
+      "height": 941,
+      "bytes": 3142976,
+      "prompt": "Use case: historical-scene. Asset type: a high-quality photorealistic architectural souvenir photograph for a Chinese heritage exploration game. Create one cinematic wide landscape image, 16:9. Subject: the INTERIOR of the main hall of Shuilu'an temple in Lantian, Shaanxi, inspired by its elaborate painted clay wall sculptures. Dense colorful bas-relief and high-relief human and divine figures, attendants, small architectural niches, mountains and narrative scenes cover the long interior walls in tightly arranged registers. Emphasize the walls as sculpted surfaces, with muted vermilion, mineral green, dusty blue, ochre and aged cream pigment; only sparse restrained gilt accents. Red-brown aged timber columns and beams frame the walls, worn stone floor in foreground. Composition: human eye-height oblique wide-angle view into the hall showing one long richly sculpted wall receding toward the back, enough opposing structure to give depth. Style: genuinely photorealistic cinematic architectural image, grounded fine craft, the solemn mysterious dark-fantasy atmosphere of Black Myth: Wukong. Materials: extraordinarily detailed aged polychrome clay sculpture and wood grain, subtle pigment wear. Lighting: soft daylight shafts through the entry, fine atmospheric haze, balanced cool shadows and amber highlights; intricate sculpture stays readable. This is an AI-created artistic interpretation, not a documentary replica. Only architecture and its attached religious sculptures. No living people, no game hero, no modern objects, no writing, no plaque text, no logo, no watermark. Do not turn this into Xiaoxitian's all-gold suspended sculptural interior. Not voxel, not cartoon, not low-poly, not a collage."
+    },
+    {
+      "id": "kaiyuan",
+      "name": "开元寺东西塔",
+      "asset": "public/photos/kaiyuan.png",
+      "width": 1672,
+      "height": 941,
+      "bytes": 3240968,
+      "prompt": "Use case: historical-scene. Asset type: a high-quality photorealistic architectural souvenir photograph for a Chinese heritage exploration game. Create one cinematic wide landscape image, 16:9. Subject: the east and west pagodas of Kaiyuan Temple in Quanzhou, Fujian: TWO towering five-storey octagonal grey granite STONE pagodas, inspired by Zhenguo and Renshou towers. Both complete pagodas visible in a broad Minnan temple garden and weathered stone courtyard, their separate five tiers and octagonal massing clearly legible. Carved stone Buddhist niches, heavy projecting stone eaves, layered granite masonry and stone balustrades; mature subtropical trees and restrained traditional temple roofs low in the background. Composition: wide architectural photography from ground level with a slight upward view, two towers separated across the frame with atmospheric depth and a stone path between them; no cropped tower tops. Style: genuinely photorealistic cinematic architectural image, detailed natural textures, the solemn ancient and mysterious dark-fantasy atmosphere of Black Myth: Wukong. Lighting: soft early-morning light breaking through a thin mist, delicate rays through trees, cool grey granite and subdued green foliage with gentle warm sun on stone. Strong believable scale and intricately weathered stone. This is an AI-created artistic interpretation, not a documentary replica. Only architecture and landscape. No living people, no game hero, no modern objects, no writing, no plaque text, no logo, no watermark. The pagodas are stone, never wooden; five storeys, not many-tiered fantasy towers. Not voxel, not cartoon, not low-poly, not a collage."
+    }
+  ]
+}

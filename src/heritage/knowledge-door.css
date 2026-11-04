@@ -1,0 +1,32 @@
+.knowledge-door-action{position:fixed;z-index:35;left:50%;bottom:1.3rem;transform:translateX(-50%);max-width:calc(100vw - 2rem);padding:.8rem 1.2rem;border:1px solid #be9a5d;border-radius:12px;background:#fff5dd;color:#473522;font-family:inherit;font-size:14px;font-weight:600;line-height:1.5;box-shadow:0 5px 22px #29271930;cursor:pointer}
+.knowledge-dialog{box-sizing:border-box;width:min(640px,calc(100vw - 28px));max-width:none;max-height:calc(100dvh - 36px);padding:0;border:1px solid #c6ad81;border-radius:18px;background:#fffaf0;color:#393528;box-shadow:0 24px 80px #171f2440;overflow:auto;overscroll-behavior:contain}
+.knowledge-dialog::backdrop{background:#18231bd0;backdrop-filter:blur(4px)}
+.knowledge-dialog-head{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;padding:24px 26px 16px;border-bottom:1px solid #e3d9c4;background:#f5edda}
+.knowledge-kicker{margin:0 0 6px;color:#86704a;font-size:12px;letter-spacing:.14em}
+.knowledge-dialog h2{margin:0;font-size:27px;line-height:1.3}
+.knowledge-close{flex:none;min-width:42px;min-height:42px;border:1px solid #cdbf9e;border-radius:50%;background:transparent;color:#594c36;font-size:27px;cursor:pointer}
+.knowledge-content{padding:6px 26px 12px;overflow-wrap:anywhere}
+.knowledge-note,.knowledge-updated{font-size:12px;line-height:1.6;color:#817966}
+.knowledge-answer{padding:18px 0;border-bottom:1px solid #e3d9c4}
+.knowledge-answer:last-of-type{border-bottom:0}
+.knowledge-answer h3{margin:0 0 8px;font-size:18px;line-height:1.55}
+.knowledge-answer-meta{margin:0 0 10px;font-size:12px;color:#86704a}
+.knowledge-answer-excerpt,.knowledge-status{font-size:15px;line-height:1.85}
+.knowledge-answer-excerpt{margin:0 0 12px;white-space:pre-line}
+.knowledge-status{padding:20px 0}
+.knowledge-answer-link,.knowledge-search{color:#276b62;font-size:14px;text-decoration:underline;text-underline-offset:4px}
+.knowledge-dialog-footer{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:18px 26px;background:#f5edda;border-top:1px solid #e3d9c4}
+.knowledge-dialog .knowledge-dialog-head,.knowledge-dialog .knowledge-dialog-footer{position:static;inset:auto;margin:0;pointer-events:auto;width:auto;box-shadow:none}
+.knowledge-continue{border:0;border-radius:9px;background:#365c4b;color:#fffaf0;padding:11px 20px;min-height:44px;font-size:14px;cursor:pointer}
+.knowledge-dialog button:focus-visible,.knowledge-dialog a:focus-visible,.knowledge-door-action:focus-visible{outline:3px solid #bb8c32;outline-offset:3px}
+.knowledge-door-transition{position:fixed;inset:0;z-index:70;display:grid;place-content:center;pointer-events:none;background:#14271b70}
+.knowledge-door-transition-frame{position:relative;width:min(360px,70vw);height:min(420px,65dvh);border:12px solid #493224;perspective:700px;background:#e6c88722;border-radius:8px 8px 0 0;box-shadow:0 18px 50px #13201880}
+.knowledge-door-shutter{position:absolute;top:0;bottom:0;width:50%;background:repeating-linear-gradient(90deg,#70422a 0,#70422a 16%,#ad7c47 17%,#70422a 18%);border:8px solid #8e6039;box-sizing:border-box;backface-visibility:hidden;box-shadow:inset 0 0 0 3px #c69655}
+.knowledge-door-shutter:after{content:'';position:absolute;top:48%;width:15px;height:22px;border:4px solid #d3b36a;border-radius:50%}
+.knowledge-door-shutter-left{left:0;transform-origin:left center}.knowledge-door-shutter-left:after{right:12%}
+.knowledge-door-shutter-right{right:0;transform-origin:right center}.knowledge-door-shutter-right:after{left:12%}
+.knowledge-door-transition-title{margin-top:18px;color:#fff4d8;text-align:center;font-size:17px;text-shadow:0 2px 8px #152015}
+.knowledge-door-action[hidden],.knowledge-door-transition[hidden]{display:none!important}
+@media(max-width:800px){.knowledge-door-action{bottom:calc(180px + env(safe-area-inset-bottom));font-size:13px;padding:.7rem 1rem;white-space:normal;text-align:center}.knowledge-dialog{max-height:calc(100dvh - 20px);width:calc(100vw - 20px);border-radius:14px}.knowledge-dialog-head{padding:18px 18px 14px}.knowledge-content{padding:4px 18px 10px}.knowledge-dialog-footer{padding:14px 18px;gap:14px}.knowledge-dialog h2{font-size:24px}.knowledge-answer h3{font-size:17px}}
+@media(prefers-reduced-motion:reduce){.knowledge-door-transition{display:none!important}}
+.mobile-game .knowledge-door-action{top:calc(max(10px,env(safe-area-inset-top)) + 52px);bottom:auto;left:var(--mobile-left);right:auto;transform:none;width:max-content;max-width:calc(100vw - 24px - env(safe-area-inset-left) - env(safe-area-inset-right));font-size:12px;min-height:44px}

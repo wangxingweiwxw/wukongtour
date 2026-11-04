@@ -1,0 +1,103 @@
+/* Phone HUD: leave the centre of the scene clear, with reading on demand. */
+.mobile-game-bar,.mobile-action-dock { display:none; }
+body.mobile-game {
+  --mobile-left:max(12px,env(safe-area-inset-left));
+  --mobile-right:max(12px,env(safe-area-inset-right));
+  --mobile-bottom:max(12px,env(safe-area-inset-bottom));
+}
+.mobile-game>header,.mobile-game>footer { display:none; }
+.mobile-game .mobile-game-bar {
+  position:fixed; top:max(10px,env(safe-area-inset-top)); left:var(--mobile-left); right:var(--mobile-right);
+  display:flex; align-items:center; justify-content:space-between; gap:12px; z-index:6; pointer-events:none;
+}
+.mobile-game-title { max-width:calc(100% - 76px); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; padding:8px 11px; border-radius:8px; background:#fff8e8d9; font-size:13px; font-weight:600; }
+.mobile-game-bar button { min-width:62px; min-height:44px; padding:9px 12px; background:#fff8e8ef; pointer-events:auto; font-size:13px; }
+.mobile-game #mobileGameMenu {
+  width:min(420px,calc(100vw - 24px)); max-height:calc(100dvh - 24px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+  margin:auto var(--mobile-right) auto auto; padding:16px; overflow:auto; border-radius:16px;
+}
+#mobileGameMenu .mobile-menu-head { position:sticky; top:-16px; z-index:8; display:flex; justify-content:space-between; align-items:center; gap:12px; background:#f4f1e4; padding:12px 0; border-bottom:1px solid #d9d4c3; }
+#mobileGameMenu .mobile-menu-head h2 { margin:0; font-size:18px; }
+#mobileGameMenu .mobile-menu-head button { min-height:44px; padding:9px 12px; font-size:12px; }
+#mobileGameMenu .mobile-menu-content { display:grid; gap:14px; padding-top:14px; }
+#mobileGameMenu .header-actions { display:flex; flex-wrap:wrap; gap:8px; align-items:flex-start; }
+#mobileGameMenu .header-actions>button,#mobileGameMenu .journey-tools summary { min-height:44px; font-size:12px; padding:11px; }
+#mobileGameMenu .journey-tools { flex:1 1 100%; }
+#mobileGameMenu .journey-tools summary { text-align:center; }
+#mobileGameMenu .journey-tool-items { position:static; width:100%; margin-top:8px; box-shadow:none; }
+#mobileGameMenu .header-actions #cameraMode { display:none; }
+#mobileGameMenu .header-actions .journey-tool-items>.journey-mobile-camera { display:block; }
+#mobileGameMenu :is(.compound-panel,.journey-location,.journey-hud,.intro,.field-card) {
+  position:static; inset:auto; width:100%; max-width:none; margin:0; padding:14px; border-radius:10px; box-shadow:none; backdrop-filter:none;
+}
+#mobileGameMenu .compound-panel { display:block; }
+#mobileGameMenu .compound-panel[hidden] { display:none; }
+#mobileGameMenu .compound-panel-head { flex-wrap:wrap; }
+#mobileGameMenu .compound-settings { width:100%; }
+#mobileGameMenu .compound-settings summary { padding:12px 0; min-height:44px; font-size:12px; }
+#mobileGameMenu .compound-settings-content { position:static; max-height:none; overflow:visible; margin-top:6px; box-shadow:none; }
+#mobileGameMenu .compound-mode-button { min-height:44px; }
+#mobileGameMenu .compound-context { flex-wrap:wrap; }
+#mobileGameMenu .compound-context-text { flex:1 1 100%; }
+#mobileGameMenu .compound-nearby { display:flex; }
+#mobileGameMenu .journey-location,#mobileGameMenu .journey-hud { display:block; }
+#mobileGameMenu .journey-location p,#mobileGameMenu .journey-hint,#mobileGameMenu .journey-hud-help { display:block; }
+#mobileGameMenu .journey-location h2 { margin:8px 0; }
+#mobileGameMenu .journey-station-progress { margin-top:10px; max-width:none; justify-content:flex-start; }
+#mobileGameMenu .journey-station-progress small { flex-basis:auto; }
+#mobileGameMenu .journey-hud h3 { margin:10px 0; }
+#mobileGameMenu .journey-bearing { display:flex; margin-top:12px; }
+#mobileGameMenu .journey-hud-help { margin-top:10px; }
+.mobile-game:not(.journey-mode):not(.compound-mode) #mobileGameMenu .field-card { display:block; }
+#mobileGameMenu .field-card p,#mobileGameMenu .field-card a,#mobileGameMenu .field-card hr { display:block; }
+#mobileGameMenu #importButton { min-height:44px; }
+.mobile-game .mobile-action-dock { display:block; }
+.mobile-game .mobile-action-dock #journeyInteract { display:none; }
+.mobile-game.journey-mode:not(.compound-mode) .mobile-action-dock #journeyInteract {
+  display:block; position:fixed; right:var(--mobile-right); bottom:calc(var(--mobile-bottom) + 54px);
+  width:142px; min-height:44px; height:auto; font-size:11px; padding:9px 5px; z-index:4;
+}
+.mobile-game .touch {
+  display:grid; position:fixed; left:var(--mobile-left); bottom:var(--mobile-bottom);
+  grid-template-columns:repeat(3,44px); gap:4px; z-index:4;
+}
+.mobile-game .touch button { min-width:44px; min-height:44px; padding:9px 0; font-size:17px; user-select:none; }
+.mobile-game .touch button:first-child { grid-column:2; grid-row:1; }
+.mobile-game .touch button:nth-child(2) { grid-column:1; grid-row:2; }
+.mobile-game .touch button:nth-child(3) { grid-column:2; grid-row:2; }
+.mobile-game .touch button:nth-child(4) { grid-column:3; grid-row:2; }
+.mobile-game.compound-mode[data-compound-view=overview] .touch,.mobile-game.compound-mode[data-compound-view=inspect] .touch { display:none; }
+.mobile-game .scene-minimap {
+  top:auto; left:auto; right:var(--mobile-right); bottom:var(--mobile-bottom); width:142px; z-index:4;
+}
+.mobile-game .scene-minimap-head,.mobile-game .scene-minimap .scene-map-art,.mobile-game .scene-minimap-status,.mobile-game .scene-minimap-title { display:none; }
+.mobile-game .scene-minimap-open { min-height:44px; padding:10px 0; text-align:center; }
+.mobile-game .scene-minimap-hint { font-size:0; margin:0; }
+.mobile-game .scene-minimap-hint::after { content:'场景地图'; font-size:12px; }
+.mobile-game .cloud-flight-panel {
+  top:auto; bottom:calc(var(--mobile-bottom) + 108px); right:var(--mobile-right); width:142px;
+  padding:6px; backdrop-filter:none; border-radius:9px; z-index:4;
+}
+.mobile-game .cloud-flight-heading { margin:0 0 5px; font-size:9px; }
+.mobile-game .cloud-flight-heading>span:first-child { display:none; }
+.mobile-game .cloud-flight-heading:has(.cloud-flight-altitude[hidden]) { display:none; }
+.mobile-game .cloud-flight-intro,.mobile-game .cloud-flight-keys,.mobile-game .cloud-flight-toggle kbd { display:none; }
+.mobile-game .cloud-flight-toggle { min-height:44px; padding:8px 4px; font-size:12px; }
+.mobile-game .cloud-flight-vertical { display:grid; grid-template-columns:1fr 1fr; gap:4px; margin-top:5px; }
+.mobile-game .cloud-flight-vertical button { min-height:44px; padding:8px 2px; font-size:11px; touch-action:none; }
+.mobile-game #status {
+  top:auto; bottom:calc(var(--mobile-bottom) + 106px); left:var(--mobile-left); transform:none;
+  max-width:calc(100vw - 180px - env(safe-area-inset-left) - env(safe-area-inset-right));
+  padding:7px 9px; font-size:10px; line-height:1.6; text-align:left; z-index:5;
+}
+@media(orientation:landscape) and (max-height:500px) {
+  .mobile-game .cloud-flight-panel { bottom:calc(var(--mobile-bottom) + 54px); }
+  .mobile-game.cloud-flight-enabled .mobile-action-dock #journeyInteract { right:calc(var(--mobile-right) + 150px); bottom:var(--mobile-bottom); }
+  .mobile-game #mobileGameMenu { max-height:calc(100dvh - 16px); }
+}
+@media(max-width:360px) {
+  .mobile-game .touch { grid-template-columns:repeat(3,40px); }
+  .mobile-game .touch button { min-width:40px; }
+  .mobile-game.journey-mode:not(.compound-mode) .mobile-action-dock #journeyInteract,.mobile-game .scene-minimap,.mobile-game .cloud-flight-panel { width:136px; }
+}
+.mobile-game #mobileGameMenu .header-actions #photo{display:inline-flex}

@@ -17,6 +17,7 @@
     "test:hero-detail": "node scripts/verify-hero-detail.mjs",
     "test:atlas": "node scripts/verify-atlas-routes.mjs",
     "test:scene-map": "node scripts/verify-scene-map.mjs",
+    "test:knowledge": "node scripts/verify-knowledge-door.mjs && node scripts/verify-zhihu-knowledge.mjs",
     "test:cliff": "node scripts/verify-cliff.mjs && node scripts/verify-cloud-flight.mjs"
   },
   "dependencies": {

@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
+import { addPlaqueFace } from './architectural-plaque.js';
 
 // An authored, metre-scale Chinese architectural garden inspired by the supplied
 // videos. Names and layout are fictional; this is not a surveyed palace model.
@@ -70,6 +71,11 @@ class Mason {
     if (turn) g.rotateY(turn);
     g.translate(x, y, z);
     this.add(g, color, layer);
+  }
+  plaque(x, y, z, width, height, side = 1) {
+    this.box(x, y, z, width, height, .16, P.dark);
+    addPlaqueFace(this.root, {text:this.name, position:[x, y, z + side * .095],
+      width, height, rotation:side < 0 ? Math.PI : 0});
   }
   cylinder(x, y, z, rt, rb, h, color, layer = 'body', sides = 8) {
     const g = new THREE.CylinderGeometry(rt, rb, h, sides, 1);
@@ -343,8 +349,7 @@ function buildGate(world) {
     b.brickFace(side * 8, .92, 26.21, 5.75, 1.55, -1);
     for (const end of [-1, 1]) b.roundWindow(side * 8, 3.18, 30 + end * 3.98, .92, end);
   }
-  b.box(0, 4.85, 34.36, 2.8, .6, .16, P.dark);
-  for (let i = -1; i <= 1; i++) b.box(i * .65, 4.85, 34.47, .25, .29, .04, P.gold);
+  for (const side of [-1, 1]) b.plaque(0, 4.85, 30 + side * 4.36, 2.8, .6, side);
   b.finish([0, 0, 37], [0, 0, 30], { minX: -4.5, maxX: 4.5, minZ: 26, maxZ: 34 }, [0, 5.5, 30]);
 }
 
@@ -384,8 +389,7 @@ function buildHall(world, { id, name, description, x, z, w, d, height, major = f
   }
   for (const side of [-1, 1]) {
     b.solid(x, base + height - .2, z + side * d / 2, w + .65, .45, .6, P.wood[0]);
-    b.box(x, base + height - .63, z + side * (d / 2 + .38), 3.25, .65, .16, P.dark);
-    for (let j = -1; j <= 1; j++) b.box(x + j * .72, base + height - .63, z + side * (d / 2 + .48), .27, .3, .05, P.gold);
+    b.plaque(x, base + height - .63, z + side * (d / 2 + .38), 3.25, .65, side);
   }
   if (major) {
     for (const xx of [-6.9, 6.9]) for (const zz of [-3.6, 3.6]) b.column(x + xx, z + zz, base, height, .5);
@@ -436,6 +440,7 @@ function buildGallery(world, side) {
   b.box(x, 5.7, 0, .35, .22, 46.5, P.roof[1], 'roof');
   for (const zz of [-22.2, 22.2]) b.ridgeBeast(x, 5.8, zz, 1, .55);
   for (let z = -21; z < 22; z += 1.5) b.box(x, .015, z, 5.6, .03, 1.43, P.stone[(Math.round(z) + 24) % 4]);
+  for (const end of [-1, 1]) b.plaque(x, 3.4, end * 22.75, 2.8, .6, end);
   b.finish([x, 0, 24.5], [x, 0, 7], { minX: x - 3.7, maxX: x + 3.7, minZ: z0, maxZ: z1 }, [x, 2.8, 0]);
 }
 
@@ -448,6 +453,7 @@ function buildPavilion(world, { id, name, x, z, w, d, double = false }) {
   if (double) b.roof(x, 6.1, z, w + .8, d + .5, 1.3, P.roof, 'roof-upper');
   // Flush inset instead of a decorative platform which the controller could not climb.
   b.box(x, -.02, z, w + .8, .04, d + .8, P.stone[1]);
+  for (const side of [-1, 1]) b.plaque(x, 3.68, z + side * (d / 2 + .26), 2.8, .6, side);
   b.finish([x, 0, z + d / 2 + 1.5], [x, 0, z],
     { minX: x - w / 2, maxX: x + w / 2, minZ: z - d / 2, maxZ: z + d / 2 }, [x, 3, z]);
 }
@@ -493,6 +499,10 @@ function buildPagoda(world) {
   }
   b.cylinder(x, 14.8, z, .35, 1.3, 1.1, P.gold, 'roof-upper');
   b.box(x, 15.65, z, .15, .85, .15, P.gold, 'roof-upper');
+  for (const side of [-1, 1]) {
+    b.box(x, PLATFORM + 4.08, z + side * 4.7, 9.4, .28, .35, P.wood[0]);
+    b.plaque(x, PLATFORM + 3.64, z + side * 4.94, 3, .65, side);
+  }
   b.finish([x, 0, z + 10], [x, PLATFORM, z],
     { minX: x - 4.5, maxX: x + 4.5, minZ: z - 4.5, maxZ: z + 4.5 }, [x, 7.2, z],
     [-1, 1].map(side => [x + side * 9.7, 0, z]));

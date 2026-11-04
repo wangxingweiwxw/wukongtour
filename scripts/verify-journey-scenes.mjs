@@ -55,7 +55,8 @@ for (const {id} of JOURNEYS) {
   const scene = createJourneyScene(id);
   assert.ok(scene.root instanceof THREE.Group);
   assert.equal(scene.points.length, 3);
-  assert.ok(scene.root.children.length <= 25, `${id}: draw call budget`);
+  const sceneMeshes=[];scene.root.traverse(node=>{if(node.isMesh)sceneMeshes.push(node);});
+  assert.ok(sceneMeshes.length <= 25, `${id}: draw call budget`);
   assert.deepEqual(scene.bounds, {minX: MIN_X, maxX: MAX_X, minZ: MIN_Z, maxZ: MAX_Z});
   const isBlocked = (x, z) => !canStand(scene, x, z);
   const blocked = new Uint8Array(NX * NZ);
@@ -103,13 +104,13 @@ for (const {id} of JOURNEYS) {
     assert.ok([...box.min.toArray(), ...box.max.toArray()].every(Number.isFinite));
   }
   let triangles = 0;
-  for (const mesh of scene.root.children) {
+  for (const mesh of sceneMeshes) {
     assert.ok(mesh.geometry.getAttribute('position').array.every(Number.isFinite));
     assert.ok(mesh.geometry.getAttribute('normal').array.every(Number.isFinite));
     triangles += mesh.geometry.index.count / 3;
   }
   assert.ok(triangles < 50000, `${id}: triangle budget`);
-  console.log(`${id}: ${scene.root.children.length} draw batches, ${triangles} triangles; 3 reachable points + all 16 guided paths traversed with the gameplay controller`);
+  console.log(`${id}: ${sceneMeshes.length} draw batches, ${triangles} triangles; 3 reachable points + all 16 guided paths traversed with the gameplay controller`);
   scene.root.traverse(node => { node.geometry?.dispose(); node.material?.dispose(); });
 }
 

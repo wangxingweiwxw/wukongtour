@@ -1,0 +1,258 @@
+{
+  "updatedAt": "2026-11-04T11:45:09.396Z",
+  "source": "知乎官方开放平台搜索快照；每处检索最多 10 项，筛选标题或正文包含当前建筑名称的回答后，按返回的赞同数降序选取最多 3 条，不代表全站最高赞或实时热榜。摘要为搜索返回内容中建筑相关段落的短节选。",
+  "sites": {
+    "shisi": {
+      "name": "时思寺",
+      "query": "景宁 时思寺 古建筑",
+      "updatedAt": "2026-11-04T11:45:09.390Z",
+      "answers": [
+        {
+          "title": "你参观过的古今建筑物中,哪一座给你留下了最震撼或最深刻的印象? - 知乎",
+          "author": "项木咄",
+          "excerpt": "这片被九座山峰环抱的高山盆地，自古便有“云中桃园”的名号，而时思寺，就静卧在盆地南端的白象山麓。 大漈平均海拔1030米，四周群峰耸峙，沐鹤溪穿谷而过，行至断崖便跌作百仞雪花漈飞瀑。…",
+          "url": "https://www.zhihu.com/question/2063218168567444636/answer/2098413084541035599?utm_medium=openapi_platform&utm_source=b38f6831b176",
+          "voteUpCount": 191
+        },
+        {
+          "title": "《黑神话:悟空》爆火,它的取景地都在哪,值不值得游客去当地「取经」? - 知乎",
+          "author": "觉察入微",
+          "excerpt": "…时思寺位于浙江省丽水市景宁畲族自治县大漈乡西岸底村，海拔1000多米的白象山上，始建于南宋。在游戏第四章里出现的时思寺不仅仅是一座寺庙，而是一组位于深山中的古建筑群，包括廊桥、山门、心经钟楼、大雄宝殿、三清殿、马仙宫、梅氏宗祠等等，保存…",
+          "url": "https://www.zhihu.com/question/664873122/answer/3606264005?utm_medium=openapi_platform&utm_source=b38f6831b176",
+          "voteUpCount": 82
+        },
+        {
+          "title": "中国哪里还有真的古建筑? - 知乎",
+          "author": "瓯南生",
+          "excerpt": "…丽水景宁时思寺 始建于南宋绍兴十年（西历1140年）。 丽水景宁梅氏宗祠 还有它隔壁的梅氏宗祠，始建于明万历年间（西历1573-1620年）。",
+          "url": "https://www.zhihu.com/question/420380425/answer/2018087563580155026?utm_medium=openapi_platform&utm_source=b38f6831b176",
+          "voteUpCount": 40
+        }
+      ]
+    },
+    "yungang": {
+      "name": "云冈石窟",
+      "query": "大同 云冈石窟",
+      "updatedAt": "2026-11-04T11:33:26.673Z",
+      "answers": [
+        {
+          "title": "探秘中国古代的石窟艺术,有哪些线路值得推荐? - 知乎",
+          "author": "aita",
+          "excerpt": "…4、北，大同云冈石窟。 建造年代相对更早、比想象中保存更好，北魏是古代中国艺术的一个高峰，文化艺术融汇东西、思想宗教交织繁荣，造就了云冈石窟，代表了当时世界佛教造像艺术的顶峰。…",
+          "url": "https://www.zhihu.com/question/5375533706/answer/2100559558691369471?utm_medium=openapi_platform&utm_source=b38f6831b176",
+          "voteUpCount": 42
+        },
+        {
+          "title": "云冈石窟值不值得去? - 知乎",
+          "author": "彩色的煤球",
+          "excerpt": "…云冈石窟始建于公元453年，那一年，北魏文成帝拓跋濬下令开凿，从那一刻起，工匠们开始在武周山的断崖上凿石，他们凿了一代又一代，凿了几十年，凿出了一个佛国。 你站在那些造像面前，你会感到一种极其特殊的“时间感”。…",
+          "url": "https://www.zhihu.com/question/285677516/answer/2093806970423793167?utm_medium=openapi_platform&utm_source=b38f6831b176",
+          "voteUpCount": 7
+        },
+        {
+          "title": "探秘中国古代的石窟艺术,有哪些线路值得推荐? - 知乎",
+          "author": "小草漫游",
+          "excerpt": "…中原石窟主轴之路 线路：大同云冈石窟-太原天龙山石窟-邯郸响堂山石窟-洛阳龙门石窟。 公元5-8世纪，是佛教造像最鼎盛的300年，皇家出资出力修建的石窟，几乎都发生在这条线上，而且每一处背后都站着一个都城。…",
+          "url": "https://www.zhihu.com/question/5375533706/answer/2100266738264888716?utm_medium=openapi_platform&utm_source=b38f6831b176",
+          "voteUpCount": 4
+        }
+      ]
+    },
+    "xuankong": {
+      "name": "悬空寺",
+      "query": "浑源 悬空寺 古建筑",
+      "updatedAt": "2026-11-04T11:33:27.534Z",
+      "answers": [
+        {
+          "title": "中国有哪些现存的宏伟至极的古建筑? - 知乎",
+          "author": "知乎用户",
+          "excerpt": "…（第三批国保） 7、浑源悬空寺南北楼，明代徐霞客（1633）描述的“天下巨观”，坐落在90米高的山崖上，悬空而建的城堡式寺院，现存为明清修复，楼高三层数十米歇山顶。…",
+          "url": "https://www.zhihu.com/question/30892385/answer/2348224759?utm_medium=openapi_platform&utm_source=b38f6831b176",
+          "voteUpCount": 2315
+        },
+        {
+          "title": "国内有哪些古建筑让你感叹人们的「奇思妙想」? - 知乎",
+          "author": "知乎用户",
+          "excerpt": "其实，比起悬空寺这个直白的名字，我更喜欢它创建初的名字“玄空阁”，“玄”从道教之中而来，“空”对应佛教教理，“玄空阁”这个名字放在现在，保不齐早就成为玄幻仙侠小说中的常用地名了，光听名字就感觉仙气飘飘。…",
+          "url": "https://www.zhihu.com/question/647555808/answer/3439707125?utm_medium=openapi_platform&utm_source=b38f6831b176",
+          "voteUpCount": 49
+        },
+        {
+          "title": "迄今为止你见过最惊艳的建筑是哪个? - 知乎",
+          "author": "知乎用户",
+          "excerpt": "…1地处凹陷 从侧面看，悬空寺位于翠屏峰半山腰的内凹处，在寺庙的正上方，山体被开凿出一条天沟，避免了更高处的落石砸到寺体建筑。 顶部突出的山岩，也可以阻挡阳光直射，缩短的日照时间，从而防止因阳光暴晒引起的木材老化。…",
+          "url": "https://www.zhihu.com/question/264213676/answer/556671198?utm_medium=openapi_platform&utm_source=b38f6831b176",
+          "voteUpCount": 31
+        }
+      ]
+    },
+    "yingxian": {
+      "name": "应县木塔",
+      "query": "应县木塔",
+      "updatedAt": "2026-11-04T11:33:28.288Z",
+      "answers": [
+        {
+          "title": "应县木塔修缮提出「1∶1 研究性复建」,对真塔保护有什么用?复建一座真塔,能带出一批「懂行」的徒弟吗? - 知乎",
+          "author": "螺旋真理",
+          "excerpt": "…应县木塔原来不是现在看到的格扇木门塔身，而是土墙。 正是在土木两种材料的共同作用下，才能够让木塔自身载荷与温带季风气候下的风霜雪雨，洪水地震等外部环境影响之间达成微妙的平衡。…",
+          "url": "https://www.zhihu.com/question/2016170864920527103/answer/2019716970015147639?utm_medium=openapi_platform&utm_source=b38f6831b176",
+          "voteUpCount": 230
+        },
+        {
+          "title": "应县木塔作为「千年病人」,其修缮面临哪些核心技术难题? - 知乎",
+          "author": "飞檐走壁朴小胖",
+          "excerpt": "…应县木塔上部三层加塔刹以千吨计，近千年的荷载历程、无数次地震风振的累积损伤，抬升—回落只能允许一次成功，不敢妄想获得“再试一次”的机会。 患者不只有骨头 谈木塔修缮，讨论往往全部聚焦“木结构怎么修”，这本身就是问题。…",
+          "url": "https://www.zhihu.com/question/2065717328243905116/answer/2073121271064303030?utm_medium=openapi_platform&utm_source=b38f6831b176",
+          "voteUpCount": 188
+        },
+        {
+          "title": "你参观过的古今建筑物中,哪一座给你留下了最震撼或最深刻的印象? - 知乎",
+          "author": "寒鲲",
+          "excerpt": "于我而言，不论是最深刻，还是最震撼，只提一座的话，当然是应县木塔，它也是我实地讲解次数最多的古迹之一，每次前往木塔考察与讲学，我都会拜服在木塔的脚下，毕竟这也是梁思成先生在1932年感慨“绝对的 Overwhelming ，好到令人叫绝…",
+          "url": "https://www.zhihu.com/question/2063218168567444636/answer/2086330252138112011?utm_medium=openapi_platform&utm_source=b38f6831b176",
+          "voteUpCount": 132
+        }
+      ]
+    },
+    "dule": {
+      "name": "独乐寺",
+      "query": "蓟州 独乐寺 观音阁",
+      "updatedAt": "2026-11-04T11:33:29.195Z",
+      "answers": [
+        {
+          "title": "天津「独乐寺」是一个什么景点,有什么吸引人的地方和历史典故? - 知乎",
+          "author": "雲绯",
+          "excerpt": "…‌独乐寺是《黑神话:悟空》的取景地之一‌。游戏中的观音阁场景取自天津蓟州独乐寺的观音阁，这座古建筑已屹立一千零四十年，是中国最古老的多层建筑之一‌。 独乐寺占地面积1.6万平方米，相传始建于唐，后经辽统和二年重建。…",
+          "url": "https://www.zhihu.com/question/309825510/answer/45306550735?utm_medium=openapi_platform&utm_source=b38f6831b176",
+          "voteUpCount": 22
+        },
+        {
+          "title": "什么东西全中国只有天津有? - 知乎",
+          "author": "卡尔赫林",
+          "excerpt": "…（1）独乐寺（蓟州区） 全球仅存的辽代木构建筑双璧，山门和观音阁全为辽代原物，观音阁整栋建筑没用一根铁钉，全靠榫卯咬合，历经唐山大地震仍完好屹立，阁内16米高的辽代泥塑观音像也是中国现存最高的古代泥塑佛像。…",
+          "url": "https://www.zhihu.com/question/1985328781754402350/answer/2096893968424375095?utm_medium=openapi_platform&utm_source=b38f6831b176",
+          "voteUpCount": 18
+        },
+        {
+          "title": "国内现在的名建筑,有哪些是从建起就一直保存至今原汁原味的? - 知乎",
+          "author": "柚妈",
+          "excerpt": "…四、天津独乐寺观音阁：辽代楼阁的活标本 天津蓟州独乐寺观音阁，辽统和二年（984年）重建。这是国内现存不多的辽代高层木构楼阁。梁思成先生当年在这里完成国内第一篇古建筑实地调查报告，意义重大。…",
+          "url": "https://www.zhihu.com/question/2086445865464489920/answer/2101365132676821355?utm_medium=openapi_platform&utm_source=b38f6831b176",
+          "voteUpCount": 2
+        }
+      ]
+    },
+    "foguang": {
+      "name": "佛光寺",
+      "query": "五台山 佛光寺 东大殿",
+      "updatedAt": "2026-11-04T11:33:30.091Z",
+      "answers": [
+        {
+          "title": "梁思成、林徽因为什么一定要寻找唐代木构?佛光寺东大殿的发现究竟改变了什么? - 知乎",
+          "author": "傻瓜乐力",
+          "excerpt": "…佛光寺在后期重修的时候，可能是因为没钱画彩画，通通用土朱色刷了一遍，把原本梁底的墨迹掩盖了。为了看清梁底的信息，几人花了大功夫。在村中找人搭了木架，把梁上的土朱色洗去，花三天，才看清原文。…",
+          "url": "https://www.zhihu.com/question/2088349196176683177/answer/2089239288739259706?utm_medium=openapi_platform&utm_source=b38f6831b176",
+          "voteUpCount": 162
+        },
+        {
+          "title": "梁思成、林徽因为什么一定要寻找唐代木构?佛光寺东大殿的发现究竟改变了什么? - 知乎",
+          "author": "温晓迪",
+          "excerpt": "…兴毁历史：佛光寺始建于北魏，在唐武宗灭佛事件中被毁，但在仅仅12年后便得以重建。 这些详实的文献资料，不仅印证了敦煌壁画中“大佛光之寺”的存在，也为梁思成和林徽因在1937年亲自前往五台山实地寻访提供了确凿的地理与历史依据。…",
+          "url": "https://www.zhihu.com/question/2088349196176683177/answer/2094362068933781365?utm_medium=openapi_platform&utm_source=b38f6831b176",
+          "voteUpCount": 92
+        },
+        {
+          "title": "梁思成、林徽因为什么一定要寻找唐代木构?佛光寺东大殿的发现究竟改变了什么? - 知乎",
+          "author": "梨涡小篆",
+          "excerpt": "既然壁画里有佛光寺，现实里可能它还在。梁思成与林徽因，还有他们的两个同仁，莫宗江和纪玉堂，1937年从北平出发，一路上火车换汽车，汽车换骡子，骡子换腿的钻进了五台山。…",
+          "url": "https://www.zhihu.com/question/2088349196176683177/answer/2099922905157187219?utm_medium=openapi_platform&utm_source=b38f6831b176",
+          "voteUpCount": 10
+        }
+      ]
+    },
+    "xiaoxitian": {
+      "name": "小西天",
+      "query": "隰县 小西天 悬塑",
+      "updatedAt": "2026-11-04T11:33:31.178Z",
+      "answers": [
+        {
+          "title": "小西天的悬塑为什么保存的如此完好? - 知乎",
+          "author": "知乎用户",
+          "excerpt": "…“千佛庵”建于崇祯七年（1634年），由东明禅师主持创建。初因大雄宝殿内有佛像千尊而名千佛庵，后因重门额题“道入西天”，又为区别城南另一座明代寺院“大西天”而更名“小西天”。…",
+          "url": "https://www.zhihu.com/question/2088565824973960422/answer/2089603800663443117?utm_medium=openapi_platform&utm_source=b38f6831b176",
+          "voteUpCount": 151
+        },
+        {
+          "title": "你去过最震撼、很少有人知道的小众古迹是哪一处? - 知乎",
+          "author": "知乎用户",
+          "excerpt": "…4.隰县小西天｜明代悬塑天花板 隰县小西天又叫千佛庵,同样是《黑神话：悟空》取景地，明代彩塑艺术的天花板之作。 寺院外部朴素低调，毫不起眼。 但只要踏入大雄宝殿,都会被那满堂塑,带来最直击心灵的视觉冲击和灵魂上的震撼。…",
+          "url": "https://www.zhihu.com/question/2099559683476428428/answer/2099912730379563358?utm_medium=openapi_platform&utm_source=b38f6831b176",
+          "voteUpCount": 8
+        },
+        {
+          "title": "文物、古迹沉默无言,为什么它会比书本里的文字更能震撼人心? - 知乎",
+          "author": "知乎用户",
+          "excerpt": "…小西天是典型的佛教禅宗寺院，悬塑是彩塑艺术之一，是悬插在壁面上的彩塑。一般在殿堂内围绕佛坛塑像，在其两侧、背后及上方依托壁面塑造而成。 悬塑始于唐代，留存下来的并不多，即便在著名的莫高窟，也仅有唐代第27窟壁面上的众赴会菩萨一例。…",
+          "url": "https://www.zhihu.com/question/2086448718421803817/answer/2099265307986731203?utm_medium=openapi_platform&utm_source=b38f6831b176",
+          "voteUpCount": 4
+        }
+      ]
+    },
+    "shuilu": {
+      "name": "水陆庵",
+      "query": "蓝田 水陆庵 壁塑",
+      "updatedAt": "2026-11-04T11:33:32.025Z",
+      "answers": [
+        {
+          "title": "类似隰县小西天这种悬彩塑的古建有中国还有多少处? - 知乎",
+          "author": "Devils-沧浪",
+          "excerpt": "…据统计，水陆庵占地面积6800平方米，建筑面积2150平方米，殿里共有3700多尊彩塑，其中人物塑像1322尊。 根据水陆庵发现的文字来看，殿内的壁塑大多出自山西匠人之手。…",
+          "url": "https://www.zhihu.com/question/809343345/answer/4986559610?utm_medium=openapi_platform&utm_source=b38f6831b176",
+          "voteUpCount": 74
+        },
+        {
+          "title": "西安除了兵马俑,还有哪些能体现其「古都气质」的深度文化体验? - 知乎",
+          "author": "行思修",
+          "excerpt": "…水陆庵：位于蓝田县，为六朝名刹始建于隋唐时期，庵内有古代彩塑，是中国古代雕塑艺术的宝库，被誉为“中国的第二个敦煌”。保存的古代精巧罕见的彩塑群，把绘画、圆雕、浮雕、镂刻等艺术手段融为一体，在殿内的墙、梁、柱上镶满了三千七百多尊人物及自然…",
+          "url": "https://www.zhihu.com/question/1970087914668033944/answer/1970437360366884006?utm_medium=openapi_platform&utm_source=b38f6831b176",
+          "voteUpCount": 22
+        },
+        {
+          "title": "《黑神话:悟空》里的小雷音寺原型是哪座寺庙? - 知乎",
+          "author": "温晓迪",
+          "excerpt": "…蓝田水陆庵位于蓝田县城城东10公里的王顺山(玉山)山脚下清河环绕的一个小岛上，是集绘画、建筑、雕塑于一体的一座明清古刹，被誉为“中国的第二个敦煌”，1996年公布为全国第四批文物保护单位。…",
+          "url": "https://www.zhihu.com/question/666559889/answer/3621911148?utm_medium=openapi_platform&utm_source=b38f6831b176",
+          "voteUpCount": 21
+        }
+      ]
+    },
+    "kaiyuan": {
+      "name": "开元寺东西塔",
+      "query": "泉州 开元寺 东西塔",
+      "updatedAt": "2026-11-04T11:33:32.872Z",
+      "answers": [
+        {
+          "title": "古代中国建筑为啥很少有石头制成的? - 知乎",
+          "author": "沧浪之水",
+          "excerpt": "…开元寺东西双塔始建于唐末五代（木塔），两塔均在南宋完成“木→砖→石”三次重建，22年间集中施工，成为世界海洋贸易中心泉州港财力的集中展示，西塔为仁寿塔，东塔为镇国塔，为国内现存最高、最大、最完整的一对宋代仿木楼阁式石塔，也是泉州古城最具…",
+          "url": "https://www.zhihu.com/question/668846541/answer/1953115689159225358?utm_medium=openapi_platform&utm_source=b38f6831b176",
+          "voteUpCount": 22
+        },
+        {
+          "title": "泉州有什么好玩的地方? - 知乎",
+          "author": "小嘉",
+          "excerpt": "…第一站：泉州古城，鲤城区巷子，西街，钟楼，开元寺。 最喜欢开元寺，其中东西双塔的故事很传奇。 东塔镇国塔代表东方娑婆世界，强调佛教的等级秩序和修行次第，塔身外壁石像依照佛教五乘等级排列。…",
+          "url": "https://www.zhihu.com/question/22937091/answer/1999085864505087946?utm_medium=openapi_platform&utm_source=b38f6831b176",
+          "voteUpCount": 13
+        },
+        {
+          "title": "你走过最值得复刻的一条访古路线是什么? - 知乎",
+          "author": "亲亲妈",
+          "excerpt": "…开元寺建于公元7世纪，至今保存着古代大型佛寺建造形制的典型布局，寺院坐北朝南，中轴线主要建筑包括自南向北依次为紫云屏、天王殿与拜亭、拜庭及东西廊、大雄宝殿、甘露戒坛、藏经阁及其东侧檀越祠。…",
+          "url": "https://www.zhihu.com/question/2082927800147600081/answer/2099902001173873815?utm_medium=openapi_platform&utm_source=b38f6831b176",
+          "voteUpCount": 2
+        }
+      ]
+    }
+  }
+}
