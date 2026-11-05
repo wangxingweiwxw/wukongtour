@@ -32,12 +32,14 @@ description: 根据古建筑照片、游戏地图或概念图，分析形制与�
 
 ```text
 node <skill>/scripts/build_glb.mjs --spec <out>/layout.json --out <out>/architecture.glb --report <out>/build-report.json
-node <skill>/scripts/validate_glb.mjs <out>/architecture.glb
+node <skill>/scripts/validate_glb.mjs <out>/architecture.glb --report <out>/validation.json
 ```
 
 构建报告需要检查尺寸、顶点/三角面数、材质数、节点名称和警告。GLB 采用 glTF 2.0、米、右手系、Y 向上，模型正面约定为 +Z；几何、颜色与所用贴图必须在同一文件内。GLB 文件扩展名本身不保证没有外部依赖。
 
-基础校验器检查结构和几何，不等同 Khronos 完整验证。交付前如环境允许，使用官方 glTF Validator 再检查；以真实结果报告，不能把基础通过写成官方通过。
+构建器在写入 GLB 前执行校验；失败时不发布新模型。使用 `--report` 时，失败退出也会把本次报告写成 `ok:false`，避免误读上次的成功报告。校验失败后先修正布局，再重新生成并校验最终文件，不要只修改报告或删除通行声明绕过错误。
+
+基础校验、通行契约与目标端验证是不同结果。读取报告中的 `validation`：存在通行声明时，`heritageContract` 和 `connectivity` 都必须为 `passed`；没有声明的普通模型不能宣称可入内漫游。核对报告 SHA-256 与最终交付文件，区分旧版和修复版。完整 glTF 规范仍需官方 glTF Validator；它不负责验证应用自定义的 `extras.heritageScene`。不能把基础通过写成官方或目标端通过。
 
 加载模型检查正面、斜侧、背面与俯瞰至少四个方向；重点检查屋檐厚度、法线、门洞、柱梁连接、台阶落地、不同建筑间距。优先使用目标导入器。独立预览可运行：
 
@@ -51,7 +53,9 @@ node <skill>/scripts/preview.mjs --model <out>/architecture.glb --port 5190
 
 普通 GLB 本身不描述玩家碰撞。只有需要可行走群落时生成 `extras.heritageScene`：它是本技能的可选、公开 JSON 契约，不是 glTF 标准扩展。字段在 [layout-schema.md](references/layout-schema.md) 中说明；不识别它的查看器仍可显示标准网格。
 
-台阶高度应小于接收端的步高限制，平台面和视觉高度一致；碰撞只覆盖实墙与柱，不能以整座建筑包围盒堵住门洞。群落元数据须与最终节点、位置及导览点一致。未经目标端通行验证时明确标记“网格已验证，通行尚未实测”。导入器不支持该契约时交付正常 GLB，并说明其通行仍由导入器负责。
+台阶高度应小于接收端的步高限制，平台面和视觉高度一致；碰撞只覆盖实墙与柱，不能以整座建筑包围盒堵住门洞。群落元数据须与最终节点、位置及导览点一致。手写 `walk.bounds` 时，要包含**完整地面矩形、台基、台阶和室内范围**，不能只包住建筑中心、出生点与导览点。越界报错先核对对应对象尺寸及边界：按场地意图扩大通行区或修正真实地面尺寸，不裁掉导航数据来掩盖错误。
+
+随技能的独立校验器检查完整 v1 契约及参考控制器的路径：出生点到各建筑入口、入口与室内/侧门双向、导览点按序连通。参考控制器不依赖应用仓库，规则与范围见 [layout-schema.md](references/layout-schema.md#walkable-glb-metadata)。路径存在仍不能证明网格与碰撞完全重合；目标导入器可用时还须实际加载与通行。目标端不可用时标记“参考契约与路径检查通过，目标端尚未实测”，不要宣称目标端验证通过。
 
 ## 交付
 

@@ -10,6 +10,8 @@
 
 ## 实际判断
 
+2026-11-05 核对：[Khronos 的 extras 定义](https://github.com/KhronosGroup/glTF/blob/main/specification/2.0/schema/extras.schema.json)允许应用自定义数据；[官方 Validator](https://github.com/KhronosGroup/glTF-Validator)针对 glTF 规范及其支持的扩展。`extras.heritageScene` 中的地面边界、入口和路径连通性需要额外契约校验，不能由官方 GLB 无错误报告推断通过。
+
 嵌入 GLB 的 PBR 颜色足够表达轻量建筑；若贴图对真实性重要，检查 UV、sRGB/线性色彩空间、透明度和法线贴图方向。检查文件中所有 `images`、`buffers` 的外部 URI；导出 GLB 时仍可能有外链贴图。
 
 验证优化前后的可见轮廓与材质，不能只看文件体积。首次交付优先使用不需要 Draco/KTX2 解码器的兼容格式；只有接收端明确支持时才加入压缩扩展。不要随意剔除地面下的台基、背面或屋檐内衬。

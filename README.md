@@ -64,6 +64,8 @@ node scripts/update-zhihu-knowledge.mjs --cli "<官方 setup 返回的 binary_pa
 
 独立技能位于 [`skills/image-to-heritage-glb`](skills/image-to-heritage-glb/SKILL.md)，包含原创建筑群参考 GLB、三建筑与十三建筑参数模板、无 npm 依赖的 Node.js 建模/校验脚本和独立预览器。将整个文件夹复制到个人 skills 目录即可使用；技能不读取本项目源码，也不依赖本项目安装。发行 ZIP 为 [`public/downloads/image-to-heritage-glb.zip`](public/downloads/image-to-heritage-glb.zip)。
 
+技能在写入 GLB 前检查完整通行矩形边界、节点归属、站位和路径连通性，拒绝“站位在边界内、整块地面却越界”的输出。生成或校验失败会写入 `ok:false` 的报告，保留已有模型；成功报告分别列出结构、契约、参考控制器路径检查，官方规范与实际目视检查需另行完成。`npm run test:skill-output` 对照实际网页导入器验证越界、断路、节点关系和失败重试行为。
+
 ```text
 使用 $image-to-heritage-glb，根据这张古建筑图片生成可导入 GLB，保留门洞与台阶，输出模型、参数和校验报告。
 ```

@@ -49,7 +49,7 @@ export function createImportGuide({trigger, fileInput, clearInput}) {
           <pre tabindex="0" aria-label="GLB 生成和校验命令"><code>node "&lt;skill&gt;/scripts/build_glb.mjs" --spec "&lt;out&gt;/layout.json" --out "&lt;out&gt;/architecture.glb" --report "&lt;out&gt;/build-report.json"
 node "&lt;skill&gt;/scripts/validate_glb.mjs" "&lt;out&gt;/architecture.glb"</code></pre>
           <a href="/downloads/heritage-layout-example.json" download>下载三建筑布局参数示例 ↓</a>
-          <p class="import-compatibility">请导出未使用 Draco / Meshopt 几何压缩、KTX2 纹理的版本；本页未配置这些解码器。建筑动画暂不播放。基础结构校验不等同于官方规范验证，交付前还需检查实际外观与通行。</p>
+          <p class="import-compatibility">新版技能在导出前检查整块地面边界、节点关系和路径连通性；失败时给出具体位置并停止输出。请导出未使用 Draco / Meshopt 几何压缩、KTX2 纹理的版本；本页未配置这些解码器。建筑动画暂不播放。技能校验不等同于官方规范或目标端验证，交付前还需检查实际外观与通行。</p>
         </details>
       </section>
     </div>

@@ -1,4 +1,5 @@
 import {createHash} from 'node:crypto';
+import {validateHeritageContract} from './heritage-contract.mjs';
 
 const fail=message=>{throw Error(message);};
 const check=(condition,message)=>{if(!condition)fail(message);};
@@ -8,7 +9,8 @@ const IDENTITY=[1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1];
 const multiply=(a,b)=>Array.from({length:16},(_,i)=>{const row=i%4,col=Math.floor(i/4);let n=0;for(let k=0;k<4;k++)n+=a[k*4+row]*b[col*4+k];return n;});
 const transform=(m,p)=>[0,1,2].map(i=>m[i]*p[0]+m[4+i]*p[1]+m[8+i]*p[2]+m[12+i]);
 function nodeMatrix(node){
-  if(node.matrix){finiteArray(node.matrix,16,'node.matrix');check(!node.translation&&!node.rotation&&!node.scale,'Node cannot combine matrix and TRS');return node.matrix;}
+  if(node.matrix){finiteArray(node.matrix,16,'node.matrix');check(!node.translation&&!node.rotation&&!node.scale,'Node cannot combine matrix and TRS');
+    check([3,7,11].every(i=>Math.abs(node.matrix[i])<1e-9)&&Math.abs(node.matrix[15]-1)<1e-9,'Node matrix must be affine');return node.matrix;}
   const t=node.translation??[0,0,0],s=node.scale??[1,1,1],q=node.rotation??[0,0,0,1];
   finiteArray(t,3,'node.translation');finiteArray(s,3,'node.scale');finiteArray(q,4,'node.rotation');
   check(Math.abs(Math.hypot(...q)-1)<1e-4,'Node quaternion is not normalized');
@@ -99,50 +101,55 @@ export function validateGlb(bytes){
     if(p.baseColorFactor){finiteArray(p.baseColorFactor,4,`material ${i} baseColor`);check(p.baseColorFactor.every(v=>v>=0&&v<=1),'PBR colour must be in [0,1]');}
     for(const key of ['metallicFactor','roughnessFactor'])if(p[key]!==undefined)check(Number.isFinite(p[key])&&p[key]>=0&&p[key]<=1,`Invalid ${key}`);
   }
-  const parents=new Map();nodes.forEach((node,i)=>{nodeMatrix(node);if(node.mesh!==undefined)index(node.mesh,meshes,`node ${i}.mesh`);
-    for(const child of node.children??[]){index(child,nodes,'node child');check(!parents.has(child),'Node has multiple parents');parents.set(child,i);}});
-  const scenes=doc.scenes??[],scene=index(doc.scene??0,scenes,'scene'),visited=new Set(),visiting=new Set();
-  const bounds={min:[Infinity,Infinity,Infinity],max:[-Infinity,-Infinity,-Infinity]};
-  function visit(id,parent){
-    const node=index(id,nodes,'scene node');check(!visiting.has(id),'Node hierarchy has a cycle');
-    check(!visited.has(id),'Scene references a node more than once');visiting.add(id);visited.add(id);
-    const world=multiply(parent,nodeMatrix(node));
-    if(node.mesh!==undefined)for(const primitive of meshes[node.mesh].primitives){
-      const data=readAccessor(primitive.attributes.POSITION).values;
-      for(let i=0;i<data.length;i+=3){const p=transform(world,data.slice(i,i+3));for(let k=0;k<3;k++){bounds.min[k]=Math.min(bounds.min[k],p[k]);bounds.max[k]=Math.max(bounds.max[k],p[k]);}}
-    }
-    for(const child of node.children??[])visit(child,world);visiting.delete(id);
+  const parents=new Map(),localMatrices=nodes.map(node=>nodeMatrix(node));
+  nodes.forEach((node,i)=>{if(node.mesh!==undefined)index(node.mesh,meshes,`node ${i}.mesh`);
+    check(node.children===undefined||Array.isArray(node.children),'Node children must be an array');
+    for(const child of node.children??[]){index(child,nodes,'node child');check(!parents.has(child),'Node has multiple parents or duplicate child references');parents.set(child,i);}});
+  // Linear-time, iterative cycle check also covers unreachable nodes.
+  const state=new Uint8Array(nodes.length);
+  for(let id=0;id<nodes.length;id++)if(!state[id]){
+    const trail=[];let at=id;
+    while(at!==undefined&&!state[at]){state[at]=1;trail.push(at);at=parents.get(at);}
+    check(at===undefined||state[at]!==1,'Node hierarchy has a cycle');for(const n of trail)state[n]=2;
   }
-  for(const root of scene.nodes??[])visit(root,IDENTITY);
+  const scenes=doc.scenes??[],sceneIndex=doc.scene??0,scene=index(sceneIndex,scenes,'scene'),visited=new Set();
+  const emptyBox=()=>({min:[Infinity,Infinity,Infinity],max:[-Infinity,-Infinity,-Infinity]});
+  const include=(a,b)=>{if(b.min.some((v,i)=>v>b.max[i]))return;for(let i=0;i<3;i++){a.min[i]=Math.min(a.min[i],b.min[i]);a.max[i]=Math.max(a.max[i],b.max[i]);}};
+  const localMeshBounds=meshes.map(mesh=>mesh.primitives.map(primitive=>{
+    const b=emptyBox();const values=readAccessor(primitive.attributes.POSITION).values;
+      for(let i=0;i<values.length;i+=3)for(let k=0;k<3;k++){b.min[k]=Math.min(b.min[k],values[i+k]);b.max[k]=Math.max(b.max[k],values[i+k]);}
+    return b;
+  }));
+  const bounds=emptyBox(),nodeBounds=new Map(),subtreeMeshes=new Map(),worldMatrices=new Map(),stack=[];
+  check(Array.isArray(scene.nodes),'Scene nodes must be an array');
+  for(const root of scene.nodes){index(root,nodes,'scene root');check(!parents.has(root),'Scene root cannot also have a parent node');stack.push({id:root,parent:IDENTITY,exit:false});}
+  while(stack.length){
+    const {id,parent,exit}=stack.pop(),node=nodes[id];
+    if(exit){
+      const box=nodeBounds.get(id);let count=node.mesh===undefined?0:1;
+      for(const child of node.children??[]){include(box,nodeBounds.get(child));count+=subtreeMeshes.get(child);}
+      subtreeMeshes.set(id,count);continue;
+    }
+    check(!visited.has(id),'Scene references a node more than once');visited.add(id);
+    const world=multiply(parent,localMatrices[id]);check(world.every(Number.isFinite),'Non-finite accumulated node transform');worldMatrices.set(id,world);
+    const box=emptyBox();nodeBounds.set(id,box);
+    if(node.mesh!==undefined){
+      // Match the receiver's Box3.setFromObject: transform the mesh's local AABB
+      // corners, not only actual vertices (the latter can produce tighter bounds).
+      for(const local of localMeshBounds[node.mesh])for(const x of [local.min[0],local.max[0]])for(const y of [local.min[1],local.max[1]])for(const z of [local.min[2],local.max[2]]){
+        const p=transform(world,[x,y,z]);check(p.every(Number.isFinite),'Non-finite transformed geometry');include(box,{min:p,max:p});
+      }
+    }
+    stack.push({id,exit:true});for(const child of node.children??[])stack.push({id:child,parent:world,exit:false});
+  }
+  for(const root of scene.nodes)include(bounds,nodeBounds.get(root));
   check(bounds.min.every(Number.isFinite)&&bounds.max.every(Number.isFinite),'Scene has no finite visible geometry');
-  // Check cycles in unreachable nodes as well, without adding them to scene bounds.
-  for(let id=0;id<nodes.length;id++){const seen=new Set();for(let at=id;parents.has(at);at=parents.get(at)){check(!seen.has(at),'Node hierarchy has a cycle');seen.add(at);}}
-  const metadata=(scene.nodes??[]).map(id=>nodes[id].extras?.heritageScene).filter(Boolean);
-  for(const rootId of scene.nodes??[]){const node=nodes[rootId];if(node.extras?.heritageScene)check(nodeMatrix(node).every((v,i)=>Math.abs(v-IDENTITY[i])<1e-9),'heritageScene root must be identity');}
-  const names=new Map();nodes.forEach(n=>{if(n.name)names.set(n.name,(names.get(n.name)??0)+1);});
-  for(const meta of metadata){
-    check(meta.version===1&&meta.kind==='compound','Invalid heritageScene version/kind');
-    finiteArray(meta.spawn,3,'heritageScene.spawn');
-    const b=meta.bounds;check(b&&['minX','maxX','minZ','maxZ'].every(k=>Number.isFinite(b[k]))&&b.minX<b.maxX&&b.minZ<b.maxZ,'Invalid heritageScene bounds');
-    const rect=(r,label)=>check(r&&['minX','maxX','minZ','maxZ'].every(k=>Number.isFinite(r[k]))&&r.minX<r.maxX&&r.minZ<r.maxZ,`Invalid ${label}`);
-    check(Array.isArray(meta.colliders)&&Array.isArray(meta.surfaces)&&Array.isArray(meta.buildings)&&Array.isArray(meta.walkRoute),'Incomplete heritageScene arrays');
-    for(const c of meta.colliders){rect(c,'collider');check(Number.isFinite(c.minY)&&Number.isFinite(c.maxY)&&c.minY<c.maxY,'Invalid collider height');}
-    for(const s of meta.surfaces){rect(s,'surface');check(Number.isFinite(s.height),'Invalid surface height');}
-    const floor=(x,z)=>Math.max(0,...meta.surfaces.filter(s=>x>=s.minX&&x<=s.maxX&&z>=s.minZ&&z<=s.maxZ).map(s=>s.height));
-    const stand=p=>p[0]>=b.minX&&p[0]<=b.maxX&&p[2]>=b.minZ&&p[2]<=b.maxZ&&Math.abs(p[1]-floor(p[0],p[2]))<.021
-      &&!meta.colliders.some(c=>p[0]>c.minX&&p[0]<c.maxX&&p[2]>c.minZ&&p[2]<c.maxZ&&p[1]+1.8>c.minY+1e-6&&p[1]<c.maxY-1e-6);
-    check(stand(meta.spawn),'Spawn is outside bounds, off the floor or inside a collider');
-    for(const building of meta.buildings){
-      check(names.get(building.nodeName)===1,`Missing/duplicate building node: ${building.nodeName}`);
-      for(const name of building.roofNodeNames??[])check(names.get(name)===1,`Missing/duplicate roof node: ${name}`);
-      finiteArray(building.entry,3,'building.entry');finiteArray(building.interior,3,'building.interior');rect(building.floorBounds,'building.floorBounds');
-      check(stand(building.entry),`${building.id}: entry is blocked or off the floor`);check(stand(building.interior),`${building.id}: interior is blocked or off the floor`);
-      for(const p of building.sideEntries??[]){finiteArray(p,3,'sideEntry');check(stand(p),`${building.id}: side entry is blocked`);}
-    }
-    for(const p of meta.walkRoute){finiteArray(p.position,3,'walkRoute.position');check(stand(p.position),`Blocked route waypoint: ${p.name}`);}
-  }
+  const heritage=validateHeritageContract({doc,sceneIndex,sceneNodeIds:visited,parents,localMatrices,nodeBounds,subtreeMeshes,bytes:bytes.length});
+  const validation={structure:{status:'passed',scope:'supported uncompressed GLB triangle geometry'},heritageContract:heritage.contract,
+    connectivity:heritage.connectivity,khronos:{status:'not-run'},visual:{status:'not-run'}};
   return {ok:true,bytes:bytes.length,sha256:createHash('sha256').update(bytes).digest('hex'),meshes:meshes.length,nodes:nodes.length,
-    materials:materials.length,vertices,triangles,bounds,embeddedResources:true,walkableScenes:metadata.length,
+    materials:materials.length,vertices,triangles,bounds,embeddedResources:true,walkableScenes:heritage.contract.status==='passed'?1:0,validation,
     nodeNames:nodes.map(node=>node.name??''),warnings:[],
-    checks:['GLB chunks and embedded buffer','accessor ranges and finite data','index ranges','position bounds','normals','scene hierarchy and transforms','walk metadata and standing points']};
+    checks:['GLB chunks and embedded buffer','accessor ranges and finite data','index ranges','position bounds','normals','scene hierarchy and transforms',
+      ...(heritage.contract.status==='passed'?['heritageScene v1 receiver contract','standing points and directed walk connectivity']:[])]};
 }

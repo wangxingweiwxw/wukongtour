@@ -14,6 +14,7 @@
     "test:references": "node scripts/verify-observation-references.mjs",
     "test:compound": "node scripts/verify-walk.mjs && node scripts/verify-compound-scene.mjs && node scripts/verify-compound-lighting.mjs",
     "test:compound-glb": "node scripts/verify-compound-glb.mjs",
+    "test:skill-output": "node scripts/verify-skill-output.mjs",
     "test:movement": "node scripts/verify-movement.mjs",
     "test:joystick": "node scripts/verify-touch-joystick.mjs",
     "test:playability": "node scripts/verify-journey-interiors.mjs && node scripts/verify-occlusion.mjs",

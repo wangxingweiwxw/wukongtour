@@ -3,6 +3,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import {buildArchitecture} from './lib/architecture.mjs';
 import {validateGlb} from './lib/validate.mjs';
+const pathKey=value=>process.platform==='win32'?value.toLowerCase():value;
 
 function options(args){
   const result={};for(let i=0;i<args.length;i++){
@@ -11,14 +12,26 @@ function options(args){
     result[args[i].slice(2)]=path.resolve(args[++i]);
   }
   if(!result.spec||!result.out)throw Error('--spec and --out are required');
-  if(result.spec===result.out||result.report===result.spec||result.report===result.out)throw Error('Spec, GLB and report paths must be distinct');
+  const paths=[result.spec,result.out,...(result.report?[result.report]:[])].map(pathKey);
+  if(new Set(paths).size!==paths.length)throw Error('Spec, GLB and report paths must be distinct');
   return result;
 }
+let args,stage='arguments',artifactWritten=false;
 try{
-  const args=options(process.argv.slice(2));const spec=JSON.parse(await fs.readFile(args.spec,'utf8'));
-  const generated=buildArchitecture(spec),validation=validateGlb(generated.binary);
-  await fs.mkdir(path.dirname(args.out),{recursive:true});await fs.writeFile(args.out,generated.binary);
+  args=options(process.argv.slice(2));stage='read-layout';
+  const spec=JSON.parse(await fs.readFile(args.spec,'utf8'));
+  stage='build';const generated=buildArchitecture(spec);
+  stage='validation';const validation=validateGlb(generated.binary);
+  stage='write-model';await fs.mkdir(path.dirname(args.out),{recursive:true});await fs.writeFile(args.out,generated.binary);artifactWritten=true;
   const report={...generated.summary,...validation,spec:args.spec,output:args.out};
+  stage='write-report';
   if(args.report){await fs.mkdir(path.dirname(args.report),{recursive:true});await fs.writeFile(args.report,JSON.stringify(report,null,2)+'\n');}
   console.log(JSON.stringify(report,null,2));
-}catch(error){console.error(`build_glb: ${error.message}`);process.exitCode=1;}
+}catch(error){
+  // A failed retry must not leave an old successful report looking current.
+  if(args?.report)try{
+    await fs.mkdir(path.dirname(args.report),{recursive:true});
+    await fs.writeFile(args.report,JSON.stringify({ok:false,stage:error.validationStage??stage,error:error.message,spec:args.spec,output:args.out,artifactWritten},null,2)+'\n');
+  }catch(reportError){console.error(`build_glb: unable to write failure report: ${reportError.message}`);}
+  console.error(`build_glb: ${error.message}`);process.exitCode=1;
+}

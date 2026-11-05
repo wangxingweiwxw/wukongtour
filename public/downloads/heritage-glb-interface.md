@@ -154,7 +154,7 @@ node "<skill>/scripts/validate_glb.mjs" "<out>/architecture.glb" --report "<out>
 node "<skill>/scripts/preview.mjs" --model "<out>/architecture.glb" --port 5190
 ```
 
-预览器使用固定版本 Three.js 公共 CDN，需要联网；建模和基础校验可离线运行。基础校验不是 Khronos 完整校验，也不证明路线连通，最终仍要在本网页导入并实际走完整条路线。
+预览器使用固定版本 Three.js 公共 CDN，需要联网；建模与校验可离线运行。新版技能在写入 GLB 前检查完整地面边界、通行契约与参考控制器的路径连通性；报告的 `validation` 会分别列出结构、契约和路径结果。失败时不写入新模型，并将指定报告更新为 `ok:false`，避免旧成功报告误导。基础校验不是 Khronos 完整校验，也不能证明视觉网格与碰撞一致，最终仍要在本网页导入并实际走完整条路线。
 
 安装包内的参考文件：
 
