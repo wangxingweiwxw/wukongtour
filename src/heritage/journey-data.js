@@ -51,7 +51,7 @@ export const JOURNEYS = [
       {
         id: 'yungang-2', title: '一龛又一龛',
         hint: '走向左侧佛龛墙，寻找横向成排、纵向分层的小体块。',
-        question: '千佛龛对照图中，哪一种排列最接近画面？',
+        question: '画面中的千佛龛呈现哪一种排列？',
         options: ['只有一条孤立竖缝', '小龛成排成层地重复', '随意散落的巨大圆窗'], answer: 1,
         explanation: '重复的小龛形成密集的横竖节奏。靠近时能看到每一龛，退后时又成为一整面有明暗层次的墙。试试在两种距离下观察它。',
         reference: '/references/niches.jpg',
@@ -217,4 +217,4 @@ export const JOURNEYS = [
   },
 ];
 
-export const JOURNEY_DISCLAIMER = '根据你提供的对照图与艺术地图创作的 MC 主题场景，非文物测绘复原；图片中的游戏与现实对应关系未作独立考证。';
+export const JOURNEY_DISCLAIMER = '原创 MC 风格主题场景，非文物测绘复原。';

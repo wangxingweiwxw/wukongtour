@@ -1,7 +1,8 @@
 import './journey.css';
+import {setReferenceImage} from './reference-crops.js';
 
-const REFERENCE_NOTE = '参考图片与艺术地图由你提供，用于观察形态与空间。游戏为原创 MC 风格主题场景，并非文物测绘复原。';
-const MAP_REFERENCE_NOTE = '本程依据你提供的艺术地图创作；问题针对地图意象与当前游戏场景，不代表真实建筑的测绘记录。';
+const REFERENCE_NOTE = '原创 MC 风格主题场景，非文物测绘复原。';
+const MAP_REFERENCE_NOTE = '本程暂以访古地图作为观察参考。';
 const FAILURE_TEXT = {
   'wrong-answer': '再看看图中的细节，换一个答案试试。答错不会扣分。',
   'out-of-range': '距离观察点有些远了。先走回金色圆环，再来记录。',
@@ -135,20 +136,31 @@ export function createJourneyUI({journeys, state, onTravel, onInteract, onAnswer
   observationHead.append(observationTitles, closeObservationButton);
   const observationLayout = element('div', 'journey-observation-layout');
   const figure = element('figure', 'journey-reference');
+  const referenceViewport = element('div', 'journey-reference-viewport');
   const reference = element('img');
   reference.loading = 'lazy';
-  const imageError = element('p', 'journey-image-error', '对照图暂未载入。可先阅读右侧线索，稍后再次查看。');
+  referenceViewport.append(reference);
+  const imageError = element('p', 'journey-image-error', '图片暂未载入。可先阅读观察线索，稍后再次查看。');
   imageError.hidden = true;
   reference.addEventListener('error', () => { imageError.hidden = false; });
   reference.addEventListener('load', () => { imageError.hidden = true; });
-  const expandReference = button('放大对照图', 'journey-expand-reference', () => {
-    const expanded = figure.classList.toggle('is-expanded');
-    expandReference.textContent = expanded ? '收起对照图' : '放大对照图';
-    expandReference.setAttribute('aria-expanded', String(expanded));
+  const imageViewer = own(element('dialog', 'journey-dialog journey-reference-viewer'));
+  imageViewer.setAttribute('aria-label', '观察图片大图');
+  const closeImageViewer = button('关闭大图', 'journey-viewer-close', () => imageViewer.close());
+  const viewerViewport = element('div', 'journey-reference-viewport');
+  const viewerImage = element('img');
+  viewerViewport.append(viewerImage);
+  imageViewer.append(closeImageViewer, viewerViewport);
+  document.body.append(imageViewer);
+  const expandReference = button('查看大图', 'journey-expand-reference', () => {
+    setReferenceImage(viewerViewport, viewerImage, reference.getAttribute('src'), reference.alt);
+    const [width, height] = (viewerViewport.style.aspectRatio || '4 / 3').split('/').map(Number);
+    imageViewer.style.setProperty('--viewer-ratio', String(width / height));
+    showDialog(imageViewer, closeImageViewer);
   });
-  expandReference.setAttribute('aria-expanded', 'false');
+  expandReference.setAttribute('aria-haspopup', 'dialog');
   const referenceCaption = element('figcaption');
-  figure.append(reference, imageError, referenceCaption, expandReference);
+  figure.append(referenceViewport, imageError, referenceCaption, expandReference);
   const questionArea = element('section', 'journey-question-area');
   const questionHint = element('p', 'journey-question-hint');
   const question = element('h3');
@@ -284,14 +296,12 @@ export function createJourneyUI({journeys, state, onTravel, onInteract, onAnswer
     const journey = journeys.find(entry => entry.points.some(p => p.id === point.id)) || current();
     observationKicker.textContent = `${journey.name} · ${observingCompleted ? '游记重温' : '发现一处细节'}`;
     observationTitle.textContent = point.title;
-    reference.src = point.reference || journey.reference;
     const fromMap = journey.referenceKind === 'map';
-    reference.alt = `${journey.name}：${point.title}，${fromMap ? '用户提供的访古艺术地图' : '用户提供的游戏与现实建筑对照图'}`;
-    referenceCaption.textContent = fromMap ? '你提供的访古地图 · 本程造型参考' : '你提供的游戏 × 现实对照图';
+    setReferenceImage(referenceViewport, reference, point.reference || journey.reference,
+      `${journey.name}：${point.title} · ${fromMap ? '访古地图' : '游戏画面'}`);
+    referenceCaption.hidden = !fromMap;
+    referenceCaption.textContent = fromMap ? '访古地图 · 本程造型参考' : '';
     observationNote.textContent = fromMap ? MAP_REFERENCE_NOTE : REFERENCE_NOTE;
-    figure.classList.remove('is-expanded');
-    expandReference.textContent = '放大对照图';
-    expandReference.setAttribute('aria-expanded', 'false');
     imageError.hidden = true;
     questionHint.textContent = point.hint || '看看场景，再对照图片里的建筑。';
     question.textContent = point.question;
@@ -347,7 +357,10 @@ export function createJourneyUI({journeys, state, onTravel, onInteract, onAnswer
     continueButton.scrollIntoView({block: 'nearest'});
   }
 
-  function closeObservation() { if (observation.open) observation.close(); }
+  function closeObservation() {
+    if (imageViewer.open) imageViewer.close();
+    if (observation.open) observation.close();
+  }
 
   function destroy() {
     closeObservation();
