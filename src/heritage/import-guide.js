@@ -3,14 +3,14 @@ import './import-guide.css';
 const SKILL_PROMPT = '使用 $image-to-heritage-glb，根据我提供的古建筑照片或地图生成自包含 GLB。先分析建筑形制与院落布局，参考内置古建群，搜索一手资料补足细节。附布局 JSON、校验报告和多角度预览；需要入内漫游时，输出 extras.heritageScene 通行元数据，并验证门洞、台阶和导览路线。';
 
 /** A local-file guide: model generation happens in the user's agent. */
-export function createImportGuide({trigger, fileInput, clearInput}) {
+export function createImportGuide({triggers, fileInput, clearInput}) {
   const dialog = document.createElement('dialog');
   dialog.id = 'importGuide';
   dialog.setAttribute('aria-labelledby', 'importGuideTitle');
   dialog.innerHTML = `
     <div class="import-guide-head">
       <div><span class="import-guide-kicker">古建工坊 · 从图片到三维</span><h2 id="importGuideTitle" tabindex="-1">把古建，带入山河</h2><p>先了解生成技能与模型规范，再选择你的 GLB 文件。</p></div>
-      <button type="button" id="closeImportGuide" aria-label="关闭导入指南，继续游玩">×</button>
+      <button type="button" id="closeImportGuide" aria-label="关闭导入指南">×</button>
     </div>
     <div class="import-guide-body">
       <div class="import-guide-intro">
@@ -57,12 +57,15 @@ node "&lt;skill&gt;/scripts/validate_glb.mjs" "&lt;out&gt;/architecture.glb"</co
   document.body.append(dialog);
   const $ = id => dialog.querySelector('#' + id);
   const choose = $('chooseImportFile'), status = $('importGuideStatus');
-  let busy = false;
+  let busy = false, openedFrom, returnDialog, returnScroll = 0;
   $('importPromptText').textContent = SKILL_PROMPT;
-  trigger.setAttribute('aria-haspopup', 'dialog');
-  trigger.setAttribute('aria-controls', dialog.id);
-  trigger.addEventListener('click', open);
+  for (const trigger of triggers) {
+    trigger.setAttribute('aria-haspopup', 'dialog');
+    trigger.setAttribute('aria-controls', dialog.id);
+    trigger.addEventListener('click', event => open(event.currentTarget));
+  }
   $('closeImportGuide').onclick = () => dialog.close();
+  dialog.addEventListener('cancel', event => { if (busy) event.preventDefault(); });
   choose.onclick = () => { if (!busy) { clearInput?.(); fileInput.click(); } };
   $('copyImportPrompt').onclick = async () => {
     try { await navigator.clipboard.writeText(SKILL_PROMPT); status.textContent = '已复制，可粘贴给你的 agent，并附上建筑参考图。'; }
@@ -70,13 +73,21 @@ node "&lt;skill&gt;/scripts/validate_glb.mjs" "&lt;out&gt;/architecture.glb"</co
   };
   dialog.addEventListener('close', () => {
     clearInput?.();
+    const source = returnDialog; returnDialog = null;
     if (!document.querySelector('dialog[open]')) {
-      const target = document.body.classList.contains('mobile-game') ? document.getElementById('mobileMenuToggle') : trigger;
+      if (source?.isConnected) {
+        source.showModal(); source.scrollTop = returnScroll;
+        openedFrom?.focus({preventScroll:true}); return;
+      }
+      const target = document.body.classList.contains('mobile-game') ? document.getElementById('mobileMenuToggle') : document.getElementById('importButton');
       target?.focus({preventScroll:true});
     }
   });
-  function open() {
+  function open(trigger) {
     clearInput?.();
+    openedFrom = trigger;
+    returnDialog = trigger.closest('dialog')?.id === 'map' ? trigger.closest('dialog') : null;
+    returnScroll = returnDialog?.scrollTop ?? 0;
     document.querySelectorAll('dialog[open]').forEach(other => { if (other !== dialog) other.close(); });
     if (!busy) { status.textContent = '已有模型？直接选择文件即可。'; status.classList.remove('import-error'); }
     if (!dialog.open) dialog.showModal();
@@ -84,8 +95,8 @@ node "&lt;skill&gt;/scripts/validate_glb.mjs" "&lt;out&gt;/architecture.glb"</co
     $('importGuideTitle').focus({preventScroll:true});
   }
   return {
-    close: () => dialog.close(),
-    setBusy(value) { busy = value; choose.disabled = value; choose.textContent = value ? '正在读取模型…' : '选择 GLB 文件 →'; if (value) { status.classList.remove('import-error'); status.textContent = '正在检查模型格式、资源与通行数据…'; } },
+    close: () => { returnDialog = null; dialog.close(); },
+    setBusy(value) { busy = value; choose.disabled = value; $('closeImportGuide').disabled = value; choose.textContent = value ? '正在读取模型…' : '选择 GLB 文件 →'; if (value) { status.classList.remove('import-error'); status.textContent = '正在检查模型格式、资源与通行数据…'; } },
     showError(message) { status.textContent = '导入失败：' + message; status.classList.add('import-error'); },
   };
 }

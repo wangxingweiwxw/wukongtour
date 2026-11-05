@@ -161,7 +161,7 @@ $('photo').onclick=()=>{renderer.render(scene,camera);const a=document.createEle
 const architecturePhotoButton=document.createElement('button');architecturePhotoButton.type='button';architecturePhotoButton.id='architecturePhotoButton';architecturePhotoButton.textContent='建筑写实纪念照';
 architecturePhotoButton.onclick=()=>{if(!journey.knowledge.openPhoto())toast('请先从访古地图进入一条主题建筑路线');};
 $('photo').before(architecturePhotoButton);
-const importGuide=createImportGuide({trigger:$('importButton'),fileInput:$('glbFile'),clearInput:clearMovementInput});
+const importGuide=createImportGuide({triggers:[$('importButton'),$('atlasImportButton')],fileInput:$('glbFile'),clearInput:clearMovementInput});
 $('glbFile').onchange=async e=>{
  const file=e.target.files[0];if(!file)return;
  if(loading||!hero){importGuide.showError('请等待当前场景加载完成后重试');e.target.value='';return;}
@@ -175,7 +175,7 @@ $('glbFile').onchange=async e=>{
   const doc=JSON.parse(new TextDecoder().decode(buf.slice(20,20+len)));
   for(const resource of [...(doc.images||[]),...(doc.buffers||[])])if(resource.uri&&!resource.uri.startsWith('data:'))throw Error('请导出贴图全部内嵌的 GLB');
   const gltf=await loader.parseAsync(buf,'');const importedWorld=createImportedCompound(gltf);
-  if(importedWorld){enterCompound(importedWorld,{duringImport:true});importGuide.close();toast('已导入 '+importedWorld.displayName+' · 可进入殿堂漫游');return;}
+  if(importedWorld){importGuide.close();enterCompound(importedWorld,{duringImport:true});toast('已导入 '+importedWorld.displayName+' · 可进入殿堂漫游');return;}
   installBuilding(gltf,true);$('stationName').textContent='我的古建';$('stationType').textContent=file.name;
   $('factTitle').textContent='模型预览庭院';$('fact').textContent='已按庭院大小自动缩放并落地。当前使用包围盒碰撞，无法进入模型内部；可在访古地图中返回示范场景。';
   $('source').hidden=true;frameView();showCourtyardMap('我的古建 · 模型庭院');importGuide.close();toast('模型已导入 · 只在本次浏览器会话中展示');
