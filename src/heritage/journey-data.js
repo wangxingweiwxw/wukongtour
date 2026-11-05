@@ -1,6 +1,5 @@
 // Observation exercises based on the supplied photographs and illustrated map.
 // Scenes are original voxel interpretations, not measured heritage reconstructions.
-const MAP_REFERENCE = '/heritage-map-v2.png';
 export const JOURNEYS = [
   {
     id: 'shisi', name: '山寺寻幽', region: '浙江 · 时思寺主题',
@@ -199,20 +198,20 @@ export const JOURNEYS = [
     ],
   },
   {
-    id: 'kaiyuan', name: '双塔听石', region: '福建 · 开元寺东西塔主题', referenceKind: 'map',
+    id: 'kaiyuan', name: '双塔听石', region: '福建 · 开元寺东西塔主题', referenceKind: 'ai',
     subtitle: '双塔对望，石檐层层向天',
-    intro: '从寺门前的 1 号打卡位出发，用俯瞰照片观察双塔与城市的关系，再到左右两侧分辨八角转面、层檐和塔身佛龛。',
-    reference: MAP_REFERENCE,
+    intro: '从寺门前的 1 号打卡位出发，观察双塔与寺院、城街的关系，再沿通畅的庭院走向左右两塔，分辨八角转面、层檐和塔身佛龛。',
+    reference: '/references/ai/kaiyuan-1.png',
     points: [
-      {id:'kaiyuan-1', title:'寺门望双塔', hint:'到寺门前的 1 号圆环，对照俯瞰照片，观察双塔与寺院、城街的关系。',
-        question:'俯瞰照片中，两座石塔与周围环境呈现什么关系？', options:['全部孤立在荒漠里','双塔立于绿树与殿堂之间，周围是城市街区','两座塔完全叠成一座塔'], answer:1,
-        explanation:'照片把近处石塔、远处另一座塔和周围的树冠、殿堂、街区放在同一视野。站在寺门前，再回看这张俯瞰图，可以把局部细节连成完整的寺院印象。', reference:'/references/kaiyuan.png', referenceKind:'photo'},
+      {id:'kaiyuan-1', title:'寺门望双塔', hint:'到寺门前的 1 号圆环，观察画面里双塔与寺院、城街的关系。',
+        question:'画面中，两座石塔与周围环境呈现什么关系？', options:['全部孤立在荒漠里','双塔立于绿树与殿堂之间，周围是城市街区','两座塔完全叠成一座塔'], answer:1,
+        explanation:'画面把近处石塔、远处另一座塔和周围的树冠、殿堂、街区放在同一视野。站在寺门前，再回看这张全景图，可以把局部细节连成完整的寺院印象。', reference:'/references/ai/kaiyuan-1.png', referenceKind:'ai'},
       {id:'kaiyuan-2', title:'八角转面', hint:'到左侧观察点，沿左塔塔身看相邻平面与檐口的转折。',
         question:'侧看本场景的石塔，能发现怎样的塔身轮廓？', options:['一张没有厚度的平面','多个平面围成的八角形','完全没有棱角的圆球'], answer:1,
-        explanation:'八角塔身让相邻塔面分别受光，檐口也跟着转折。移动视线时，明暗会帮助你分清每一个面。', reference:MAP_REFERENCE},
+        explanation:'八角塔身让相邻塔面分别受光，檐口也跟着转折。移动视线时，明暗会帮助你分清每一个面。', reference:'/references/ai/kaiyuan-2.png', referenceKind:'ai'},
       {id:'kaiyuan-3', title:'石龛与层檐', hint:'到右侧观察点，看右塔各层的檐口与塔身小龛。',
         question:'塔身细节中，哪两种元素反复出现？', options:['大玻璃窗与钢索','平整白墙与光滑球顶','向外挑出的石檐与凹入的小龛'], answer:2,
-        explanation:'石檐向外伸，小龛向内收，一凸一凹让塔身更有层次。灰石的统一色调，也让这些起伏比鲜艳色块更突出。', reference:MAP_REFERENCE},
+        explanation:'石檐向外伸，小龛向内收，一凸一凹让塔身更有层次。灰石的统一色调，也让这些起伏比鲜艳色块更突出。', reference:'/references/ai/kaiyuan-3.png', referenceKind:'ai'},
     ],
   },
 ];

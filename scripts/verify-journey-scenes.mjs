@@ -96,10 +96,37 @@ for (const journey of JOURNEYS) {
     assert.ok(point.position[2] >= MIN_Z && point.position[2] <= MAX_Z);
     assert.equal(reached[cell(point.position)], 1, `${point.id}: route is blocked`);
   }
-  assert.equal(Math.hypot(scene.spawn[0] - scene.points[0].position[0], scene.spawn[2] - scene.points[0].position[2]), id === 'kaiyuan' ? 15.5 : 5);
+  assert.equal(Math.hypot(scene.spawn[0] - scene.points[0].position[0], scene.spawn[2] - scene.points[0].position[2]), id === 'kaiyuan' ? 3 : 5);
   if (id === 'kaiyuan') {
-    assert.deepEqual(scene.points.map(point => point.position), [[0,0,4.5],[-16,0,0],[16,0,0]]);
+    assert.deepEqual(scene.points.map(point => point.position), [[0,0,17],[-16,0,0],[16,0,0]]);
     assert.equal(scene.points.some(point => point.position[0] === 0 && point.position[2] === 15), false, 'removed marker is absent');
+    const landmarks = new Map(scene.landmarks.map(([key, , position]) => [key, position]));
+    assert.deepEqual(landmarks.get('west-tower'), [-10.2,12,-10.7], 'west tower remains in place');
+    assert.deepEqual(landmarks.get('east-tower'), [10.2,11.6,-12.2], 'east tower remains in place');
+    assert.deepEqual(landmarks.get('gate'), [0,3.62,13.4], 'map label follows the southern gate');
+    const gatePlaque = scene.root.children.find(node => node.userData.plaqueText === '开元寺'
+      && Math.abs(node.position.y - 3.62) < 1e-7);
+    assert.ok(gatePlaque, 'gate plaque is retained');
+    assert.ok(Math.abs(gatePlaque.position.z - 13.825) < 1e-7, 'lettering follows the moved gate facade');
+
+    // Reachability alone accepted the old gate: the guide detoured south around
+    // its wings. The tower-front corridor must now be directly traversable.
+    for (const z of [-3, 0, .5, 7]) for (const direction of [-1, 1]) {
+      const start = {x: direction * 16, z}, end = {x: -direction * 16, z};
+      assert.ok(segmentWalkable(scene, start, end), `kaiyuan: east/west corridor blocked at z=${z}`);
+      assert.equal(assertWalkPath(`kaiyuan straight cross-corridor ${z}/${direction}`, scene, start, end).length, 2,
+        'the tower cross-corridor must not need a detour');
+    }
+    for (const [start, end] of [[{x:0,z:17},{x:0,z:7}],[{x:0,z:7},{x:0,z:17}]]) {
+      assert.equal(assertWalkPath('kaiyuan southern gate passage', scene, start, end).length, 2);
+    }
+    for (const side of [-1, 1]) {
+      assert.equal(canStand(scene, side * 4.15, 12), false, 'gate wings still block movement');
+      assert.equal(canStand(scene, side * 3.2, 13.4), false, 'gate columns still block movement');
+      assert.equal(canStand(scene, side * 2.95, 12), false, 'open door leaves retain their collision');
+      assert.equal(canStand(scene, side * 1.18, 13.4), true, 'central doorway retains its clear passage');
+      assert.equal(canStand(scene, side * 1.2, 13.4), false, 'existing staff-clearance padding was not reduced');
+    }
   }
   for (const c of scene.colliders) {
     assert.ok(Object.values(c).every(Number.isFinite));

@@ -133,6 +133,60 @@
       "bytes": 3720383,
       "sha256": "02eb56cf6bb9140657f07aa530ca072eabf1ec3bb0d6539ab1ba50d8109040c0",
       "prompt": "Use case: stylized-concept\nAsset type: original architectural observation image for a game, shuilu-3.\nPrimary request: a high-detail original realistic game concept artwork inspired by the polychrome narrative clay relief walls at Shuilu'an temple in Lantian, Shaanxi, China. Invented interpretive artwork, not an official game screenshot or a documentary photograph.\nScene and subject: a substantial section of an old temple's richly painted sculptural wall, filled with static miniature figures, pavilion roofs, terraces, and curling clouds. Repeated raised niche frames and carved dividers visibly organize the wall into four adjacent narrative units. In each unit, small groups of sculpted figures gather around a different little architectural setting; the repeated frames, rather than individual heroes, are the main subject.\nComposition: horizontal 3:2 full-bleed, straight-on frontal medium view at the wall's center height, with all four adjacent framed narrative units clearly readable. Show continuous red-brown architectural framing above and below to connect the units into one coherent relief wall. Balanced dense detail; each compartment has its own figures, little pavilion and clouds with enough spacing to read its boundaries. No dominant oversized foreground statue. Do not use oblique perspective. This should feel like a realistic continuous sculptural wall rather than a graphic panel layout.\nPalette/materials: weathered mineral colors, dusty blue-green, muted red, ochre, old cream and discreet gold traces; sculpted painted clay, worn wood framing, intricate robes and roof tiles, fine cracks and chipped paint. Clearly polychrome rather than uniformly gold.\nLighting/style: cinematic realistic Chinese mythic game environment art, solemn Black Myth: Wukong atmosphere; soft warm angled illumination gives the relief gentle readable depth without losing the frontal organization. Clear details across the whole wall.\nConstraints: all figures are immobile sculpture, no living people, tourists, protagonist, words, signs, text, labels, numerals, logo, watermark, UI, borders, black bars, montage or collage."
+    },
+    {
+      "id": "kaiyuan-1",
+      "route": "双塔听石",
+      "title": "寺门望双塔",
+      "asset": "public/references/ai/kaiyuan-1.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 3605211,
+      "sha256": "acdf8f627d564679c01d8527316b42e5eea159a5c6dfed195f07f70df971192c",
+      "prompt": "Use case: stylized-concept.\nAsset type: one original architectural observation image for a Chinese heritage exploration game. Landscape 3:2, approximately 1536x1024, full bleed.\nPrimary request: a richly detailed, realistic 3D game-art interpretation of the twin stone pagodas of Kaiyuan Temple in Quanzhou, Fujian. This is a broad elevated three-quarter view of the entire temple compound: two DISTINCT gray granite octagonal pagodas, each with five storeys and five stone eave tiers, standing apart on opposite sides of lush trees and ancient temple halls. One tower is closer and a little larger; the second is clearly visible in the middle distance. The towers must not overlap or look fused. Low reddish terracotta rooftops and old city lanes surround the green temple precinct in the background. Include some temple gate roofing at the lower edge without hiding the towers. Emphasize how the twin pagodas, halls, trees and surrounding city form a coherent place.\nStyle: original premium cinematic realistic 3D environment art with the solemn ancient Chinese architectural atmosphere associated with Black Myth Wukong, believable weathered granite blocks, restrained moss, warm side daylight and subtle distant haze. Clear, natural colors and readable architecture. Not an official game screenshot or documentary photograph.\nConstraints: exactly two prominent pagodas; not a map, diagram, aerial satellite photo, infographic or city plan. No people, characters, animals, writing, captions, labels, numbers, logos, watermark, game interface, collage, borders, black bars or blank margins. Architectural scene fills the entire horizontal frame.",
+      "references": [
+        {
+          "url": "https://www.quanzhou.gov.cn/lyb/lswh/zdww/201510/t20151029_183313.htm",
+          "checked": "2026-11-05",
+          "used": "八角、五层五檐、花岗岩石塔；艺术演绎的构件与构图参考，非测绘复原"
+        }
+      ]
+    },
+    {
+      "id": "kaiyuan-2",
+      "route": "双塔听石",
+      "title": "八角转面",
+      "asset": "public/references/ai/kaiyuan-2.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 3466371,
+      "sha256": "47e5aa27544384efb874d7bfc3bdbfbec68e85ea361d79e4a3239273b74a2853",
+      "prompt": "Use case: stylized-concept.\nAsset type: one original architectural observation image for a Chinese heritage exploration game, landscape 3:2, approximately 1536x1024, full bleed.\nPrimary request: a close low three-quarter architectural view of an octagonal gray granite stone pagoda inspired by the west tower of Kaiyuan Temple in Quanzhou. The teaching subject is the eight-sided tower's sharp changes of plane: show three adjacent flat stone faces meeting at clear vertical corners, each catching a different tone of daylight. Broad projecting stone eaves turn around these angled faces in crisp connected polygonal tiers. Show the lower three storeys prominently and allow the upper five-storey silhouette to recede; the near tower fills most of the frame. The tower must have masonry granite walls, not timber framing, with carved relief niches and stone brackets.\nComposition: close view from slightly below and off to one corner, enough perspective to make the angled planes unmistakable. Quiet green temple trees and a small stone courtyard remain secondary at the frame edges. Not a symmetrical head-on shot, not an aerial view, not two identical towers.\nStyle: original premium realistic 3D game environment art with a solemn ancient Chinese Buddhist atmosphere reminiscent of Black Myth Wukong. Weathered gray-beige granite, finely visible block joints, shallow carved reliefs, clear side daylight and readable shadows; no heavy fog hiding the edges.\nConstraints: one coherent image, no collage. No people, characters, creatures, text, labels, calligraphy, logos, watermark, interface, arrows, borders, black bars or blank margins. Not an official game screenshot or documentary photograph. Fill the entire landscape frame.",
+      "references": [
+        {
+          "url": "https://www.quanzhou.gov.cn/lyb/lswh/zdww/201510/t20151029_183313.htm",
+          "checked": "2026-11-05",
+          "used": "八角、五层五檐、花岗岩石塔；艺术演绎的构件与构图参考，非测绘复原"
+        }
+      ]
+    },
+    {
+      "id": "kaiyuan-3",
+      "route": "双塔听石",
+      "title": "石龛与层檐",
+      "asset": "public/references/ai/kaiyuan-3.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 3468973,
+      "sha256": "13df9e3aec2d47a939dfdb8e721a3129de65ce5ed27e7392f2c370544d908c66",
+      "prompt": "Use case: stylized-concept.\nAsset type: one original architectural observation image for a Chinese heritage exploration game. Landscape 3:2, approximately 1536x1024, full bleed.\nPrimary request: an intimate, very detailed architectural study of carved stone niches and projecting eaves on the eastern granite pagoda of Kaiyuan Temple, Quanzhou. Show TWO adjacent storeys of its octagonal stone facade at close range. Each storey has shallow recessed shrine niches holding weathered small Buddhist stone relief figures; above each row, broad projecting gray granite eaves with carved stone bracket supports cast a distinct horizontal shadow. Make the contrast between the outward projecting eaves and inward recessed niches immediately readable. Clearly show a turning corner to imply the eight-sided plan, but the focus is the relief niches and two horizontal eave tiers, NOT the full tower.\nComposition: tight three-quarter detail from a slightly upward view, frame filled with aged granite, carved reliefs, layered stone edges and joints; a thin glimpse of soft green trees or pale sky at an outer edge only. The stone figures are architectural reliefs, not living people. Clearly different composition from a whole tower or twin-tower aerial view.\nStyle: original premium cinematic realistic 3D environmental game art, solemn ancient Chinese architectural atmosphere associated with Black Myth Wukong, fine stone grain and subtle lichen, soft warm grazing light to reveal carving depth, well-exposed shadows.\nConstraints: not a documentary photograph or official game screenshot; no text, characters, calligraphy, signs, labels, numbers, arrows, logos, watermark, game UI, collage, frames, black bars or blank margins. No timber pagoda walls, no shiny gold figures, no modern elements. Full bleed landscape.",
+      "references": [
+        {
+          "url": "https://www.quanzhou.gov.cn/lyb/lswh/zdww/201510/t20151029_183313.htm",
+          "checked": "2026-11-05",
+          "used": "八角、五层五檐、花岗岩石塔；艺术演绎的构件与构图参考，非测绘复原"
+        }
+      ]
     }
   ]
 }

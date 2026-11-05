@@ -743,7 +743,7 @@ const SCENES = {
     theme: { sky: '#c2d5dc', fog: '#d4ccb7', sun: '#ffe0ad' } },
   shuilu: { build: shuiluTemple, points: [[0, 0, 15], [-16, 0, 0], [16, 0, 0]],
     theme: { sky: '#c4dce0', fog: '#c4d7c9', sun: '#ffe6c1' } },
-  kaiyuan: { build: kaiyuanTowers, points: [[0, 0, 4.5], [-16, 0, 0], [16, 0, 0]],
+  kaiyuan: { build: kaiyuanTowers, points: [[0, 0, 17], [-16, 0, 0], [16, 0, 0]],
     theme: { sky: '#b7d5e4', fog: '#cadbd7', sun: '#fff0ce' } },
 };
 

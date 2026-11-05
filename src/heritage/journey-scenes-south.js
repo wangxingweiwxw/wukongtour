@@ -266,26 +266,27 @@ export function kaiyuanTowers(b) {
   stonePagoda(b,10.2,-12.2,.94,1);
   // A calm axial garden links the paired towers without blocking the cross-path.
   b.path([[0,7],[0,-19]],3.4);
-  // A low, open mountain gate identifies the temple entrance. Stop 1 now sits
-  // here at [0, 0, 4.5]; the two tower-side stops keep their original positions.
+  // The gate belongs to the southern entrance, clear of both the z=0 tower
+  // cross-corridor and the z=7 approach path. Stop 1 sits in front at [0,0,17].
+  // The two towers and their side observation stops retain their positions.
   // No sill or platform spans the opening, and collision leaves a 2.38m-wide
   // centre passage after the scene's existing staff-clearance padding.
-  const gateZ=-2, gateFront=-.6;
+  const gateZ=12, gateFront=gateZ+1.4, gateBack=gateZ-1.4;
   for(const side of [-1,1]){
     const wingX=side*4.15;
     b.box(wingX,.2,gateZ,1.8,.4,2.8,C.stone[2]);
     b.box(wingX,1.8,gateZ,1.45,2.8,2.5,C.red,'wood');
     b.obstacle(wingX,gateZ,1.8,2.8,0,3.2);
-    for(const x of [side*3.2,side*5.1])for(const z of [gateFront,-3.4]){
+    for(const x of [side*3.2,side*5.1])for(const z of [gateFront,gateBack]){
       b.pillar(x,0,z,3.65,.48,true);
       b.obstacle(x,z,.72,.72,0,4.1);
     }
     // The timber leaves are held open alongside the jambs, not across the path.
     b.box(side*2.95,1.6,gateZ,.16,3.2,2.35,C.wood,'wood');
-    b.box(side*2.85,1.55,-1.1,.08,.24,.14,C.gold[1],'metal');
+    b.box(side*2.85,1.55,gateZ+.9,.08,.24,.14,C.gold[1],'metal');
     b.obstacle(side*2.95,gateZ,.16,2.35,0,3.2);
   }
-  for(const z of [gateFront,-3.4])b.box(0,4.05,z,10.9,.42,.55,C.wood,'wood');
+  for(const z of [gateFront,gateBack])b.box(0,4.05,z,10.9,.42,.55,C.wood,'wood');
   b.box(0,3.62,gateFront+.32,3.2,.7,.18,C.dark,'wood');
   addPlaqueFace(b.root,{text:'开元寺',position:[0,3.62,gateFront+.425],width:3.2,height:.7});
   b.roof(0,4.32,gateZ,12.6,5.3,1.45,C.roof);

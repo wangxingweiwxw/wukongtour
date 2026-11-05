@@ -32,6 +32,9 @@ export const REFERENCE_SIZES = {
   '/references/ai/xiaoxitian-3.png': [1536, 1024],
   '/references/ai/shuilu-2.png': [1536, 1024],
   '/references/ai/shuilu-3.png': [1536, 1024],
+  '/references/ai/kaiyuan-1.png': [1536, 1024],
+  '/references/ai/kaiyuan-2.png': [1536, 1024],
+  '/references/ai/kaiyuan-3.png': [1536, 1024],
 };
 
 export function setReferenceImage(viewport, image, source, description) {
