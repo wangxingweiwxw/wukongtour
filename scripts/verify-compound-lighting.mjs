@@ -79,12 +79,12 @@ for (const [difference, resolution] of [[after.x - before.x, sun.shadow.mapSize.
 }
 
 for (const mode of ['overview', 'inspect']) {
-  lighting.update({ active: true, mode });
+  lighting.update({ active: true, mode, world });
   verifyDirection();
-  assert.deepEqual(sun.target.position.toArray(), [0, 0, 0]);
-  assert.equal(camera.left, -70); assert.equal(camera.right, 70);
-  assert.equal(camera.top, 70); assert.equal(camera.bottom, -70);
-  assert.equal(camera.near, 1); assert.equal(camera.far, 180);
+  assert.ok(sun.target.position.toArray().every(Number.isFinite));
+  assert.ok(camera.right > 0 && camera.top > 0);
+  assert.equal(camera.left, -camera.right); assert.equal(camera.bottom, -camera.top);
+  assert.equal(camera.near, 1); assert.ok(camera.far > camera.near);
   for (const [x, , z] of corners) for (const y of [0, 1.8]) insideShadow([x, y, z], `${mode} playable corner`);
   for (const building of world.buildings) {
     for (const x of [building.bounds.min.x, building.bounds.max.x]) {
@@ -94,7 +94,7 @@ for (const mode of ['overview', 'inspect']) {
     }
   }
   sun.shadow.needsUpdate = false;
-  assert.equal(lighting.update({ active: true, mode }), false);
+  assert.equal(lighting.update({ active: true, mode, world }), false);
   assert.equal(sun.shadow.needsUpdate, false);
 }
 

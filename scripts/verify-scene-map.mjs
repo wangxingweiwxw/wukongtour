@@ -130,7 +130,8 @@ for (const [index, building] of compound.buildings.entries()) {
 assert.deepEqual(compoundMap.points, compound.walkRoute.map((point, index) => ({
   id: `compound-${index}`, name: point.name, position: point.position,
 })));
-assert.equal(compoundMap.points.filter(point => point.position[1] > 0).length, 2, 'indoor platforms retain their actual heights');
+assert.equal(compoundMap.points.filter(point => point.position[1] > 0).length,
+  compound.walkRoute.filter(point => point.position[1] > 0).length, 'raised courtyards and indoor platforms retain their actual heights');
 verifyProjection(compound.root, compoundMap);
 compoundMap.points[0].position[2] += 1;
 assert.notDeepEqual(compoundMap.points[0].position, compound.walkRoute[0].position);
@@ -189,4 +190,4 @@ for (const dimensions of [[16, 8, 12], [10, 24, 10], [5, 3, 19]]) {
 
 assert.throws(() => createSceneMapProjection({ root: new THREE.Group(), bounds: { minX: 0, maxX: 0, minZ: -1, maxZ: 1 } }), RangeError);
 
-console.log(`Scene map data and projections verified: ${JOURNEYS.length} journeys, 9 compound buildings, 12 walk stops including 2 indoor platforms, padded walkable boundaries and camera-aligned overlays; scaled/imported courtyard data has no live-state mutations.`);
+console.log(`Scene map data and projections verified: ${JOURNEYS.length} journeys, ${compound.buildings.length} compound buildings, ${compound.walkRoute.length} walk stops, padded walkable boundaries and camera-aligned overlays; scaled/imported courtyard data has no live-state mutations.`);

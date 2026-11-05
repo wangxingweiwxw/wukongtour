@@ -1,15 +1,16 @@
 import * as THREE from 'three';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { addPlaqueFace } from './architectural-plaque.js';
+import { COMPOUND_LAYOUT } from './compound-layout.js';
 
-// An authored, metre-scale Chinese architectural garden inspired by the supplied
-// videos. Names and layout are fictional; this is not a surveyed palace model.
+// Original metre-scale mountain courts interpreted from the supplied map.
+// Geometry and traversable metadata share the same authored placements.
 const P = {
-  stone: ['#b2aa98', '#c2b7a2', '#9e9b8e', '#cec2ac'],
+  stone: ['#a7adb0', '#bcc3c5', '#899397', '#d7dcda'],
   wood: ['#634634', '#805a40', '#a08058', '#42362b'],
   roof: ['#5b605c', '#71756c', '#969589', '#48514e'],
-  leaf: ['#718247', '#8c9954', '#a5aa60', '#536b3e'],
-  red: '#934e3b', plaster: '#c2ad8e', gold: '#bba06a', dark: '#35423d',
+  leaf: ['#475952', '#61736b', '#81908a', '#384c46'],
+  red: '#824436', plaster: '#b4afa4', gold: '#bba06a', dark: '#35423d',
   brick: ['#88513e', '#774535', '#9a624a', '#a27354'], moss: ['#69794b', '#859157'],
 };
 // Body clearance, rather than the decorative staff's full span. Narrow open
@@ -148,7 +149,7 @@ class Mason {
   roof(x, y, z, w, d, rise = 2.1, colors = P.roof, layer = 'roof') {
     // A curved tiled shell replaces stacked flat slabs. Raised tile runs follow
     // the actual concave slope, while the four hip seams lift into flying eaves.
-    const rows = 10, ribs = Math.max(10, Math.round(w / .66));
+    const rows = 9, ribs = Math.max(10, Math.round(w / .78));
     const height = (t, edge) => y + rise * Math.pow(t, 1.72) + .2 * Math.pow(1 - t, 8)
       + .72 * Math.pow(Math.abs(edge), 8) * Math.pow(1 - t, 3);
     const face = (u, t, side) => [x + u * w / 2 * (1 - .3 * t), height(t, u), z + side * d / 2 * (1 - .95 * t)];
@@ -176,6 +177,13 @@ class Mason {
           const u0 = -1 + col / 6, u1 = -1 + (col + 1) / 6;
           this.quad(face(u0, t0, side), face(u1, t0, side), face(u1, t1, side), face(u0, t1, side), colors[(row + col) % 4], layer);
           this.quad(hip(u0, t0, side), hip(u1, t0, side), hip(u1, t1, side), hip(u0, t1, side), colors[(row + col + 1) % 4], layer);
+          // Thin snow caught toward the ridge follows the curved tile surface;
+          // exposed lower courses retain the gray roof's architectural outline.
+          if (row >= 5 && (row + col * 3 + side) % 5 !== 0) {
+            const snowy = [face(u0, t0, side), face(u1, t0, side), face(u1, t1, side), face(u0, t1, side)]
+              .map(([xx, yy, zz]) => [xx, yy + .055, zz]);
+            this.quad(...snowy, row % 2 ? '#e0e5e3' : '#edf0eb', layer);
+          }
         }
         for (let i = 0; i <= ribs; i++) {
           const u = -1 + 2 * i / ribs, a = face(u, t0, side), b = face(u, t1, side);
@@ -329,8 +337,8 @@ class Mason {
   }
 }
 
-function buildGate(world) {
-  const b = new Mason(world, 'gate', '承风门', '三开间山门，中央门道前后贯通；登楼形制仅作风格化表达。');
+function buildGate(world, {id = 'gate', name = '雪岭山门'} = {}) {
+  const b = new Mason(world, id, name, '三开间重檐山门，中央门道前后贯通。穿门后沿雪石中轴继续登台，楼层仅作外形表达。');
   const z = 30, height = 5.4;
   for (const side of [-1, 1]) {
     b.solid(side * 8, height / 2, z, 6, height, 7.5, P.red);
@@ -407,28 +415,29 @@ function buildHall(world, { id, name, description, x, z, w, d, height, major = f
     [x, base + height / 2 + 1, z], [-1, 1].map(side => [x + side * ((w + 2) / 2 + 3.7), 0, z]));
 }
 
-function buildGallery(world, side) {
-  const x = side * 18, z0 = -22, z1 = 22, width = 8;
-  const b = new Mason(world, side < 0 ? 'west-gallery' : 'east-gallery', side < 0 ? '西回廊' : '东回廊',
-    '南北贯通的开放回廊。连续柱网、梁枋与灰瓦把前庭和后院连接起来。');
+function buildGallery(world, side, {id, name, length = 24, width = 7} = {}) {
+  const x = side * 18, z0 = -length / 2, z1 = length / 2;
+  const b = new Mason(world, id, name,
+    '位于中层台地的开放经廊。连续柱梁连接偏殿与登山石阶，四面留出可穿行的柱间。');
   // Posts along the margins leave over 4m even after held-staff padding.
-  for (let z = z0; z <= z1; z += 5.5) {
+  for (let bay = 0; bay <= 8; bay++) {
+    const z = z0 + bay * length / 8;
     for (const sign of [-1, 1]) {
       // Main-hall stairs arrive at the inner central bay. The outer post next
       // to each side hall shifts behind its doorway to keep the route open.
       const inner = sign === -side;
       if (inner && z === 0) continue;
-      const postZ = !inner && z === -5.5 ? -8 : z;
+      const postZ = z;
       b.column(x + sign * width / 2, postZ, 0, 3.7, .35, false);
     }
     b.box(x, 3.8, z, width + .35, .28, .35, P.wood[1]);
   }
-  for (const sign of [-1, 1]) b.box(x + sign * width / 2, 3.8, 0, .3, .3, 45, P.wood[0]);
+  for (const sign of [-1, 1]) b.box(x + sign * width / 2, 3.8, 0, .3, .3, length + 1, P.wood[0]);
   // Continuous lengthwise gable in stepped courses, separate from supporting frame.
   for (let row = 0; row < 7; row++) {
     const t = row / 6, rw = width + 2 - t * (width + 1.6), yy = 4 + 1.5 * Math.pow(t, 1.7) + .2 * Math.pow(1 - t, 8);
-    b.box(x, yy, 0, rw, .23, 46, P.roof[row % 4], 'roof');
-    for (let z = -22.7; z < 23; z += 1.1) for (const sign of [-1, 1]) {
+    b.box(x, yy, 0, rw, .23, length + 2, row > 4 ? '#e1e6e3' : P.roof[row % 4], 'roof');
+    for (let z = z0 - .7; z < z1 + 1; z += 1.1) for (const sign of [-1, 1]) {
       if (row < 6) {
         const next = (row + 1) / 6, nextWidth = width + 2 - next * (width + 1.6);
         const nextY = 4 + 1.5 * Math.pow(next, 1.7) + .2 * Math.pow(1 - next, 8);
@@ -437,11 +446,11 @@ function buildGallery(world, side) {
       if (row === 0 && Math.round((z + 22.7) / 1.1) % 2 === 0) b.tileEnd(x + sign * (rw / 2 + .06), yy + .08, z, .13, Math.PI / 2);
     }
   }
-  b.box(x, 5.7, 0, .35, .22, 46.5, P.roof[1], 'roof');
-  for (const zz of [-22.2, 22.2]) b.ridgeBeast(x, 5.8, zz, 1, .55);
-  for (let z = -21; z < 22; z += 1.5) b.box(x, .015, z, 5.6, .03, 1.43, P.stone[(Math.round(z) + 24) % 4]);
-  for (const end of [-1, 1]) b.plaque(x, 3.4, end * 22.75, 2.8, .6, end);
-  b.finish([x, 0, 24.5], [x, 0, 7], { minX: x - 3.7, maxX: x + 3.7, minZ: z0, maxZ: z1 }, [x, 2.8, 0]);
+  b.box(x, 5.7, 0, .35, .22, length + 2.5, P.roof[1], 'roof');
+  for (const zz of [z0 - .2, z1 + .2]) b.ridgeBeast(x, 5.8, zz, 1, .55);
+  for (let z = z0 + 1; z < z1; z += 1.5) b.box(x, .015, z, width - 2.4, .03, 1.43, P.stone[(Math.round(z) + 100) % 4]);
+  for (const end of [-1, 1]) b.plaque(x, 3.4, end * (length / 2 + .75), 2.8, .6, end);
+  b.finish([x, 0, z1 + 2.5], [x, 0, 7], { minX: x - width / 2, maxX: x + width / 2, minZ: z0, maxZ: z1 }, [x, 2.8, 0]);
 }
 
 function buildPavilion(world, { id, name, x, z, w, d, double = false }) {
@@ -458,9 +467,9 @@ function buildPavilion(world, { id, name, x, z, w, d, double = false }) {
     { minX: x - w / 2, maxX: x + w / 2, minZ: z - d / 2, maxZ: z + d / 2 }, [x, 3, z]);
 }
 
-function buildPagoda(world) {
+function buildPagoda(world, {id = 'east-pagoda', name = '照雪塔'} = {}) {
   const x = 30, z = -32;
-  const b = new Mason(world, 'east-pagoda', '听松塔', '三层八角木塔的风格化演绎。首层敞开，环绕观察层层出檐与木构比例。');
+  const b = new Mason(world, id, name, '上院东侧的三层八角木塔。首层四面石阶可入内，塔檐呼应后山大殿，楼上仅供外部观察。');
   b.platform(x, z, 12, 12, 8, 6);
   for (const xx of [-4.7, 4.7]) for (const zz of [-4.7, 4.7]) b.column(x + xx, z + zz, PLATFORM, 4.2, .5);
   for (const side of [-1, 1]) {
@@ -509,237 +518,137 @@ function buildPagoda(world) {
 }
 
 function landscaping(world) {
-  const b = new Mason(world, null);
-  b.box(0, -.65, 0, 270, 1.2, 270, '#78845b', 'ground');
-  b.box(0, -.11, 0, 89, .2, 97, '#827d6d', 'ground');
-  const inGarden = (x, z) => (Math.abs(x) > 25 && z > 10 && z < 24)
-    || (Math.abs(x) > 8.8 && Math.abs(x) < 12.2 && z > 16 && z < 23)
-    || (Math.abs(x) > 6 && Math.abs(x) < 12 && z < -22 && z > -28);
-  const paving = ['#b7af9e', '#bab19f', '#afa997', '#c1b7a4', '#b1aa99', '#c7bda9'];
-  // Metre-scale, staggered flagstones replace the two-metre checkerboard.
-  // Each slab is a top face, not a hidden six-sided box: all floor tops remain
-  // exactly y=0 and the original stair heights/collision surfaces remain valid.
-  const rowDepth = .86, slabWidth = 1.26;
-  for (let row = 0; row < 112; row++) {
-    const z0 = -48 + row * rowDepth, z1 = Math.min(48, z0 + rowDepth - .018);
-    for (let col = -1; col < 71; col++) {
-      const x0 = Math.max(-44, -44 + col * slabWidth + (row % 2) * slabWidth / 2);
-      const x1 = Math.min(44, -44 + (col + 1) * slabWidth + (row % 2) * slabWidth / 2 - .022);
-      if (x1 <= x0) continue;
-      const x = (x0 + x1) / 2, z = (z0 + z1) / 2, garden = inGarden(x, z);
-      const color = garden ? ['#747f50', '#7d8656', '#72764e'][Math.floor(world.random() * 3)]
-        : paving[Math.floor(world.random() * paving.length)];
-      const nick = !garden && world.random() < .16 ? .035 + world.random() * .07 : 0;
-      b.quad([x0 + nick, 0, z0], [x1, 0, z0], [x1 - nick, 0, z1], [x0, 0, z1], color, 'ground');
-      // Moss lives at planting beds and aged wall edges. The central approach
-      // stays quiet enough to read the route and the player's feet clearly.
-      const edge = Math.abs(x) > 38 || inGarden(x - 1.25, z) || inGarden(x + 1.25, z)
-        || inGarden(x, z - .9) || inGarden(x, z + .9);
-      if (!garden && edge && world.random() < .28) {
-        const mw = .15 + world.random() * .35, md = .08 + world.random() * .18;
-        b.quad([x0, .003, z0], [x0 + mw, .003, z0], [x0 + mw * .76, .003, z0 + md],
-          [x0, .003, z0 + md * 1.5], P.moss[row % 2], 'ground');
+  const b = new Mason(world), {bounds, terraces, stairways} = COMPOUND_LAYOUT;
+  const width = bounds.maxX - bounds.minX;
+  const floorAt = z => terraces.find(t => z >= t.minZ && z <= t.maxZ)?.height || 0;
+  for (const terrace of terraces) {
+    const depth = terrace.maxZ - terrace.minZ, z = (terrace.maxZ + terrace.minZ) / 2;
+    world.surface(0, z, width, depth, terrace.height);
+    const slabTop = terrace.height - .025;
+    b.box(0, (slabTop - .5) / 2, z, width, slabTop + .5, depth, P.stone[2], 'ground');
+    // Broad staggered stone slabs read as a courtyard, with quiet central paths.
+    for (let zz = terrace.minZ; zz < terrace.maxZ; zz += 1.3) {
+      const row = Math.round((zz - terrace.minZ) / 1.3);
+      for (let xx = bounds.minX; xx < bounds.maxX; xx += 1.9) {
+        const x1 = Math.min(bounds.maxX, xx + 1.88), z1 = Math.min(terrace.maxZ, zz + 1.28);
+        const color = P.stone[(row + Math.floor((xx + 48) / 1.9)) % 4];
+        b.quad([xx, terrace.height, zz], [x1, terrace.height, zz],
+          [x1, terrace.height, z1], [xx, terrace.height, z1], color, 'ground');
+        if (Math.abs(xx) > 39 && world.random() > .35) {
+          b.quad([xx, terrace.height + .012, zz], [x1, terrace.height + .012, zz],
+            [x1 - .18, terrace.height + .012, z1], [xx, terrace.height + .012, z1 - .12], '#e6eae6', 'ground');
+        }
       }
-      if (!garden && Math.abs(x) < 6 && world.random() < .045) {
-        // A flush dark hairline across occasional slabs, not an obstacle.
-        b.quad([x0 + .3, .002, z0], [x0 + .315, .002, z0],
-          [x0 + .65, .002, z1], [x0 + .63, .002, z1], '#8c887a', 'ground');
+    }
+    if (terrace.height) {
+      for (let x = -46; x < 48; x += 2.1) {
+        b.box(x, terrace.height / 2, terrace.maxZ + .04, 2.02, terrace.height - .05, .12, P.stone[1], 'ground');
       }
     }
   }
-  // Perimeter walls break at both axial exits so spawn and rear garden remain open.
-  for (const side of [-1, 1]) {
-    b.solid(side * 44, 1.3, 0, .65, 2.6, 96, P.red);
-    b.box(side * 44, 2.7, 0, 1.05, .23, 96, P.roof[0]);
-    b.box(side * 43.62, .32, 0, .14, .64, 96, P.stone[2]);
-    for (const end of [-1, 1]) {
-      b.solid(side * 26, 1.3, end * 46, 36, 2.6, .65, P.red);
-      b.box(side * 26, 2.7, end * 46, 36, .23, 1.05, P.roof[1]);
-      b.box(side * 26, .32, end * 45.62, 36, .64, .14, P.stone[2]);
-      for (let x = 8.5; x < 44; x += 1.1) {
-        b.box(side * x, .66, end * 45.56, 1.02, .17, .21, P.stone[Math.floor(x) % 4]);
-        b.box(side * x, 2.83, end * 46, .13, .13, 1.16, P.roof[2]);
-      }
+  for (const stair of stairways) {
+    const count = Math.round((stair.to - stair.from) / STEP);
+    for (let level = 1; level <= count; level++) {
+      const height = stair.from + level * STEP;
+      const z = stair.z + (count - level) * TREAD + TREAD / 2;
+      b.box(stair.x, stair.from + (height - stair.from) / 2, z,
+        stair.width, height - stair.from, TREAD, P.stone[level % 4], 'ground');
+      world.surface(stair.x, z, stair.width, TREAD, height);
+      for (const side of [-1, 1]) b.box(stair.x + side * (stair.width / 2 - .22),
+        height + .018, z, .35, .036, TREAD * .8, '#e4e9e7', 'ground');
     }
-  }
-  function tree(x, z, scale, autumn = false, inBounds = true) {
-    const height = 6.1 * scale, palette = autumn ? ['#858e49', '#a1a354', '#b5ae64', '#697d42'] : P.leaf;
-    const lean = (.35 + world.random() * .45) * scale;
-    b.beam([x, 0, z], [x + lean, height, z + .16 * scale], .68 * scale, P.wood[0], 'nature');
-    b.beam([x - .16 * scale, .18, z + .12 * scale], [x + lean - .18 * scale, height * .83, z], .17 * scale, P.wood[1], 'nature');
-    // Three asymmetric boughs carry broad, stepped clusters. Small peripheral
-    // cells and narrower vertical crowns avoid the old floating-cube canopy.
-    for (let lobe = 0; lobe < 3; lobe++) {
-      const angle = lobe * 2.25 + x * .17, reach = (1.35 + lobe * .28) * scale;
-      const lx = x + lean + Math.cos(angle) * reach, lz = z + Math.sin(angle) * reach;
-      const ly = height + (lobe === 1 ? .85 : -.2) * scale;
-      b.beam([x + lean * .65, height * .62, z], [lx, ly - .4 * scale, lz], .26 * scale, P.wood[1], 'nature');
-      for (let ix = -1; ix <= 1; ix++) for (let iz = -1; iz <= 1; iz++) {
-        const edge = Math.abs(ix) + Math.abs(iz), step = .78 * scale;
-        const top = ly + (edge === 0 ? .65 : edge === 1 ? .36 : -.02) * scale + world.random() * .25 * scale;
-        b.box(lx + ix * step, top, lz + iz * step, (1.02 + world.random() * .18) * scale,
-          (.72 + world.random() * .28) * scale, (1.02 + world.random() * .18) * scale, palette[(ix + iz + lobe + 6) % 4], 'nature');
-        if (edge === 2 && (ix + iz + lobe) % 2 === 0) b.box(lx + ix * step * 1.65, top - .32 * scale,
-          lz + iz * step * 1.45, .58 * scale, .48 * scale, .56 * scale, palette[lobe], 'nature');
-      }
-    }
-    if (inBounds) world.obstacle(x, height / 2, z, 1.15 * scale, height, 1.15 * scale);
-  }
-  function lantern(x, z, scale = 1) {
-    const stone = (xx, yy, zz, w, h, d, color) => b.box(x + xx * scale, yy * scale, z + zz * scale,
-      w * scale, h * scale, d * scale, color);
-    stone(0, .1, 0, 1.04, .2, 1.04, P.stone[2]);
-    stone(0, .26, 0, .8, .16, .8, P.stone[1]);
-    stone(0, .68, 0, .38, .72, .38, P.stone[0]);
-    stone(0, 1.07, 0, .76, .17, .76, P.stone[1]);
-    stone(0, 1.37, 0, .42, .45, .42, '#5d6153');
-    for (const sx of [-1, 1]) for (const sz of [-1, 1]) stone(sx * .27, 1.36, sz * .27, .16, .45, .16, P.stone[3]);
-    stone(0, 1.65, 0, 1.08, .16, 1.08, P.stone[1]);
-    stone(0, 1.79, 0, .76, .13, .76, P.stone[0]);
-    stone(0, 1.94, 0, .36, .18, .36, P.stone[3]);
-    stone(-.33, .24, .42, .28, .09, .04, P.moss[0]);
-    world.obstacle(x, scale, z, 1.08 * scale, 2.05 * scale, 1.08 * scale);
-  }
-  function shortRail(x, z, length) {
-    // Short sections frame planting beds; none cross a door or the central axis.
-    b.box(x, .11, z, length + .5, .22, .56, P.stone[2]);
-    for (let i = 0; i <= 2; i++) {
-      const xx = x - length / 2 + i * length / 2;
-      b.box(xx, .61, z, .28, 1, .32, P.stone[i % 4]);
-      b.box(xx, 1.14, z, .46, .16, .48, P.stone[1]);
-      b.box(xx, 1.3, z, .25, .18, .27, P.stone[3]);
-    }
-    b.box(x, .88, z, length, .18, .27, P.stone[1]);
-    b.box(x, .43, z, length, .15, .23, P.stone[0]);
-    world.obstacle(x, .72, z, length + .5, 1.44, .56);
-  }
-  function rock(x, z, scale = 1) {
-    b.box(x, .21 * scale, z, .94 * scale, .42 * scale, .75 * scale, P.stone[2], 'nature');
-    b.box(x - .14 * scale, .48 * scale, z + .05 * scale, .67 * scale, .2 * scale, .62 * scale, P.stone[0], 'nature');
-    b.box(x - .29 * scale, .61 * scale, z, .33 * scale, .08 * scale, .46 * scale, P.moss[0], 'nature');
-    world.obstacle(x, .33 * scale, z, .94 * scale, .66 * scale, .75 * scale);
-  }
-  function shrubs(cx, cz, w, d, count) {
-    for (let i = 0; i < count; i++) {
-      const x = cx + (world.random() - .5) * w, z = cz + (world.random() - .5) * d;
-      const s = .25 + world.random() * .38;
-      b.box(x, s * .36, z, s * 1.25, s * .72, s, P.leaf[i % 4], 'nature');
-      if (i % 3 === 0) b.box(x + s * .3, s * .75, z, s * .5, s * .35, s * .6, P.leaf[(i + 1) % 4], 'nature');
+    // Stone cheeks sit outside the stair width; every tread retains an open centre.
+    for (const side of [-1, 1]) for (let level = 0; level <= count; level += 2) {
+      const z = stair.z + (count - level) * TREAD;
+      const floor = stair.from + Math.max(1, level) * STEP;
+      b.box(stair.x + side * (stair.width / 2 + .65), floor + .45, z, .5, .9, .5, P.stone[1]);
+      world.obstacle(stair.x + side * (stair.width / 2 + .65), floor + .45, z, .5, .9, .5);
     }
   }
   for (const side of [-1, 1]) {
-    for (const [x, z, s] of [[33, 18, 1.1], [39, 10, .85], [10, -24, .9], [40, -37, .95], [39, 35, 1], [11.1, 22.2, 1.12]]) tree(side * x, z, s, z > 10);
-    // The front pair already has staff-safe trunk proxies at (+/-11.1,22.2).
-    // Lean secondary boughs over the garden, leaving over 4m physical headroom
-    // and framing the main hall from the gate without moving a route obstacle.
-    for (const [cx, cz, cy] of [[7.3, 21.1, 5.65], [9.3, 24.2, 6.25]]) {
-      b.beam([side * 11.1, 4.1, 22.2], [side * cx, cy - .3, cz], .28, P.wood[1], 'nature');
-      for (let ix = -1; ix <= 1; ix++) for (let iz = -1; iz <= 1; iz++) {
-        const edge = Math.abs(ix) + Math.abs(iz);
-        b.box(side * (cx + ix * .95), cy + (2 - edge) * .23, cz + iz * .85,
-          1.24, .7, 1.12, P.leaf[(ix + iz + 6) % 4], 'nature');
+    for (const t of terraces) {
+      const depth = t.maxZ - t.minZ, z = (t.maxZ + t.minZ) / 2;
+      b.solid(side * 47.2, t.height + 1.1, z, .65, 2.2, depth, P.red);
+      b.box(side * 47.2, t.height + 2.25, z, 1.1, .2, depth, P.roof[0]);
+      b.box(side * 47.2, t.height + 2.38, z, 1.05, .08, depth, '#e7ebe7');
+    }
+    for (const z of [66, 38, 19, -10, -28, -48, -63]) {
+      const x = side * (43 + world.random()), base = floorAt(z), height = 6.5 + world.random() * 2;
+      b.beam([x, base, z], [x + side * .55, base + height, z], .55, P.wood[0], 'nature');
+      world.obstacle(x, base + height / 2, z, .75, height, .75);
+      for (let crown = 0; crown < 3; crown++) {
+        const cy = base + height - crown * 1.35, reach = 1.5 + crown * .65;
+        b.beam([x, cy - 1, z], [x + side * reach, cy, z + .8], .2, P.wood[1], 'nature');
+        b.box(x + side * .4, cy, z, reach * 2.2, .5, reach * 1.5, P.leaf[crown], 'nature');
+        b.box(x + side * .6, cy + .29, z, reach * 1.8, .1, reach * 1.2, '#dfe6e2', 'nature');
       }
     }
-    for (let z = -55; z < 60; z += 12) tree(side * (51 + world.random() * 5), z, 1 + world.random() * .65, false, false);
-    shrubs(side * 33, 17, 12, 10, 85);
-    shrubs(side * 10.5, 20.1, 2.4, 4.5, 36);
-    shrubs(side * 9, -25, 4.5, 4.5, 30);
-    for (const z of [18, -17]) lantern(side * 7.8, z);
-    lantern(side * 25.2, 24.6, .86);
-    shortRail(side * 10.6, 15.1, 2.8);
-    shortRail(side * 33.5, 24, 4.6);
-    rock(side * 10.5, 19.7, .95);
-    rock(side * 38.5, 18.4, 1.3);
-    // Low fragments at the planting edge remain outside the staff-safe route.
-    for (let i = 0; i < 6; i++) {
-      const x = side * (9.1 + world.random() * 2.5), z = 17 + world.random() * 4.8;
-      b.box(x, .035, z, .22 + world.random() * .28, .07, .22 + world.random() * .25, P.stone[i % 4], 'nature');
-    }
-    // Paired original stone guardians give the main stairs a human-scale frame.
-    const gx = side * 10.2, gz = 10.6;
-    b.box(gx, .18, gz, 1.02, .36, 1.14, P.stone[1]);
-    b.box(gx, .64, gz, .6, .58, .69, P.stone[0]);
-    b.box(gx, 1.03, gz + .19, .52, .4, .5, P.stone[2]);
-    b.box(gx, 1.08, gz + .47, .34, .2, .19, P.stone[1]);
-    for (const paw of [-1, 1]) b.box(gx + paw * .2, .48, gz + .43, .21, .24, .34, P.stone[3]);
-    b.box(gx, .87, gz - .37, .25, .52, .23, P.stone[0]);
-    world.obstacle(gx, .65, gz, 1.02, 1.3, 1.18);
-  }
-  // Quiet garden pool below the west pavilion, with edging outside passage.
-  b.box(-31, -.015, -21, 9.5, .03, 5.5, '#6f9790', 'ground');
-  for (const side of [-1, 1]) b.solid(-31 + side * 5.1, .2, -21, .55, .4, 6.1, P.stone[0]);
-  for (const side of [-1, 1]) b.solid(-31, .2, -21 + side * 3.05, 10.7, .4, .55, P.stone[0]);
-  // Each mountain is one solid elliptical heightfield, not separate columns.
-  // Broad shoulders support two or three uneven summits; exterior-only voxel
-  // faces reveal 1.6m rock courses without hidden faces or stacked box bases.
-  const mountainPalettes = [['#7c8d89', '#879590', '#929e96', '#74857e'],
-    ['#90a29c', '#9bacA3', '#a5b3a9', '#899c93']];
-  const cell = 1.7, rockStep = 1.6;
-  for (let ring = 1; ring >= 0; ring--) {
-    const count = ring ? 10 : 12;
-    for (let i = 0; i < count; i++) {
-      const angle = i * Math.PI * 2 / count + ring * .21, radius = 83 + ring * 31 + world.random() * 7;
-      const x = Math.sin(angle) * radius, z = Math.cos(angle) * radius;
-      const peak = Math.round((22 + world.random() * 10) / rockStep) * rockStep;
-      const nx = 9 + Math.floor(world.random() * 4), nz = 7 + Math.floor(world.random() * 3);
-      const phase = world.random() * Math.PI * 2, palette = mountainPalettes[ring];
+    // Asymmetric close mountain walls define the long valley without occupying
+    // walkable court space. Solid heightfields avoid disconnected rock columns.
+    for (let mountain = 0; mountain < 5; mountain++) {
+      const cx = side * (63 + world.random() * 7), cz = 70 - mountain * 36 + side * 4;
+      const nx = 11, nz = 15, cell = 2.35, peak = 35 + world.random() * 26;
       const heights = new Float32Array(nx * nz);
-      const summits = [[-.37, -.08, .55], [.3, .2, .48], [.02, -.42, i % 3 ? .32 : 0]];
-      let maximum = 0;
       for (let ix = 0; ix < nx; ix++) for (let iz = 0; iz < nz; iz++) {
-        const u = ((ix + .5) / nx - .5) * 2, v = ((iz + .5) / nz - .5) * 2;
-        const radius2 = u * u + v * v;
-        if (radius2 >= 1) continue;
-        const shoulder = .5 * Math.pow(1 - radius2, .6);
-        let summit = 0;
-        for (const [px, pz, amplitude] of summits) summit = Math.max(summit,
-          amplitude * Math.exp(-((u - px) ** 2 / .12 + (v - pz) ** 2 / .2)));
-        const weathering = .035 * Math.sin(ix * 2.7 + iz * 1.3 + phase)
-          + .025 * Math.cos(ix * 1.1 - iz * 2.3 + phase);
-        const value = Math.max(.04, shoulder + summit + weathering);
-        heights[ix * nz + iz] = value;
-        maximum = Math.max(maximum, value);
+        const u = (ix + .5) / nx * 2 - 1, v = (iz + .5) / nz * 2 - 1;
+        const r = u * u + v * v;
+        if (r < 1) heights[ix * nz + iz] = Math.max(2, Math.round(peak * Math.pow(1 - r, .58)
+          * (.8 + .2 * Math.sin(ix * .63 + mountain)) / 1.5) * 1.5);
       }
-      for (let k = 0; k < heights.length; k++) {
-        if (heights[k] > 0) heights[k] = Math.max(rockStep, Math.round(heights[k] / maximum * peak / rockStep) * rockStep);
-      }
-      const at = (ix, iz) => ix < 0 || ix >= nx || iz < 0 || iz >= nz ? 0 : heights[ix * nz + iz];
+      const at = (ix, iz) => ix < 0 || iz < 0 || ix >= nx || iz >= nz ? 0 : heights[ix * nz + iz];
       for (let ix = 0; ix < nx; ix++) for (let iz = 0; iz < nz; iz++) {
-        const height = at(ix, iz);
-        if (!height) continue;
-        const x0 = x + (ix - nx / 2) * cell, x1 = x0 + cell;
-        const z0 = z + (iz - nz / 2) * cell, z1 = z0 + cell;
-        const moss = height < peak * .6 && (ix * 3 + iz + i) % 5 < 2;
-        const topColor = moss ? (ring ? '#8b9d84' : '#74865e') : palette[(ix + iz + i) % 3];
-        b.quad([x0, height, z0], [x1, height, z0], [x1, height, z1], [x0, height, z1], topColor, 'distant');
-        // Only the difference above an adjacent column is exposed. All omitted
-        // faces are internal solid rock; no independent thin shafts remain.
+        const y = at(ix, iz); if (!y) continue;
+        const x0 = cx + (ix - nx / 2) * cell, x1 = x0 + cell;
+        const z0 = cz + (iz - nz / 2) * cell, z1 = z0 + cell;
+        b.quad([x0, y, z0], [x1, y, z0], [x1, y, z1], [x0, y, z1],
+          y > peak * .5 ? '#dce2de' : '#929e9e', 'distant');
         for (const [dx, dz] of [[-1, 0], [1, 0], [0, -1], [0, 1]]) {
-          const low = at(ix + dx, iz + dz);
-          if (low >= height) continue;
-          for (let y0 = low; y0 < height - .01; y0 += rockStep * 2) {
-            const y1 = Math.min(height, y0 + rockStep * 2);
-            const stratum = (Math.floor(y0 / (rockStep * 2)) + ix * 2 + iz + i) % 7;
-            const color = palette[stratum === 0 ? 2 : stratum === 1 ? 3 : 1];
-            if (dx) {
-              const xx = dx < 0 ? x0 : x1;
-              b.quad([xx, y0, z0], [xx, y0, z1], [xx, y1, z1], [xx, y1, z0], color, 'distant', [dx, 0, 0]);
-            } else {
-              const zz = dz < 0 ? z0 : z1;
-              b.quad([x0, y0, zz], [x1, y0, zz], [x1, y1, zz], [x0, y1, zz], color, 'distant', [0, 0, dz]);
-            }
+          const low = at(ix + dx, iz + dz); if (low >= y) continue;
+          const color = ['#6e7c80', '#849195', '#a0aaa9'][(ix + iz + mountain) % 3];
+          if (dx) {
+            const xx = dx < 0 ? x0 : x1;
+            b.quad([xx, low, z0], [xx, low, z1], [xx, y, z1], [xx, y, z0], color, 'distant', [dx, 0, 0]);
+          } else {
+            const zz = dz < 0 ? z0 : z1;
+            b.quad([x0, low, zz], [x1, low, zz], [x1, y, zz], [x0, y, zz], color, 'distant', [0, 0, dz]);
           }
         }
       }
     }
   }
-  for (let i = 0; i < 11; i++) {
-    const a = i * 2.4, x = Math.sin(a) * 71, z = Math.cos(a) * 71, y = 24 + (i % 4) * 2.8;
-    b.box(x, y, z, 10, 2, 4.2, '#fff4df', 'cloud');
-    b.box(x - 2, y + 1.2, z, 5, 2, 4, '#fff8e9', 'cloud');
-    b.box(x + 4, y + .6, z + .3, 5, 1.5, 3.8, '#f5eddd', 'cloud');
-  }
   b.finish();
+}
+
+// Each single building remains a reusable local model. One placement translates
+// the visible group and all physics/navigation metadata into world coordinates.
+function appendBuilding(world, spec) {
+  const local = new Compound();
+  let origin = [0, 0, 0];
+  if (spec.type === 'gate') {buildGate(local, spec); origin = [0, 0, 30];}
+  else if (spec.type === 'hall') buildHall(local, {...spec, x: 0, z: 0,
+    description: spec.major ? '上院中轴大殿，重檐高起、四面石阶。可穿过前后门及侧门观察高大柱梁。'
+      : '中院偏殿，石台抬高于院地，前后及两侧石阶连接经廊与偏院。'});
+  else if (spec.type === 'gallery') {buildGallery(local, spec.side, spec); origin = [spec.side * 18, 0, 0];}
+  else if (spec.type === 'pagoda') {buildPagoda(local, spec); origin = [30, 0, -32];}
+  else buildPavilion(local, {...spec, x: 0, z: 0});
+  const offset = new THREE.Vector3(spec.x - origin[0], spec.base, spec.z - origin[2]);
+  const point = p => [p[0] + offset.x, p[1] + offset.y, p[2] + offset.z];
+  const rect = r => ({...r, minX: r.minX + offset.x, maxX: r.maxX + offset.x,
+    minZ: r.minZ + offset.z, maxZ: r.maxZ + offset.z});
+  const building = local.buildings[0];
+  building.root.position.copy(offset);
+  building.root.updateMatrixWorld(true);
+  building.bounds.translate(offset);
+  for (const key of ['entry', 'interior', 'viewTarget']) building[key] = point(building[key]);
+  building.sideEntries = building.sideEntries.map(point);
+  building.floorBounds = rect(building.floorBounds);
+  building.placement = {x: spec.x, y: spec.base, z: spec.z};
+  world.root.add(building.root);
+  world.buildings.push(building);
+  world.colliders.push(...local.colliders.map(c => ({...rect(c), minY: c.minY + offset.y, maxY: c.maxY + offset.y})));
+  world.surfaces.push(...local.surfaces.map(s => ({...rect(s), height: s.height + offset.y})));
+  world.cameraBounds.push(...local.cameraBounds.map(box => box.clone().translate(offset)));
+  world.cameraObstacles.push(...local.cameraObstacles.map(c => ({...c, box: c.box.clone().translate(offset)})));
 }
 
 /** All positions and boxes use metres in world space. Colliders include body
@@ -749,38 +658,33 @@ function landscaping(world) {
  * for selecting it in the architecture viewer. No external assets are loaded.
  */
 export function createCompoundScene() {
-  const world = new Compound();
+  const world = new Compound(), layout = COMPOUND_LAYOUT;
   landscaping(world);
-  buildGate(world);
-  buildHall(world, { id: 'main-hall', name: '明德殿', description: '中轴主殿。0.72米台基、四面石阶、通透柱网与双层出檐，可从前后门与侧门入内观察梁架。',
-    x: 0, z: 0, w: 22, d: 14, height: 5.8, major: true });
-  buildGallery(world, -1);
-  buildGallery(world, 1);
-  for (const side of [-1, 1]) buildHall(world, { id: side < 0 ? 'west-hall' : 'east-hall',
-    name: side < 0 ? '西静堂' : '东文轩', description: '四面石阶与侧门相连的偏殿。灰瓦、朱柱与木格窗围出尺度亲切的室内空间。',
-    x: side * 31, z: -5, w: 14, d: 10, height: 4.2 });
-  buildPavilion(world, { id: 'rear-pavilion', name: '望山亭', x: 0, z: -34, w: 10, d: 8, double: true });
-  buildPavilion(world, { id: 'garden-pavilion', name: '临池亭', x: -30, z: -32, w: 9, d: 8 });
-  buildPagoda(world);
+  for (const spec of layout.buildings) appendBuilding(world, spec);
+  const byId = new Map(world.buildings.map(building => [building.id, building]));
+  const inside = (id, name) => ({name: name || byId.get(id).name, buildingId: id,
+    position: [...byId.get(id).interior]});
   const walkRoute = [
-    { name: '穿过承风门', position: [0, 0, 30] },
-    { name: '前庭中轴', position: [0, 0, 20] },
-    { name: '西回廊柱网', position: [-18, 0, 7] },
-    { name: '明德殿前阶', position: [0, 0, 13] },
-    { name: '入殿观梁架', position: [0, PLATFORM, 0] },
-    { name: '穿殿到后院', position: [0, 0, -20] },
-    { name: '东廊回望', position: [18, 0, -18] },
-    { name: '东文轩门前', position: [31, 0, 6] },
-    { name: '东文轩内', position: [31, PLATFORM, -5] },
-    { name: '望山亭休憩', position: [0, 0, -34] },
-    { name: '临池亭', position: [-30, 0, -32] },
-    { name: '听松塔前', position: [30, 0, -22] },
+    inside('gate', '穿过雪岭山门'),
+    inside('west-front-pavilion'), inside('east-front-pavilion'),
+    {name: '登中轴第一重石阶', position: [0, 1.44, 22]},
+    inside('terrace-gate', '穿入云门进中院'),
+    inside('west-gallery'), inside('west-hall'),
+    inside('east-gallery'), inside('east-hall'),
+    {name: '登上后山台地', position: [0, 2.88, -21]},
+    inside('west-upper-pavilion'),
+    {name: '雷音大殿前阶', buildingId: 'main-hall', position: [...byId.get('main-hall').entry]},
+    inside('main-hall', '入雷音大殿观梁'),
+    inside('east-upper-pavilion'), inside('east-pagoda'), inside('rear-pavilion'),
   ];
-  world.root.userData.units = 'metres';
-  world.root.userData.playerHeight = 1.8;
-  world.root.userData.playerClearance = PAD;
-  world.root.userData.disclaimer = '参考视频形制创作的原创古建群，非故宫或其他文物的测绘复原。';
-  return { root: world.root, colliders: world.colliders, cameraBounds: world.cameraBounds,
+  world.root.name = 'snow-mountain-temple-compound';
+  Object.assign(world.root.userData, {units: 'metres', playerHeight: 1.8, playerClearance: PAD,
+    layoutId: layout.id, disclaimer: layout.description});
+  return {root: world.root, colliders: world.colliders, cameraBounds: world.cameraBounds,
     cameraObstacles: world.cameraObstacles, surfaces: world.surfaces, buildings: world.buildings,
-    spawn: [0, 0, 42], bounds: { minX: -44, maxX: 44, minZ: -48, maxZ: 48 }, walkRoute };
+    spawn: [...layout.spawn], bounds: {...layout.bounds}, walkRoute,
+    displayName: layout.displayName, description: layout.description,
+    overview: {...layout.overview, target: [...layout.overview.target], position: [...layout.overview.position],
+      mobilePosition: [...layout.overview.mobilePosition]},
+    terraces: layout.terraces.map(t => ({...t})), stairways: layout.stairways.map(s => ({...s})), layoutId: layout.id};
 }

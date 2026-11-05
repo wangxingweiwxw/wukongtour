@@ -10,6 +10,7 @@ import {HeritageCameraRig} from './camera-rig.js';
 import {HeroOcclusion} from './hero-occlusion.js';
 import {createJourneyPlay} from './journey-play.js';
 import {createCompoundPlay} from './compound-play.js';
+import {createImportedCompound} from './compound-glb.js';
 import {createCompoundLighting} from './compound-lighting.js';
 import {createCloudFlight} from './cloud-flight.js';
 import {createCloudFlightUI} from './cloud-flight-ui.js';
@@ -101,18 +102,29 @@ function travelJourney(id){
 journey=createJourneyPlay({scene,getHero:()=>hero,isFlying:()=>cloud.active,blocked,onTravel:travelJourney,onOpenMap:openMap,clearInput:clearMovementInput,toast});
 function resetCourtyardLight(){scene.fog.near=42;scene.fog.far=115;hemisphere.intensity=1.7;rim.intensity=1.1;if(compoundLighting.reset())renderer.shadowMap.needsUpdate=true;}
 function saveExperience(value){try{localStorage.setItem('wukong-experience-v1',value);}catch{}}
-function enterCompound(){
- if(loading||!hero){toast('请等待当前场景加载完成');return;}
+function enterCompound(nextWorld,{duringImport=false}={}){
+ if((loading&&!duringImport)||!hero){toast('请等待当前场景加载完成');return;}
  occlusion.dispose();clearMovementInput();cloud.configure(null);environment.setCliffMode(false);document.querySelectorAll('dialog[open]').forEach(d=>d.close());journey.leave();dispose(building);building=null;collider=null;custom=false;ring.visible=false;
  if(courtyard)courtyard.root.visible=false;environment.setCompoundMode(true);
- compound.enter();occlusion.setRoots([compound.world.root]);viewMode='hero';scene.fog.near=65;scene.fog.far=180;scene.fog.color.set('#c5d2c4');
+ compound.enter(nextWorld);occlusion.setRoots([compound.world.root]);viewMode='hero';scene.fog.near=65;scene.fog.far=180;scene.fog.color.set('#c5d2c4');
  sun.color.set('#ffe2b0');hemisphere.intensity=1.35;rim.intensity=.65;
- compoundLighting.update({active:true,mode:compound.mode,position:hero.position});
- renderer.shadowMap.needsUpdate=true;saveExperience('compound');$('stationName').textContent='山河古建群';
+ compoundLighting.update({active:true,mode:compound.mode,position:hero.position,world:compound.world});
+ renderer.shadowMap.needsUpdate=true;saveExperience('compound');$('stationName').textContent=compound.world.displayName || '山河古建群';
  localMap.setScene(createCompoundMapData(compound.world),compound.world.root);
  toast('穿过山门，走进殿堂与回廊 · V 细看古建，C 俯瞰建筑群');
 }
-compound=createCompoundPlay({scene,camera,controls,renderer,cameraRig,canvas,environment,getHero:()=>hero,clearInput:clearMovementInput,onEnter:enterCompound,onExit:()=>travelJourney(journey.state.activeId),toast});
+async function downloadCompound(){
+ if(!compound?.world)return;
+ toast('正在导出古建群模型……',0);
+ try{
+  const {exportCompoundGLB}=await import('./compound-export.js');
+  const buffer=await exportCompoundGLB(compound.world);
+  const url=URL.createObjectURL(new Blob([buffer],{type:'model/gltf-binary'}));
+  const a=document.createElement('a');a.href=url;a.download='ancient-compound.glb';a.click();
+  setTimeout(()=>URL.revokeObjectURL(url),60000);toast('已导出古建群 GLB，可重新导入继续漫游');
+ }catch(error){toast('导出失败：'+error.message,0);}
+}
+compound=createCompoundPlay({scene,camera,controls,renderer,cameraRig,canvas,environment,getHero:()=>hero,clearInput:clearMovementInput,onEnter:enterCompound,onExit:()=>travelJourney(journey.state.activeId),onExport:downloadCompound,toast});
 const localMap=createSceneMapUI({onOpen:clearMovementInput,onAtlas:openMap});
 createMobileControls({clearInput:clearMovementInput});
 joystick=createTouchJoystick({element:$('moveJoystick'),onMove:({x,z})=>{joystickInput.x=x;joystickInput.z=z;},isEnabled:joystickAllowed});
@@ -149,7 +161,7 @@ const architecturePhotoButton=document.createElement('button');architecturePhoto
 architecturePhotoButton.onclick=()=>{if(!journey.knowledge.openPhoto())toast('请先从访古地图进入一条主题建筑路线');};
 $('photo').before(architecturePhotoButton);
 $('importButton').onclick=()=>{clearMovementInput();$('glbFile').click();};
-$('glbFile').onchange=async e=>{const file=e.target.files[0];if(!file)return;if(loading){toast('请等待当前场景加载完成');e.target.value='';return;}loading=true;toast('正在读取建筑模型……',0);try{if(file.size>96*1024*1024)throw Error('试玩版单个 GLB 限制为 96 MB');const buf=await file.arrayBuffer(),v=new DataView(buf);if(buf.byteLength<20||v.getUint32(0,true)!==0x46546c67||v.getUint32(4,true)!==2||v.getUint32(8,true)!==buf.byteLength)throw Error('请选择有效的 GLB 2.0 文件');const len=v.getUint32(12,true);if(v.getUint32(16,true)!==0x4e4f534a||20+len>buf.byteLength)throw Error('GLB JSON 数据不完整');const doc=JSON.parse(new TextDecoder().decode(buf.slice(20,20+len)));for(const resource of [...(doc.images||[]),...(doc.buffers||[])])if(resource.uri&&!resource.uri.startsWith('data:'))throw Error('请导出贴图全部内嵌的 GLB');const gltf=await loader.parseAsync(buf,'');installBuilding(gltf,true);$('stationName').textContent='我的古建';$('stationType').textContent=file.name;$('factTitle').textContent='模型预览庭院';$('fact').textContent='已按庭院大小自动缩放并落地。当前使用包围盒碰撞，无法进入模型内部；可在访古地图中返回示范场景。';$('source').hidden=true;frameView();showCourtyardMap('我的古建 · 模型庭院');toast('模型已导入 · 只在本次浏览器会话中展示');}catch(err){toast('导入失败：'+err.message,0);}finally{loading=false;e.target.value='';}};
+$('glbFile').onchange=async e=>{const file=e.target.files[0];if(!file)return;if(loading){toast('请等待当前场景加载完成');e.target.value='';return;}loading=true;toast('正在读取建筑模型……',0);try{if(file.size>96*1024*1024)throw Error('试玩版单个 GLB 限制为 96 MB');const buf=await file.arrayBuffer(),v=new DataView(buf);if(buf.byteLength<20||v.getUint32(0,true)!==0x46546c67||v.getUint32(4,true)!==2||v.getUint32(8,true)!==buf.byteLength)throw Error('请选择有效的 GLB 2.0 文件');const len=v.getUint32(12,true);if(v.getUint32(16,true)!==0x4e4f534a||20+len>buf.byteLength)throw Error('GLB JSON 数据不完整');const doc=JSON.parse(new TextDecoder().decode(buf.slice(20,20+len)));for(const resource of [...(doc.images||[]),...(doc.buffers||[])])if(resource.uri&&!resource.uri.startsWith('data:'))throw Error('请导出贴图全部内嵌的 GLB');const gltf=await loader.parseAsync(buf,'');const importedWorld=createImportedCompound(gltf);if(importedWorld){enterCompound(importedWorld,{duringImport:true});toast('已导入 '+importedWorld.displayName+' · 可进入殿堂漫游');return;}installBuilding(gltf,true);$('stationName').textContent='我的古建';$('stationType').textContent=file.name;$('factTitle').textContent='模型预览庭院';$('fact').textContent='已按庭院大小自动缩放并落地。当前使用包围盒碰撞，无法进入模型内部；可在访古地图中返回示范场景。';$('source').hidden=true;frameView();showCourtyardMap('我的古建 · 模型庭院');toast('模型已导入 · 只在本次浏览器会话中展示');}catch(err){toast('导入失败：'+err.message,0);}finally{loading=false;e.target.value='';}};
 let mobileView;
 function frameView(){
  if(compound?.active){compound.frameCamera();return;}
@@ -247,7 +259,7 @@ function frame(){
  // neither the camera nor the hero snaps away when crossing a doorway.
  if(hero)occlusion.update({camera,position:hero.position,viewport:renderer.getDrawingBufferSize(occlusionViewport),
   enabled:compound.active?compound.mode==='walk':viewMode==='hero',dt});
- if(compound.active&&compoundLighting.update({active:true,mode:compound.mode,position:hero.position}))renderer.shadowMap.needsUpdate=true;
+ if(compound.active&&compoundLighting.update({active:true,mode:compound.mode,position:hero.position,world:compound.world}))renderer.shadowMap.needsUpdate=true;
  if(journey.active&&cloud.available&&compoundLighting.update({active:true,mode:viewMode==='hero'?'walk':'overview',position:hero.position}))renderer.shadowMap.needsUpdate=true;
  environment.update(hero,cloud.active,camera);
  renderer.render(scene,camera);

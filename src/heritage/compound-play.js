@@ -4,20 +4,20 @@ import {createCompoundUI} from './compound-ui.js';
 import {groundHeight,findWalkPath} from './walk-controller.js';
 
 // Building inspection and walking share one scene and one real player position.
-export function createCompoundPlay({scene,camera,controls,renderer,cameraRig,canvas,environment,getHero,clearInput,onEnter,onExit,toast}) {
+export function createCompoundPlay({scene,camera,controls,renderer,cameraRig,canvas,environment,getHero,clearInput,onEnter,onExit,onExport,toast}) {
  let world=null,active=false,mode='walk',selected=null,manualRoof=false,nearby=null;
  let guideIndex=0,guideFinished=false,pathElapsed=1,nearbyKey='',indoorId=null;
  const reached=new Set(),follow=new THREE.Vector3(),delta=new THREE.Vector3(),desired=new THREE.Vector3();
  const raycaster=new THREE.Raycaster(),mouse=new THREE.Vector2(),dummy=new THREE.Object3D();
  let guideDots,guideMarker,inspectionFloor,buildingLabels,lastPathStart=null,roofKey='',pointerStart=null;
- const ui=createCompoundUI({onEnter,onExit,onWalk:()=>setMode('walk'),onOverview:()=>setMode('overview'),
+ const ui=createCompoundUI({onEnter,onExit,onExport,onRestore:()=>onEnter?.(createCompoundScene()),onWalk:()=>setMode('walk'),onOverview:()=>setMode('overview'),
   onInspect:id=>inspect(id),onRoofToggle(){if(mode!=='inspect')inspect(nearby?.id||selected);manualRoof=!manualRoof;updateRoofs(true);},
   onFocusNext(){if(!world||reached.size===world.walkRoute.length)return;do{guideIndex=(guideIndex+1)%world.walkRoute.length;}while(reached.has(guideIndex));guideFinished=false;pathElapsed=2;updateRoute();if(mode!=='walk')setMode('walk');},
   onReset(){if(!world)return;clearInput();getHero().position.fromArray(world.spawn);setMode('walk');toast('已回到古建群南门入口');}
  });
  function updateRoute(){if(!world)return;const stop=world.walkRoute[guideIndex];ui.setRoute({name:stop.name,index:guideIndex+1,total:world.walkRoute.length,complete:guideFinished});guideMarker.position.set(stop.position[0],stop.position[1]+.1,stop.position[2]);guideMarker.visible=!guideFinished;lastPathStart=null;}
  function ensureWorld(){
-  if(world)return;world=createCompoundScene();scene.add(world.root);ui.setBuildings(world.buildings);selected=world.buildings[0]?.id;
+  if(guideDots)return;if(!world)world=createCompoundScene();scene.add(world.root);ui.setBuildings(world.buildings);ui.setWorld(world);selected=world.buildings[0]?.id;
   guideDots=new THREE.InstancedMesh(new THREE.BoxGeometry(.16,.035,.28),new THREE.MeshBasicMaterial({color:'#e9b94d'}),180);guideDots.count=0;guideDots.frustumCulled=false;guideDots.name='CompoundGuide';world.root.add(guideDots);
   guideMarker=new THREE.Mesh(new THREE.TorusGeometry(.85,.055,6,40),new THREE.MeshStandardMaterial({color:'#e9b94d',emissive:'#664c16',emissiveIntensity:.5}));guideMarker.rotation.x=-Math.PI/2;world.root.add(guideMarker);
   inspectionFloor=new THREE.Mesh(new THREE.CylinderGeometry(1,1,.14,64),new THREE.MeshStandardMaterial({color:'#c8c0ac',roughness:1}));inspectionFloor.receiveShadow=true;inspectionFloor.visible=false;world.root.add(inspectionFloor);
@@ -34,14 +34,20 @@ export function createCompoundPlay({scene,camera,controls,renderer,cameraRig,can
   for(const decoration of [guideDots,guideMarker,inspectionFloor,buildingLabels])decoration.userData.minimapExclude=true;
  }
  function frameCamera(){
-  if(!active)return;cameraRig.reset();const mobile=innerWidth<=800;camera.fov=mobile?62:50;camera.far=260;
+  if(!active)return;cameraRig.reset();const mobile=innerWidth<=800;camera.fov=mobile?62:50;camera.far=700;
   controls.autoRotate=false;controls.enablePan=mode!=='walk';controls.maxPolarAngle=Math.PI*.60;controls.minPolarAngle=.12;
   if(mode==='walk'){
    const hero=getHero();follow.copy(hero.position);controls.target.copy(hero.position).add(new THREE.Vector3(0,1.35,0));
    // Near eye-level framing keeps the complete eaves above a readable hero.
    camera.position.copy(hero.position).add(new THREE.Vector3(0,mobile?2.2:1.95,mobile?6.8:5.6));controls.minDistance=2.2;controls.maxDistance=21;
   }else if(mode==='overview'){
-   controls.target.set(0,2,-2);camera.position.set(mobile?16:51,mobile?90:65,mobile?102:65);controls.minDistance=22;controls.maxDistance=150;controls.maxPolarAngle=Math.PI*.48;
+   const bounds=world.bounds,width=bounds.maxX-bounds.minX,depth=bounds.maxZ-bounds.minZ;
+   const target=world.overview?.target || [(bounds.minX+bounds.maxX)/2,5,(bounds.minZ+bounds.maxZ)/2];
+   controls.target.fromArray(target);
+   const halfFov=THREE.MathUtils.degToRad(camera.fov/2),radius=Math.hypot(width,depth)*.52;
+   const distance=radius/Math.sin(Math.atan(Math.tan(halfFov)*Math.min(camera.aspect,1)));
+   camera.position.copy(controls.target).addScaledVector(new THREE.Vector3(mobile ? .16 : .7,1,1.12).normalize(),distance);
+   controls.minDistance=22;controls.maxDistance=Math.max(200,distance*1.5);controls.maxPolarAngle=Math.PI*.48;
   }else{
    const building=world.buildings.find(b=>b.id===selected);if(!building)return;
    const box=building.bounds,size=box.getSize(new THREE.Vector3()),center=box.getCenter(new THREE.Vector3());
@@ -57,8 +63,9 @@ export function createCompoundPlay({scene,camera,controls,renderer,cameraRig,can
   const building=world.buildings.find(b=>b.id===selected);
   world.root.children.forEach(node=>node.visible=mode!=='inspect'||node===building?.root||node===inspectionFloor);
   inspectionFloor.visible=mode==='inspect';environment.setSkyVisible(mode!=='inspect');scene.background.set(mode==='inspect'?'#e8e2d4':'#b9cfdb');
-  scene.fog.near=mode==='overview'?135:65;scene.fog.far=mode==='overview'?280:180;
-  if(mode==='inspect'&&building){const size=building.bounds.getSize(new THREE.Vector3()),center=building.bounds.getCenter(new THREE.Vector3()),r=Math.max(size.x,size.z)*.77;inspectionFloor.scale.set(r,1,r);inspectionFloor.position.set(center.x,Math.min(0,building.bounds.min.y)-.09,center.z);}
+  const extent=Math.max(world.bounds.maxX-world.bounds.minX,world.bounds.maxZ-world.bounds.minZ);
+  scene.fog.near=mode==='overview'?extent*2:65;scene.fog.far=mode==='overview'?extent*5:Math.max(180,extent*1.4);
+  if(mode==='inspect'&&building){const size=building.bounds.getSize(new THREE.Vector3()),center=building.bounds.getCenter(new THREE.Vector3()),r=Math.max(size.x,size.z)*.77;inspectionFloor.scale.set(r,1,r);inspectionFloor.position.set(center.x,building.bounds.min.y-.09,center.z);}
   updateRoofs(true);frameCamera();
  }
  function inspect(id){if(!active)return;selected=world.buildings.some(b=>b.id===id)?id:nearby?.id||selected||world.buildings[0].id;setMode('inspect');}
@@ -70,7 +77,11 @@ export function createCompoundPlay({scene,camera,controls,renderer,cameraRig,can
   for(const b of world.buildings){const hidden=mode==='inspect'&&manualRoof&&b.id===selected;b.roofs.forEach(mesh=>mesh.visible=!hidden);}
   ui.setRoofHidden(mode==='inspect'&&manualRoof);renderer.shadowMap.needsUpdate=true;
  }
- function enter(){
+ function enter(nextWorld){
+  if(nextWorld&&nextWorld!==world){
+   if(world){scene.remove(world.root);const geometries=new Set(),materials=new Set(),textures=new Set();world.root.traverse(node=>{if(node.geometry)geometries.add(node.geometry);for(const material of (Array.isArray(node.material)?node.material:[node.material]))if(material){materials.add(material);for(const value of Object.values(material))if(value?.isTexture)textures.add(value);}});textures.forEach(item=>item.dispose());geometries.forEach(item=>item.dispose());materials.forEach(item=>item.dispose());}
+   world=nextWorld;guideDots=null;guideMarker=null;inspectionFloor=null;buildingLabels=null;nearby=null;indoorId=null;roofKey='';
+  }
   ensureWorld();active=true;world.root.visible=true;guideIndex=0;guideFinished=false;reached.clear();lastPathStart=null;pathElapsed=2;nearbyKey='';
   getHero().position.fromArray(world.spawn);getHero().rotation.y=Math.PI;ui.setActive(true);setMode('walk');updateRoute();renderer.shadowMap.needsUpdate=true;
  }

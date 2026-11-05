@@ -19,6 +19,27 @@ export function createCompoundLighting(sun) {
   const right = new THREE.Vector3().crossVectors(THREE.Object3D.DEFAULT_UP, normal).normalize();
   const up = new THREE.Vector3().crossVectors(normal, right).normalize();
   const focus = new THREE.Vector3(), desiredSun = new THREE.Vector3();
+  const sceneBox = new THREE.Box3(), sceneCenter = new THREE.Vector3(), corner = new THREE.Vector3();
+  const overviewOffset = new THREE.Vector3();
+  let overviewWorld = null, overviewExtent = OVERVIEW_EXTENT, overviewFar = 180;
+
+  function frameWorld(world) {
+    if(world===overviewWorld)return;
+    overviewWorld=world;
+    if(!world){sceneCenter.copy(ORIGIN);overviewOffset.copy(COMPOUND_OFFSET);overviewExtent=OVERVIEW_EXTENT;overviewFar=180;return;}
+    const b=world.bounds;
+    sceneBox.set(new THREE.Vector3(b.minX,0,b.minZ),new THREE.Vector3(b.maxX,0,b.maxZ));
+    world.buildings.forEach(building=>sceneBox.union(building.bounds));
+    sceneBox.getCenter(sceneCenter);
+    let horizontal=0,vertical=0,depth=0;
+    for(const x of [sceneBox.min.x,sceneBox.max.x])for(const y of [sceneBox.min.y,sceneBox.max.y])for(const z of [sceneBox.min.z,sceneBox.max.z]){
+      corner.set(x,y,z).sub(sceneCenter);
+      horizontal=Math.max(horizontal,Math.abs(corner.dot(right)));vertical=Math.max(vertical,Math.abs(corner.dot(up)));depth=Math.max(depth,Math.abs(corner.dot(normal)));
+    }
+    overviewExtent=Math.ceil(Math.max(horizontal,vertical)+5);
+    overviewOffset.copy(normal).multiplyScalar(depth+40);overviewFar=Math.ceil(depth*2+80);
+  }
+  overviewOffset.copy(COMPOUND_OFFSET);
 
   function apply(center, offset, extent, far) {
     const camera = sun.shadow.camera;
@@ -48,9 +69,9 @@ export function createCompoundLighting(sun) {
     return apply(ORIGIN, COURTYARD_OFFSET, COURTYARD_EXTENT, 100);
   }
 
-  function update({ active, mode, position }) {
+  function update({ active, mode, position, world }) {
     if (!active) return reset();
-    if (mode !== 'walk') return apply(ORIGIN, COMPOUND_OFFSET, OVERVIEW_EXTENT, 180);
+    if (mode !== 'walk') {frameWorld(world || null);return apply(sceneCenter, overviewOffset, overviewExtent, overviewFar);}
     if (!position || ![position.x, position.y, position.z].every(Number.isFinite)) {
       throw new RangeError('Walking shadow focus requires a finite player position');
     }

@@ -6,7 +6,8 @@
 .compound-panel { position:fixed; top:110px; left:max(28px,env(safe-area-inset-left)); width:352px; padding:17px; border:1px solid #fff9; border-left:3px solid #9e7746; border-radius:0 13px 13px 0; background:#fff8e8ed; color:#273f38; box-shadow:0 6px 28px #2b372e20; z-index:4; }
 .compound-panel [hidden],.header-actions .compound-enter[hidden],.header-actions .compound-exit[hidden] { display:none !important; }
 .compound-panel-head { display:flex; align-items:center; justify-content:space-between; gap:10px; min-height:25px; }
-.compound-kicker { color:#8b6b43; font-size:11px; letter-spacing:1.2px; font-weight:600; }
+.compound-kicker { color:#8b6b43; font-size:11px; letter-spacing:1.2px; font-weight:600; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.compound-settings { flex-shrink:0; }
 .compound-settings summary { list-style:none; cursor:pointer; font-size:11px; padding:6px 0 6px 9px; color:#556b55; }
 .compound-settings summary::after { content:'⌄'; margin-left:6px; }
 .compound-settings summary::-webkit-details-marker { display:none; }

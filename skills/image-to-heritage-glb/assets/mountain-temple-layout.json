@@ -1,0 +1,74 @@
+{
+  "version": 1,
+  "name": "雪山三进院落 · 十三建筑参数范例",
+  "description": "参考地图空间关系创作的原创雪山寺院：两重山门、三层院台、中轴大殿、侧殿长廊与山后亭阁。不是游戏网格提取或文物测绘复原。长廊和塔阁使用本技能的亭式参数表达。",
+  "units": "meters",
+  "seed": 90211,
+  "materials": {
+    "tile": {"color":"#697573", "roughness":0.94},
+    "tileLight": {"color":"#b4c2bd", "roughness":0.9},
+    "stone": {"color":"#bdc3b8", "roughness":0.97},
+    "plaster": {"color":"#b5a991", "roughness":0.97}
+  },
+  "buildings": [
+    {"id":"gate", "name":"雪岭山门", "type":"gate", "position":[0,0,58], "width":22, "depth":8, "height":6.2, "base":{"height":0}, "doors":{"width":4.8,"height":3.8}, "roof":{"levels":2,"rise":2.3,"cornerLift":0.7}},
+    {"id":"west-front-pavilion", "name":"听雪亭", "type":"pavilion", "position":[-28,0,44], "width":11, "depth":8, "height":4.1, "base":{"height":0.36,"stairs":"all"}, "roof":{"rise":1.7}},
+    {"id":"east-front-pavilion", "name":"候月亭", "type":"pavilion", "position":[28,0,44], "width":11, "depth":8, "height":4.1, "base":{"height":0.36,"stairs":"all"}, "roof":{"rise":1.7}},
+    {"id":"terrace-gate", "name":"入云门", "type":"gate", "position":[0,1.44,14], "width":18, "depth":6, "height":5.3, "base":{"height":0}, "doors":{"width":4.6,"height":3.6}, "roof":{"levels":1,"rise":2}},
+    {"id":"west-gallery", "name":"西侧经廊", "type":"pavilion", "description":"长条亭式柱廊，朝向中轴庭院", "position":[-18,1.44,4], "rotation":1.5707963267948966, "width":24, "depth":7, "height":4.1, "bays":7, "base":{"height":0}, "roof":{"levels":1,"rise":1.65,"overhang":0.8}},
+    {"id":"east-gallery", "name":"东侧经廊", "type":"pavilion", "description":"长条亭式柱廊，朝向中轴庭院", "position":[18,1.44,4], "rotation":-1.5707963267948966, "width":24, "depth":7, "height":4.1, "bays":7, "base":{"height":0}, "roof":{"levels":1,"rise":1.65,"overhang":0.8}},
+    {"id":"west-hall", "name":"西静堂", "type":"hall", "position":[-33,1.44,2], "width":16, "depth":10, "height":5, "base":{"height":0.54,"stairs":"both"}, "doors":{"width":3.1,"height":3}, "roof":{"rise":2.1}},
+    {"id":"east-hall", "name":"东禅堂", "type":"hall", "position":[33,1.44,2], "width":16, "depth":10, "height":5, "base":{"height":0.54,"stairs":"both"}, "doors":{"width":3.1,"height":3}, "roof":{"rise":2.1}},
+    {"id":"main-hall", "name":"雷音大殿", "type":"hall", "position":[0,2.88,-37], "width":26, "depth":18, "height":8, "bays":5, "base":{"height":0.72,"stairs":"both"}, "doors":{"width":3.5,"height":4.3}, "roof":{"levels":2,"rise":3.6,"overhang":1.8,"cornerLift":0.8}},
+    {"id":"west-upper-pavilion", "name":"西钟亭", "type":"pavilion", "position":[-30,2.88,-35], "width":11, "depth":9, "height":4.7, "base":{"height":0.36,"stairs":"all"}, "roof":{"rise":1.9,"levels":2}},
+    {"id":"east-upper-pavilion", "name":"东鼓亭", "type":"pavilion", "position":[30,2.88,-35], "width":11, "depth":9, "height":4.7, "base":{"height":0.36,"stairs":"all"}, "roof":{"rise":1.9,"levels":2}},
+    {"id":"east-pagoda", "name":"照雪塔阁", "type":"pavilion", "description":"三重屋顶的亭式塔阁意象，非历史塔型的精确复原", "position":[33,2.88,-56], "width":8, "depth":8, "height":7.5, "base":{"height":0.54,"stairs":"all"}, "roof":{"levels":3,"rise":2.3,"overhang":1.1,"cornerLift":0.7}},
+    {"id":"rear-pavilion", "name":"后山净亭", "type":"pavilion", "position":[0,2.88,-60], "width":12, "depth":6, "height":4.1, "base":{"height":0.36,"stairs":"all"}, "roof":{"rise":1.6}}
+  ],
+  "terraces": [
+    {"id":"ground-court", "position":[0,-0.12,4], "width":96, "depth":144, "height":0.12},
+    {"id":"middle-court", "position":[0,0,2], "width":96, "depth":44, "height":1.44},
+    {"id":"upper-court", "position":[0,0,-44], "width":96, "depth":48, "height":2.88}
+  ],
+  "stairs": [
+    {"id":"middle-axis", "position":[0,0,26.4], "width":12, "depth":4.8, "height":1.44},
+    {"id":"middle-west", "position":[-32,0,26.4], "width":7, "depth":4.8, "height":1.44},
+    {"id":"middle-east", "position":[32,0,26.4], "width":7, "depth":4.8, "height":1.44},
+    {"id":"upper-axis", "position":[0,1.44,-17.6], "width":12, "depth":4.8, "height":1.44},
+    {"id":"upper-west", "position":[-32,1.44,-17.6], "width":7, "depth":4.8, "height":1.44},
+    {"id":"upper-east", "position":[32,1.44,-17.6], "width":7, "depth":4.8, "height":1.44}
+  ],
+  "walls": [
+    {"id":"west-lower-wall", "position":[-46,0,48], "rotation":1.5707963267948966, "width":42, "height":2.6},
+    {"id":"east-lower-wall", "position":[46,0,48], "rotation":1.5707963267948966, "width":42, "height":2.6},
+    {"id":"west-middle-wall", "position":[-46,1.44,2], "rotation":1.5707963267948966, "width":40, "height":2.6},
+    {"id":"east-middle-wall", "position":[46,1.44,2], "rotation":1.5707963267948966, "width":40, "height":2.6},
+    {"id":"rear-wall", "position":[0,2.88,-67], "width":90, "height":2.6}
+  ],
+  "rocks": [
+    {"id":"west-rock-a", "position":[-43,2.88,-42], "radius":2.1, "height":4.8, "seed":3},
+    {"id":"west-rock-b", "position":[-41,2.88,-57], "radius":2.7, "height":7, "seed":6},
+    {"id":"east-rock-a", "position":[43,2.88,-44], "radius":2, "height":5, "seed":11}
+  ],
+  "paths": [
+    {"id":"south-axis", "width":4.2, "points":[[0,74],[0,29]]},
+    {"id":"south-cross", "width":3.2, "points":[[-28,49],[0,49],[28,49]]}
+  ],
+  "walk": {
+    "bounds":{"minX":-48,"maxX":48,"minZ":-68,"maxZ":76},
+    "spawn":[0,0,71],
+    "walkRoute":[
+      {"name":"穿过雪岭山门", "position":[0,0,58]},
+      {"name":"南山前院", "position":[0,0,36]},
+      {"name":"登临中院", "position":[0,1.44,22]},
+      {"name":"穿过入云门", "position":[0,1.44,14]},
+      {"name":"中院柱廊", "position":[-18,1.44,4]},
+      {"name":"西静堂内", "position":[-33,1.98,2]},
+      {"name":"东禅堂内", "position":[33,1.98,2]},
+      {"name":"登临上院", "position":[0,2.88,-22]},
+      {"name":"大殿观梁", "position":[0,3.6,-37]},
+      {"name":"后山净亭", "position":[0,3.24,-60]},
+      {"name":"照雪塔阁", "position":[33,3.42,-56]}
+    ]
+  }
+}

@@ -62,8 +62,8 @@ export function createJourneyMapData(id, world) {
 export function createCompoundMapData(world) {
   return {
     id: 'compound',
-    title: '古建群落',
-    subtitle: '穿山门 · 入殿观梁 · 沿廊游园',
+    title: world.displayName || '古建群落',
+    subtitle: world.description || '穿山门 · 入殿观梁 · 沿廊游园',
     bounds: { ...world.bounds },
     landmarks: world.buildings.map(building => ({
       id: building.id,

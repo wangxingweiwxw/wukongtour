@@ -14,9 +14,10 @@ const action = (text, className, handler) => {
 };
 
 /** Presentation for the compound. Camera, movement and navigation live in the controller. */
-export function createCompoundUI({onEnter, onWalk, onOverview, onInspect, onRoofToggle, onFocusNext, onReset, onExit}) {
+export function createCompoundUI({onEnter, onWalk, onOverview, onInspect, onRoofToggle, onFocusNext, onReset, onExit, onExport, onRestore}) {
   let active = false, mode = 'walk', buildings = [], selectedId = '', roofHidden = false;
   let nearby = {}, route = {}, lastNearby = '', lastRoute = '';
+  let worldName = '古建群';
   const actions = document.querySelector('.header-actions');
 
   const enter = action('', 'compound-enter', () => onEnter?.());
@@ -53,8 +54,13 @@ export function createCompoundUI({onEnter, onWalk, onOverview, onInspect, onRoof
   reset.id = 'compoundReset';
   const nearbyInspect = action('细看附近古建', 'compound-soft-button', inspectNearby);
   nearbyInspect.id = 'compoundNearbyInspect';
+  const exportModel = action('导出古建群 GLB', 'compound-soft-button', () => onExport?.());
+  exportModel.id = 'compoundExport';
+  const restore = action('返回内置古建群', 'compound-soft-button', () => onRestore?.());
+  restore.id = 'compoundRestore';
+  restore.hidden = true;
   const settingsHint = make('p', 'compound-settings-hint', 'WASD 行走 · Shift 奔跑 · V 细看附近古建 · C 全景 · Esc 回漫游。查看时暂停人物，拖动旋转、滚轮缩放。');
-  settingsActions.append(roof, reset, nearbyInspect);
+  settingsActions.append(roof, reset, nearbyInspect, exportModel, restore);
   settingsContent.append(buildingLabel, description, settingsActions, settingsHint);
   settings.append(summary, settingsContent);
   head.append(heading, settings);
@@ -107,11 +113,11 @@ export function createCompoundUI({onEnter, onWalk, onOverview, onInspect, onRoof
     if (mode === 'walk') {
       contextName.textContent = route.complete ? '这一圈，已走遍' : route.name || '从山门开始，走进古建群';
       contextSub.textContent = route.total ? `${route.index ?? 0} / ${route.total} · ${proximity}` : proximity;
-      heading.textContent = '古建群 · 街巷漫游';
+      heading.textContent = worldName;
     } else {
       contextName.textContent = mode === 'inspect' ? selected?.name || '选择一座古建' : '屋檐、庭院与街巷';
       contextSub.textContent = '人物已暂停 · 拖动旋转 / 滚轮缩放';
-      heading.textContent = mode === 'inspect' ? '古建群 · 单体细看' : '古建群 · 俯瞰全景';
+      heading.textContent = `${worldName} · ${mode === 'inspect' ? '单体细看' : '俯瞰全景'}`;
     }
     contextName.title = contextName.textContent;
     contextSub.title = contextSub.textContent;
@@ -189,6 +195,11 @@ export function createCompoundUI({onEnter, onWalk, onOverview, onInspect, onRoof
   }
 
   function setRoofHidden(value) { roofHidden = Boolean(value); renderContext(); }
+  function setWorld(world) {
+    worldName = world.displayName || '古建群';
+    restore.hidden = !world.imported;
+    renderContext();
+  }
   const closeSettings = event => { if (!settings.contains(event.target)) settings.open = false; };
   const closeOnEscape = event => { if (event.code === 'Escape') settings.open = false; };
   document.addEventListener('pointerdown', closeSettings);
@@ -204,5 +215,5 @@ export function createCompoundUI({onEnter, onWalk, onOverview, onInspect, onRoof
 
   setMode('walk');
   setActive(false);
-  return {setActive, setMode, setBuildings, setSelection, setNearby, setRoofHidden, setRoute, destroy};
+  return {setActive, setMode, setBuildings, setSelection, setNearby, setRoofHidden, setRoute, setWorld, destroy};
 }

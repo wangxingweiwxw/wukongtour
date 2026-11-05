@@ -47,7 +47,7 @@ node scripts/update-zhihu-knowledge.mjs --cli "<官方 setup 返回的 binary_pa
 
 ## 主要功能
 
-- 古建群漫游：九座建筑、庭院、可进入的殿堂与十二处行走地标；支持侧门进出、全景、单体观察和手动揭开屋顶。
+- 古建群漫游：参考小雷音寺地图构建十三座建筑、三层院落与十六处行走地标；支持侧门进出、台阶登高、全景、单体观察和手动揭开屋顶。模型为原创概括，不是游戏资产提取或精确测绘。
 - 九条主题路线：时思寺、云冈石窟、悬空寺、应县木塔、独乐寺、佛光寺、小西天、水陆庵、开元寺东西塔；共二十七处观察点，对照图片与地图答题并收集游记。
 - 悬空寺筋斗云：升降、加速、绕山观景与安全落地；实体岩壁、屋顶和楼阁参与碰撞。
 - 访古地图：九处艺术地图标记全部可玩，另保留二十三处古建资料检索；当前场景另有实时定位小地图。
@@ -55,6 +55,18 @@ node scripts/update-zhihu-knowledge.mjs --cli "<官方 setup 返回的 binary_pa
 - 三处通用示范场景打卡、PNG 留影、浏览器进度保存与手机透明摇杆。
 
 主角直接加载 `public/models/wukong-current-hero.glb`，使用文件内的 `Idle`、`Walk`、`Run` 动画，并在停止、行走与奔跑之间平滑切换。游戏统一按 1.8 米角色高度处理台阶、视角和乘云；模型的顶点色、金箍棒与关节层级保留。`src/heritage/hero.js` 是早期程序建模源，当前网页使用 GLB 资产。
+
+## 古建群 GLB 与独立技能
+
+在古建群的“查看设置”中点击“导出古建群 GLB”，可保存包含牌匾、材质、门洞碰撞、台阶和导览点的单文件模型。导出保留完整屋顶，排除运行时指引与悬浮标签。“导入建筑 GLB”会识别 `extras.heritageScene` 的群落并进入漫游；普通 GLB 仍进入单体预览。导入群落后，可在设置中返回内置古建群。
+
+独立技能位于 [`skills/image-to-heritage-glb`](skills/image-to-heritage-glb/SKILL.md)，包含原创建筑群参考 GLB、三建筑与十三建筑参数模板、无 npm 依赖的 Node.js 建模/校验脚本和独立预览器。将整个文件夹复制到个人 skills 目录即可使用；技能不读取本项目源码，也不依赖本项目安装。发行 ZIP 为 [`public/downloads/image-to-heritage-glb.zip`](public/downloads/image-to-heritage-glb.zip)。
+
+```text
+使用 $image-to-heritage-glb，根据这张古建筑图片生成可导入 GLB，保留门洞与台阶，输出模型、参数和校验报告。
+```
+
+图片由 agent 分析后转成布局参数；单张图不可见的尺寸、背面和结构需要合理补全。它不是自动摄影测量，也不包含游戏官方模型。详见 [本次重建与导出说明](docs/ancient-compound-glb.md)。
 
 ## 操作
 

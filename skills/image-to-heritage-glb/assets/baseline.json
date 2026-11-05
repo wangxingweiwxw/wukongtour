@@ -1,0 +1,107 @@
+{
+  "file": "ancient-compound.glb",
+  "name": "小雷音寺 · 雪山院落",
+  "sha256": "c1329c5f0fe2c02d4e5fd4ccf459746ddaa327b2d65e8ee84c1b9e5935db5752",
+  "bytes": 21677252,
+  "buildings": 13,
+  "routes": 16,
+  "units": "metres",
+  "coordinates": {
+    "handedness": "right-handed",
+    "up": "+Y",
+    "front": "+Z"
+  },
+  "provenance": "原创建模：依据用户提供的小雷音寺地图解读纵深院落、台地与山势；不是从官方游戏提取的模型，也不是文物测绘复原。",
+  "builder": {
+    "kind": "actual-game-baseline",
+    "description": "由当前游戏实际使用的高质量程序化群落 createCompoundScene 构建，经真实 exportCompoundGLB 导出，包含曲面瓦檐、柱梁、中文牌匾、三层台地、雪石与山势。",
+    "source": "wukong-china-lite/src/heritage/compound-scene.js",
+    "exporter": "wukong-china-lite/src/heritage/compound-export.js",
+    "standaloneTemplate": "mountain-temple-layout.json",
+    "templateDistinction": "mountain-temple-layout.json 是技能独立生成器使用的近似参数模板；它独立可运行，但不会逐面重建本高质量实际游戏基准。"
+  },
+  "embeddedTextures": {
+    "count": 26,
+    "mimeTypes": [
+      "image/png"
+    ],
+    "purpose": "26张中文牌匾正反面纹理",
+    "fontsRasterized": true
+  },
+  "navigation": {
+    "contract": "extras.heritageScene",
+    "version": 1,
+    "bounds": {
+      "minX": -48,
+      "maxX": 48,
+      "minZ": -68,
+      "maxZ": 76
+    },
+    "spawn": [
+      0,
+      0,
+      71
+    ],
+    "terraces": [
+      {
+        "id": "lower-court",
+        "height": 0
+      },
+      {
+        "id": "middle-court",
+        "height": 1.44
+      },
+      {
+        "id": "upper-court",
+        "height": 2.88
+      }
+    ],
+    "stairways": 6
+  },
+  "createdAt": "2026-11-05T09:01:13.216Z",
+  "validation": {
+    "status": "passed",
+    "khronos": {
+      "validatorVersion": "2.0.0-dev.3.10",
+      "errors": 0,
+      "warnings": 0,
+      "infos": 26,
+      "infoCodes": [
+        "IMAGE_NPOT_DIMENSIONS"
+      ],
+      "report": "ancient-compound.glb.khronos.json"
+    },
+    "skill": {
+      "ok": true,
+      "embeddedResources": true,
+      "walkableScenes": 1,
+      "checks": [
+        "GLB chunks and embedded buffer",
+        "accessor ranges and finite data",
+        "index ranges",
+        "position bounds",
+        "normals",
+        "scene hierarchy and transforms",
+        "walk metadata and standing points"
+      ]
+    },
+    "plaqueInspection": {
+      "font": "KaiTi, rasterized from the installed simkai.ttf; no font binary embedded",
+      "texturedPlaques": 26,
+      "distinctBuildingNames": 13,
+      "visuallyChecked": [
+        "雪岭山门",
+        "雷音大殿",
+        "西侧经廊"
+      ],
+      "result": "Chinese characters rendered correctly; no missing-glyph boxes"
+    }
+  },
+  "geometry": {
+    "meshes": 60,
+    "nodes": 75,
+    "materials": 60,
+    "vertices": 555904,
+    "triangles": 246078
+  }
+}

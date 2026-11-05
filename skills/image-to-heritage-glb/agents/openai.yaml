@@ -1,0 +1,4 @@
+interface:
+  display_name: "图片生成古建筑 GLB"
+  short_description: "分析建筑照片或地图，生成独立可导入的古建与院落群 GLB 模型"
+  default_prompt: "使用 $image-to-heritage-glb，根据这张古建筑图片生成 GLB，附布局参数、校验报告和模型预览。"
