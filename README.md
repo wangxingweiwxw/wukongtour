@@ -60,6 +60,8 @@ node scripts/update-zhihu-knowledge.mjs --cli "<官方 setup 返回的 binary_pa
 
 在古建群的“查看设置”中点击“导出古建群 GLB”，可保存包含牌匾、材质、门洞碰撞、台阶和导览点的单文件模型。导出保留完整屋顶，排除运行时指引与悬浮标签。“导入建筑 GLB”会识别 `extras.heritageScene` 的群落并进入漫游；普通 GLB 仍进入单体预览。导入群落后，可在设置中返回内置古建群。
 
+“导入建筑 GLB”现在先打开导入指南，提供技能介绍与安装包、可复制的调用示例、三步导入说明，以及普通模型和可漫游群落的接口区别。页面可下载[完整接口说明](public/downloads/heritage-glb-interface.md)和[三建筑布局参数](public/downloads/heritage-layout-example.json)。选择文件按钮始终保留在底部；取消文件选择可继续阅读，导入失败会在页内显示原因并允许重试。手机端从游玩菜单进入同一说明页。
+
 独立技能位于 [`skills/image-to-heritage-glb`](skills/image-to-heritage-glb/SKILL.md)，包含原创建筑群参考 GLB、三建筑与十三建筑参数模板、无 npm 依赖的 Node.js 建模/校验脚本和独立预览器。将整个文件夹复制到个人 skills 目录即可使用；技能不读取本项目源码，也不依赖本项目安装。发行 ZIP 为 [`public/downloads/image-to-heritage-glb.zip`](public/downloads/image-to-heritage-glb.zip)。
 
 ```text

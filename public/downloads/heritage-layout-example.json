@@ -1,0 +1,67 @@
+{
+  "version": 1,
+  "name": "Three-building courtyard study",
+  "description": "Original parameterized gate, hall and pavilion study. Agent-authored layout, not a measured heritage reconstruction.",
+  "units": "meters",
+  "seed": 29,
+  "buildings": [
+    {
+      "id": "gate",
+      "name": "South gate",
+      "type": "gate",
+      "position": [0, 0, 12],
+      "width": 10,
+      "depth": 4,
+      "height": 3.8,
+      "base": {"height": 0},
+      "doors": {"front": true, "back": true, "width": 2.6, "height": 2.8},
+      "roof": {"levels": 1, "rise": 1.6, "cornerLift": 0.55}
+    },
+    {
+      "id": "main-hall",
+      "name": "Main hall",
+      "type": "hall",
+      "position": [0, 0, -4],
+      "width": 14,
+      "depth": 9,
+      "height": 4.6,
+      "base": {"height": 0.54, "stairs": "both"},
+      "doors": {"front": true, "back": true, "width": 2.8, "height": 2.9},
+      "roof": {"levels": 2, "rise": 2.0, "cornerLift": 0.65}
+    },
+    {
+      "id": "garden-pavilion",
+      "name": "Garden pavilion",
+      "type": "pavilion",
+      "position": [-18, 0, -9],
+      "width": 8,
+      "depth": 6,
+      "height": 3.6,
+      "base": {"height": 0.36, "stairs": "all"},
+      "roof": {"levels": 1, "rise": 1.5, "cornerLift": 0.7}
+    }
+  ],
+  "walls": [
+    {"id": "east-wall", "position": [12, 0, 4], "rotation": 1.5707963267948966, "width": 22, "height": 2.3, "thickness": 0.3},
+    {"id": "rear-wall", "position": [2, 0, -18], "width": 22, "height": 2.3, "thickness": 0.3}
+  ],
+  "rocks": [
+    {"id": "garden-rock", "position": [-12, 0, 1], "radius": 1.2, "height": 1.6, "seed": 8}
+  ],
+  "paths": [
+    {"id": "axis-path", "width": 2.6, "points": [[0, 20], [0, -16]]},
+    {"id": "garden-path", "width": 2.3, "points": [[0, 5], [-18, 5], [-18, -4.3]]}
+  ],
+  "walk": {
+    "bounds": {"minX": -26, "maxX": 17, "minZ": -23, "maxZ": 23},
+    "spawn": [0, 0, 20],
+    "walkRoute": [
+      {"name": "Through the gate", "position": [0, 0, 12]},
+      {"name": "Front courtyard", "position": [0, 0, 5]},
+      {"name": "Inside the hall", "position": [0, 0.54, -4]},
+      {"name": "Behind the hall", "position": [0, 0, -13]},
+      {"name": "Garden approach", "position": [-18, 0, -2]},
+      {"name": "Inside the pavilion", "position": [-18, 0.36, -9]}
+    ]
+  }
+}

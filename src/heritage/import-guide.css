@@ -1,0 +1,67 @@
+#importGuide{width:min(1040px,94vw);height:min(820px,92dvh);max-height:92dvh;padding:0;overflow:hidden;border-radius:20px;background:#f7f3e7}
+#importGuide[open]{display:flex;flex-direction:column}
+.import-guide-head{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;padding:26px 30px 22px;border-bottom:1px solid #ded8c7;flex-shrink:0}
+.import-guide-kicker,.import-guide-number{font-size:10px;letter-spacing:2px;color:#927447;font-weight:600}
+.import-guide-head h2{font-family:"SimSun",serif;font-size:30px;font-weight:500;letter-spacing:3px;margin:10px 0 8px;outline:none}
+.import-guide-head p{font-size:12px;color:#707b70;margin:0;line-height:1.7}
+#closeImportGuide{border-radius:50%;padding:0;width:42px;height:42px;flex-shrink:0;font-size:25px;background:transparent}
+.import-guide-body{overflow-y:auto;overscroll-behavior:contain;min-height:0;padding:26px 30px 30px;scrollbar-width:thin;scrollbar-color:#b9b4a1 transparent}
+.import-guide-intro{display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1.15fr);gap:30px}
+.import-skill-card{padding:25px;border-radius:14px;background:#284948;color:#f9f1dc;align-self:start}
+.import-skill-card .import-guide-number{color:#dcc49a}
+.import-skill-card h3{font-family:"SimSun",serif;font-size:27px;line-height:1.6;font-weight:400;margin:17px 0 12px;letter-spacing:1px}
+.import-skill-name{font-size:11px;display:inline-block;color:#e1d1b3;background:#ffffff0c;padding:7px 9px;border:1px solid #ffffff21;border-radius:5px;overflow-wrap:anywhere}
+.import-skill-card p,.import-skill-card li{font-size:12px;line-height:1.9;color:#e1e5d8}
+.import-skill-card ul{padding-left:17px;margin:17px 0 21px}
+.import-skill-card li{padding-left:3px;margin:4px 0}
+.import-skill-download{display:flex;justify-content:space-between;gap:12px;align-items:center;border:1px solid #a4ac92;border-radius:8px;padding:13px 12px;font-size:12px;color:#fff2d4;min-height:44px}
+.import-skill-download:hover{background:#ffffff12}
+.import-skill-download span{font-size:10px;white-space:nowrap;color:#d5d9c5}
+.import-skill-card .import-skill-note{font-size:10px;color:#c2cfc1;margin:13px 0 0}
+.import-steps h3,.import-interface h3{font-size:18px;font-weight:600;margin:13px 0 20px;line-height:1.5}
+.import-steps ol{counter-reset:import-step;list-style:none;padding:0;margin:0}
+.import-steps li{counter-increment:import-step;position:relative;padding-left:38px;margin-bottom:22px}
+.import-steps li:before{content:counter(import-step);position:absolute;left:0;top:-2px;width:25px;height:25px;border:1px solid #cbb997;border-radius:50%;display:grid;place-items:center;font:14px Georgia,serif;color:#896a3c}
+.import-steps strong,.import-local-note strong{font-size:13px;font-weight:600}
+.import-steps p,.import-interface p{font-size:12px;line-height:1.9;color:#66746b;margin:7px 0 0;overflow-wrap:anywhere}
+.import-guide-body code{font-family:ui-monospace,Consolas,monospace;overflow-wrap:anywhere}
+.import-copy{font-size:11px;margin-top:9px;padding:8px 11px;min-height:36px;background:transparent;border-color:#bcbfaa}
+.import-example{font-size:11px;color:#697469;margin:4px 0 18px}
+.import-example summary,.import-technical summary{cursor:pointer;line-height:1.7;padding:9px 0;font-weight:600}
+.import-example p{padding:12px;background:#ede8d9;border-radius:8px;user-select:text}
+.import-local-note{padding:13px 15px;background:#eeecdf;border-radius:9px}
+.import-local-note p{font-size:11px;margin-top:4px}
+.import-interface{margin-top:28px;border-top:1px solid #d9d4c4;padding-top:24px}
+.import-interface-head{display:flex;justify-content:space-between;gap:18px;align-items:center}
+.import-interface-head h3{margin-bottom:12px}
+.import-interface a{font-size:12px;color:#96613a;text-decoration:underline;text-underline-offset:4px;line-height:1.8}
+.import-interface-head>a{white-space:nowrap}
+.import-spec-badges{display:flex;flex-wrap:wrap;gap:8px;margin:5px 0 16px}
+.import-spec-badges span{font-size:10px;color:#626d5f;border:1px solid #d8d7c7;padding:6px 9px;border-radius:5px;background:#fdf9ef}
+.import-modes{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.import-modes article{background:#fffcf3;border:1px solid #e2dccb;border-radius:10px;padding:16px 18px;min-width:0}
+.import-modes h4{font-size:13px;margin:0}
+.import-technical{margin-top:15px;border-bottom:1px solid #d9d4c4;padding-bottom:8px;font-size:12px}
+.import-technical dl{display:grid;grid-template-columns:145px minmax(0,1fr);font-size:11px;line-height:1.8;margin:15px 0;border-top:1px solid #ddd7c7}
+.import-technical dt,.import-technical dd{margin:0;padding:9px 10px;border-bottom:1px solid #ddd7c7;overflow-wrap:anywhere}
+.import-technical dt{font-family:ui-monospace,Consolas,monospace;color:#6a735f;background:#efeddf}
+.import-technical pre{padding:16px;background:#263f40;color:#f0ecd8;border-radius:8px;overflow:auto;font-size:11px;line-height:1.9}
+.import-technical pre code{overflow-wrap:normal}
+.import-technical .import-compatibility{font-size:11px;margin:15px 0;color:#7b7765}
+.import-guide-actions{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-shrink:0;padding:16px 30px;border-top:1px solid #ded8c7;background:#f7f3e7}
+#importGuideStatus{margin:0;font-size:11px;color:#6e7869;line-height:1.8;overflow-wrap:anywhere}
+#importGuideStatus.import-error{color:#a1442e}
+#chooseImportFile{background:#96603d;border-color:#96603d;color:#fff5df;font-size:13px;padding:13px 22px;min-height:46px;flex-shrink:0;min-width:185px}
+#chooseImportFile:hover{background:#825335}
+#chooseImportFile:disabled{cursor:wait;transform:none}
+#chooseImportFile span{margin-left:20px}
+@media(max-width:680px){
+ #importGuide{width:calc(100vw - 20px);height:94dvh;max-height:94dvh;border-radius:14px}
+ .import-guide-head{padding:19px 18px 16px;gap:10px}.import-guide-head h2{font-size:25px;letter-spacing:1px}.import-guide-head p{font-size:11px}
+ #closeImportGuide{width:38px;height:38px}.import-guide-body{padding:18px}
+ .import-guide-intro{grid-template-columns:1fr;gap:24px}.import-skill-card{padding:20px}.import-skill-card h3{font-size:23px;margin:12px 0;letter-spacing:.5px}
+ .import-modes{grid-template-columns:1fr;gap:10px}.import-interface-head{align-items:flex-start;flex-direction:column;gap:0}.import-interface-head h3{margin-bottom:7px}.import-interface-head>a{margin-bottom:10px}
+ .import-technical dl{grid-template-columns:112px minmax(0,1fr)}.import-technical dt,.import-technical dd{padding:8px 6px}
+ .import-guide-actions{padding:12px 18px max(12px,env(safe-area-inset-bottom));flex-direction:column;gap:8px;align-items:stretch}#chooseImportFile{width:100%;min-height:46px}#importGuideStatus{font-size:10px}
+}
+@media(max-height:500px) and (min-width:681px){.import-guide-head{padding:12px 24px}.import-guide-head h2{font-size:23px;margin:6px 0}.import-guide-head p{display:none}.import-guide-actions{padding:10px 24px}}

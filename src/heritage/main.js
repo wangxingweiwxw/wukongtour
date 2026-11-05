@@ -20,6 +20,7 @@ import {createSceneMapUI} from './scene-map-ui.js';
 import {createJourneyMapData,createCompoundMapData,createCourtyardMapData} from './scene-map-data.js';
 import {createMobileControls} from './mobile-controls.js';
 import {createTouchJoystick} from './touch-joystick.js';
+import {createImportGuide} from './import-guide.js';
 
 const $=id=>document.getElementById(id),loader=new GLTFLoader();
 const stops=[
@@ -160,8 +161,27 @@ $('photo').onclick=()=>{renderer.render(scene,camera);const a=document.createEle
 const architecturePhotoButton=document.createElement('button');architecturePhotoButton.type='button';architecturePhotoButton.id='architecturePhotoButton';architecturePhotoButton.textContent='建筑写实纪念照';
 architecturePhotoButton.onclick=()=>{if(!journey.knowledge.openPhoto())toast('请先从访古地图进入一条主题建筑路线');};
 $('photo').before(architecturePhotoButton);
-$('importButton').onclick=()=>{clearMovementInput();$('glbFile').click();};
-$('glbFile').onchange=async e=>{const file=e.target.files[0];if(!file)return;if(loading){toast('请等待当前场景加载完成');e.target.value='';return;}loading=true;toast('正在读取建筑模型……',0);try{if(file.size>96*1024*1024)throw Error('试玩版单个 GLB 限制为 96 MB');const buf=await file.arrayBuffer(),v=new DataView(buf);if(buf.byteLength<20||v.getUint32(0,true)!==0x46546c67||v.getUint32(4,true)!==2||v.getUint32(8,true)!==buf.byteLength)throw Error('请选择有效的 GLB 2.0 文件');const len=v.getUint32(12,true);if(v.getUint32(16,true)!==0x4e4f534a||20+len>buf.byteLength)throw Error('GLB JSON 数据不完整');const doc=JSON.parse(new TextDecoder().decode(buf.slice(20,20+len)));for(const resource of [...(doc.images||[]),...(doc.buffers||[])])if(resource.uri&&!resource.uri.startsWith('data:'))throw Error('请导出贴图全部内嵌的 GLB');const gltf=await loader.parseAsync(buf,'');const importedWorld=createImportedCompound(gltf);if(importedWorld){enterCompound(importedWorld,{duringImport:true});toast('已导入 '+importedWorld.displayName+' · 可进入殿堂漫游');return;}installBuilding(gltf,true);$('stationName').textContent='我的古建';$('stationType').textContent=file.name;$('factTitle').textContent='模型预览庭院';$('fact').textContent='已按庭院大小自动缩放并落地。当前使用包围盒碰撞，无法进入模型内部；可在访古地图中返回示范场景。';$('source').hidden=true;frameView();showCourtyardMap('我的古建 · 模型庭院');toast('模型已导入 · 只在本次浏览器会话中展示');}catch(err){toast('导入失败：'+err.message,0);}finally{loading=false;e.target.value='';}};
+const importGuide=createImportGuide({trigger:$('importButton'),fileInput:$('glbFile'),clearInput:clearMovementInput});
+$('glbFile').onchange=async e=>{
+ const file=e.target.files[0];if(!file)return;
+ if(loading||!hero){importGuide.showError('请等待当前场景加载完成后重试');e.target.value='';return;}
+ loading=true;clearMovementInput();importGuide.setBusy(true);toast('正在读取建筑模型……',0);
+ try{
+  if(file.size>96*1024*1024)throw Error('单个 GLB 限制为 96 MiB');
+  const buf=await file.arrayBuffer(),v=new DataView(buf);
+  if(buf.byteLength<20||v.getUint32(0,true)!==0x46546c67||v.getUint32(4,true)!==2||v.getUint32(8,true)!==buf.byteLength)throw Error('请选择有效的 GLB 2.0 文件');
+  const len=v.getUint32(12,true);
+  if(v.getUint32(16,true)!==0x4e4f534a||20+len>buf.byteLength)throw Error('GLB JSON 数据不完整');
+  const doc=JSON.parse(new TextDecoder().decode(buf.slice(20,20+len)));
+  for(const resource of [...(doc.images||[]),...(doc.buffers||[])])if(resource.uri&&!resource.uri.startsWith('data:'))throw Error('请导出贴图全部内嵌的 GLB');
+  const gltf=await loader.parseAsync(buf,'');const importedWorld=createImportedCompound(gltf);
+  if(importedWorld){enterCompound(importedWorld,{duringImport:true});importGuide.close();toast('已导入 '+importedWorld.displayName+' · 可进入殿堂漫游');return;}
+  installBuilding(gltf,true);$('stationName').textContent='我的古建';$('stationType').textContent=file.name;
+  $('factTitle').textContent='模型预览庭院';$('fact').textContent='已按庭院大小自动缩放并落地。当前使用包围盒碰撞，无法进入模型内部；可在访古地图中返回示范场景。';
+  $('source').hidden=true;frameView();showCourtyardMap('我的古建 · 模型庭院');importGuide.close();toast('模型已导入 · 只在本次浏览器会话中展示');
+ }catch(err){importGuide.showError(err.message);toast('导入失败：'+err.message,0);}
+ finally{loading=false;importGuide.setBusy(false);e.target.value='';}
+};
 let mobileView;
 function frameView(){
  if(compound?.active){compound.frameCamera();return;}
