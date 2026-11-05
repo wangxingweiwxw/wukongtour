@@ -20,6 +20,18 @@ export const REFERENCE_SIZES = {
   '/references/foguang.jpg': [1024, 691],
   '/references/shuilu.jpg': [1080, 957],
   '/references/xiaoxitian.png': [756, 420],
+  '/references/ai/xuankong-2.png': [1536, 1024],
+  '/references/ai/xuankong-3.png': [1536, 1024],
+  '/references/ai/yingxian-2.png': [1536, 1024],
+  '/references/ai/yingxian-3.png': [1536, 1024],
+  '/references/ai/dule-2.png': [1536, 1024],
+  '/references/ai/dule-3.png': [1536, 1024],
+  '/references/ai/foguang-2.png': [1536, 1024],
+  '/references/ai/foguang-3.png': [1536, 1024],
+  '/references/ai/xiaoxitian-2.png': [1536, 1024],
+  '/references/ai/xiaoxitian-3.png': [1536, 1024],
+  '/references/ai/shuilu-2.png': [1536, 1024],
+  '/references/ai/shuilu-3.png': [1536, 1024],
 };
 
 export function setReferenceImage(viewport, image, source, description) {

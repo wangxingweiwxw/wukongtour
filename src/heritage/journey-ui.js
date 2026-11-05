@@ -3,6 +3,7 @@ import {setReferenceImage} from './reference-crops.js';
 
 const REFERENCE_NOTE = '原创 MC 风格主题场景，非文物测绘复原。';
 const MAP_REFERENCE_NOTE = '本程暂以访古地图作为观察参考。';
+const AI_REFERENCE_NOTE = 'AI 生成的建筑细节演绎，用于辅助观察，非实地照片或官方游戏截图。';
 const FAILURE_TEXT = {
   'wrong-answer': '再看看图中的细节，换一个答案试试。答错不会扣分。',
   'out-of-range': '距离观察点有些远了。先走回金色圆环，再来记录。',
@@ -298,12 +299,13 @@ export function createJourneyUI({journeys, state, onTravel, onInteract, onAnswer
     observationTitle.textContent = point.title;
     const referenceKind = point.referenceKind || journey.referenceKind || 'game';
     const fromMap = referenceKind === 'map';
-    const referenceLabel = fromMap ? '访古地图' : referenceKind === 'photo' ? '建筑照片' : '游戏画面';
+    const fromAI = referenceKind === 'ai';
+    const referenceLabel = fromMap ? '访古地图' : fromAI ? 'AI 建筑细节图' : referenceKind === 'photo' ? '建筑照片' : '游戏画面';
     setReferenceImage(referenceViewport, reference, point.reference || journey.reference,
       `${journey.name}：${point.title} · ${referenceLabel}`);
-    referenceCaption.hidden = !fromMap;
-    referenceCaption.textContent = fromMap ? '访古地图 · 本程造型参考' : '';
-    observationNote.textContent = fromMap ? MAP_REFERENCE_NOTE : REFERENCE_NOTE;
+    referenceCaption.hidden = !fromMap && !fromAI;
+    referenceCaption.textContent = fromMap ? '访古地图 · 本程造型参考' : fromAI ? 'AI 生成 · 建筑细节演绎' : '';
+    observationNote.textContent = fromMap ? MAP_REFERENCE_NOTE : fromAI ? AI_REFERENCE_NOTE : REFERENCE_NOTE;
     imageError.hidden = true;
     questionHint.textContent = point.hint || '看看场景，再对照图片里的建筑。';
     question.textContent = point.question;

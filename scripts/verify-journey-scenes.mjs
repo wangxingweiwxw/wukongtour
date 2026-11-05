@@ -96,7 +96,11 @@ for (const journey of JOURNEYS) {
     assert.ok(point.position[2] >= MIN_Z && point.position[2] <= MAX_Z);
     assert.equal(reached[cell(point.position)], 1, `${point.id}: route is blocked`);
   }
-  assert.equal(Math.hypot(scene.spawn[0] - scene.points[0].position[0], scene.spawn[2] - scene.points[0].position[2]), 5);
+  assert.equal(Math.hypot(scene.spawn[0] - scene.points[0].position[0], scene.spawn[2] - scene.points[0].position[2]), id === 'kaiyuan' ? 15.5 : 5);
+  if (id === 'kaiyuan') {
+    assert.deepEqual(scene.points.map(point => point.position), [[0,0,4.5],[-16,0,0],[16,0,0]]);
+    assert.equal(scene.points.some(point => point.position[0] === 0 && point.position[2] === 15), false, 'removed marker is absent');
+  }
   for (const c of scene.colliders) {
     assert.ok(Object.values(c).every(Number.isFinite));
     assert.ok(c.minX < c.maxX && c.minZ < c.maxZ);

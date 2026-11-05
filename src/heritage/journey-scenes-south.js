@@ -266,8 +266,8 @@ export function kaiyuanTowers(b) {
   stonePagoda(b,10.2,-12.2,.94,1);
   // A calm axial garden links the paired towers without blocking the cross-path.
   b.path([[0,7],[0,-19]],3.4);
-  // A low, open mountain gate identifies the temple entrance. Its fourth stop
-  // sits on the existing approach at [0, 0, 4.5]; the first three stay unchanged.
+  // A low, open mountain gate identifies the temple entrance. Stop 1 now sits
+  // here at [0, 0, 4.5]; the two tower-side stops keep their original positions.
   // No sill or platform spans the opening, and collision leaves a 2.38m-wide
   // centre passage after the scene's existing staff-clearance padding.
   const gateZ=-2, gateFront=-.6;

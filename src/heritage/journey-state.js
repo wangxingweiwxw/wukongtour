@@ -2,7 +2,7 @@ import {JOURNEYS} from './journey-data.js';
 
 export const JOURNEY_SAVE_KEY = 'wukong-journey-v1';
 export const OBSERVATION_RADIUS = 2.4;
-const SAVE_VERSION = 1;
+const SAVE_VERSION = 2;
 const journeys = new Map(JOURNEYS.map(journey => [journey.id, journey]));
 const points = new Map(JOURNEYS.flatMap(journey => journey.points.map(point => [point.id, {point, sceneId: journey.id}])));
 
@@ -20,12 +20,19 @@ export function createJourneyState(storage) {
       const data = JSON.parse(raw);
       if (data && typeof data === 'object' && !Array.isArray(data)) {
         if (Number.isInteger(data.version) && data.version > SAVE_VERSION) writable = false;
-        if (data.version === SAVE_VERSION) {
+        if (data.version === 1 || data.version === SAVE_VERSION) {
           if (journeys.has(data.activeId)) activeId = data.activeId;
           if (Array.isArray(data.completed)) {
-            for (const id of data.completed) if (typeof id === 'string' && points.has(id)) completed.add(id);
+            for (let id of data.completed) {
+              if (typeof id !== 'string') continue;
+              // Version 1's original Kaiyuan stop 1 was removed. The gate stop
+              // formerly numbered 4 now owns id 1; never award it for old stop 1.
+              if (data.version === 1 && id === 'kaiyuan-1') continue;
+              if (data.version === 1 && id === 'kaiyuan-4') id = 'kaiyuan-1';
+              if (points.has(id)) completed.add(id);
+            }
           }
-          saved = true;
+          saved = data.version === SAVE_VERSION;
         }
       }
     }

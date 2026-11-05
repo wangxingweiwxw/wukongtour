@@ -11,6 +11,7 @@
     "assets:bake": "node scripts/bake-courtyard.mjs",
     "test:heritage": "node scripts/verify-heritage.mjs && node scripts/verify-camera.mjs",
     "test:journey": "node scripts/verify-journey.mjs && node scripts/verify-journey-scenes.mjs",
+    "test:references": "node scripts/verify-observation-references.mjs",
     "test:compound": "node scripts/verify-walk.mjs && node scripts/verify-compound-scene.mjs && node scripts/verify-compound-lighting.mjs",
     "test:movement": "node scripts/verify-movement.mjs",
     "test:joystick": "node scripts/verify-touch-joystick.mjs",
