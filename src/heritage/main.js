@@ -90,7 +90,8 @@ function travelJourney(id){
   cameraBounds.splice(0,cameraBounds.length,...entered.world.cameraBounds);
   const {data,world}=entered;scene.background.set(world.theme.sky);scene.fog.color.set(world.theme.fog);sun.color.set(world.theme.sun);
   if(world.flight){scene.fog.near=65;scene.fog.far=180;hemisphere.intensity=1.45;rim.intensity=.7;}
-  $('stationNumber').textContent=`访古路线 · ${journey.state.progress(data.id).done} / 3`;
+  const routeProgress=journey.state.progress(data.id);
+  $('stationNumber').textContent=`访古路线 · ${routeProgress.done} / ${routeProgress.total}`;
   $('stationName').textContent=data.name;$('stationType').textContent=data.region;
   viewMode='hero';frameView();renderer.shadowMap.needsUpdate=true;
   localMap.setScene(createJourneyMapData(data.id,world),world.root);

@@ -11,8 +11,20 @@ export const REFERENCE_CROPS = {
   '/references/yingxian.jpg': [2, 347, 1044, 782],
 };
 
+// Standalone references fill a window with their own aspect ratio, keeping the
+// complete building in view instead of forcing wide or tall photos into 4:3.
+export const REFERENCE_SIZES = {
+  '/references/yungang-wall.jpg': [1200, 911],
+  '/references/dule.jpg': [2000, 1333],
+  '/references/kaiyuan.png': [1000, 578],
+  '/references/foguang.jpg': [1024, 691],
+  '/references/shuilu.jpg': [1080, 957],
+  '/references/xiaoxitian.png': [756, 420],
+};
+
 export function setReferenceImage(viewport, image, source, description) {
   const crop = REFERENCE_CROPS[source];
+  const size = REFERENCE_SIZES[source];
   viewport.classList.toggle('is-cropped', Boolean(crop));
   viewport.style.removeProperty('aspect-ratio');
   image.removeAttribute('style');
@@ -23,6 +35,8 @@ export function setReferenceImage(viewport, image, source, description) {
       width: `${1179 / width * 100}%`, height: `${2556 / height * 100}%`,
       left: `${-x / width * 100}%`, top: `${-y / height * 100}%`,
     });
+  } else if (size) {
+    viewport.style.aspectRatio = `${size[0]} / ${size[1]}`;
   }
   image.alt = description;
   image.src = source;

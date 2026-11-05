@@ -2,7 +2,7 @@ import { enterablePlatform, interiorObstacle } from './journey-interiors.js';
 import { addPlaqueFace } from './architectural-plaque.js';
 
 // Map-inspired observation spaces, intentionally authored as original scenes.
-// Each opens toward +Z; the three observation stops remain on the valley floor.
+// Each opens toward +Z; the observation stops remain on the valley floor.
 const C = {
   rock: ['#aaa18c', '#c7b89b', '#b5a487', '#958a75'],
   stone: ['#a8aaa0', '#c2c3b6', '#92998f', '#d0cdbd'],
@@ -266,6 +266,29 @@ export function kaiyuanTowers(b) {
   stonePagoda(b,10.2,-12.2,.94,1);
   // A calm axial garden links the paired towers without blocking the cross-path.
   b.path([[0,7],[0,-19]],3.4);
+  // A low, open mountain gate identifies the temple entrance. Its fourth stop
+  // sits on the existing approach at [0, 0, 4.5]; the first three stay unchanged.
+  // No sill or platform spans the opening, and collision leaves a 2.38m-wide
+  // centre passage after the scene's existing staff-clearance padding.
+  const gateZ=-2, gateFront=-.6;
+  for(const side of [-1,1]){
+    const wingX=side*4.15;
+    b.box(wingX,.2,gateZ,1.8,.4,2.8,C.stone[2]);
+    b.box(wingX,1.8,gateZ,1.45,2.8,2.5,C.red,'wood');
+    b.obstacle(wingX,gateZ,1.8,2.8,0,3.2);
+    for(const x of [side*3.2,side*5.1])for(const z of [gateFront,-3.4]){
+      b.pillar(x,0,z,3.65,.48,true);
+      b.obstacle(x,z,.72,.72,0,4.1);
+    }
+    // The timber leaves are held open alongside the jambs, not across the path.
+    b.box(side*2.95,1.6,gateZ,.16,3.2,2.35,C.wood,'wood');
+    b.box(side*2.85,1.55,-1.1,.08,.24,.14,C.gold[1],'metal');
+    b.obstacle(side*2.95,gateZ,.16,2.35,0,3.2);
+  }
+  for(const z of [gateFront,-3.4])b.box(0,4.05,z,10.9,.42,.55,C.wood,'wood');
+  b.box(0,3.62,gateFront+.32,3.2,.7,.18,C.dark,'wood');
+  addPlaqueFace(b.root,{text:'开元寺',position:[0,3.62,gateFront+.425],width:3.2,height:.7});
+  b.roof(0,4.32,gateZ,12.6,5.3,1.45,C.roof);
   b.hall(0,-24.5,10,5,0,3.3,true,'开元寺');
   b.obstacle(0,-24.5,11.4,6.4,0,6.7);
   for(const side of [-1,1]){
@@ -291,5 +314,6 @@ export function kaiyuanTowers(b) {
     ['east-tower','东侧石塔',[10.2,11.6,-12.2]],
     ['hall','双塔后殿',[0,4,-24.5]],
     ['stele','石刻碑亭',[7.8,2,3]],
+    ['gate','开元寺山门',[0,3.62,gateFront]],
   ];
 }

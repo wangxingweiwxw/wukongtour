@@ -38,7 +38,9 @@ check('All nine artwork sites have distinct playable journeys', () => {
   const routes = atlasRoutes();
   assert(routes.every(route => route.onArtwork), 'Every journey must be selectable from the artwork');
   assert.deepEqual(routes.map(route => route.number), [1, 2, 3, 4, 5, 6, 7, 8, 9]);
-  assert(routes.every(route => route.done === 0 && route.total === 3 && !route.complete && !route.current));
+  assert(routes.every(route => route.done === 0 && route.total === route.points.length && !route.complete && !route.current));
+  assert.equal(routes.reduce((total, route) => total + route.total, 0), 28);
+  assert.equal(routes.find(route => route.id === 'kaiyuan').total, 4);
 });
 
 check('The cliff temple is Xuankong in Hunyuan; Guangsheng remains a separate library site', () => {
@@ -59,8 +61,8 @@ check('The wider research directory stays separate while former demo sites gain 
     assert.equal(routeForSite(site.id), null, `Unexpected playable route for ${site.id}`);
   }
   // These also retain legacy generic examples, separate from the new routes.
-  assert.equal(routeForSite('foguang').points.length, 3);
-  assert.equal(routeForSite('dule').points.length, 3);
+  assert.deepEqual(routeForSite('foguang').points, JOURNEYS.find(route => route.id === 'foguang').points);
+  assert.deepEqual(routeForSite('dule').points, JOURNEYS.find(route => route.id === 'dule').points);
   for (const unknown of ['missing', '__proto__', '', null, undefined]) assert.equal(routeForSite(unknown), null);
 });
 
@@ -113,10 +115,27 @@ check('Travel preserves collected pages, observations update map progress, and r
   routes = atlasRoutes(restored, restored.activeId);
   assert.equal(restored.activeId, 'yungang');
   assert.deepEqual(routes.map(route => [route.id, route.done, route.total, route.complete]),
-    JOURNEYS.map(route => [route.id, route.id === 'shisi' ? 1 : route.id === 'yungang' ? 3 : 0, 3, route.id === 'yungang']));
+    JOURNEYS.map(route => [route.id, route.id === 'shisi' ? 1 : route.id === 'yungang' ? route.points.length : 0,
+      route.points.length, route.id === 'yungang']));
   assert.equal(restored.travel('shisi'), true);
   assert.deepEqual(atlasRoutes(restored, restored.activeId).filter(route => route.current).map(route => route.id), ['shisi']);
-  assert.equal(restored.progress().done, 4);
+  assert.equal(restored.progress().done, 1 + yungang.points.length);
+});
+
+check('A legacy completed Kaiyuan route shows 3/4 on the map until its new observation is collected', () => {
+  const storage = memoryStorage();
+  storage.setItem(JOURNEY_SAVE_KEY, JSON.stringify({version: 1, activeId: 'kaiyuan',
+    completed: ['kaiyuan-1', 'kaiyuan-2', 'kaiyuan-3']}));
+  const state = createJourneyState(storage), writes = storage.writes;
+  let route = atlasRoutes(state, state.activeId).find(entry => entry.id === 'kaiyuan');
+  assert.deepEqual([route.done, route.total, route.complete, route.current], [3, 4, false, true]);
+  assert.equal(storage.writes, writes, 'reading map progress must not rewrite the legacy save');
+  assert.equal(state.nextPoint().id, 'kaiyuan-4');
+  collect(state, state.nextPoint());
+  const restored = createJourneyState(storage);
+  route = atlasRoutes(restored, restored.activeId).find(entry => entry.id === 'kaiyuan');
+  assert.deepEqual([route.done, route.total, route.complete, route.current], [4, 4, true, true]);
+  assert.deepEqual(restored.completed, ['kaiyuan-1', 'kaiyuan-2', 'kaiyuan-3', 'kaiyuan-4']);
 });
 
 console.log(JSON.stringify({passed: results.length, artworkPins: ART_PINS.length, playableRoutes: JOURNEYS.length, scenarios: results}, null, 2));

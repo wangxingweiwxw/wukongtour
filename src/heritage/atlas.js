@@ -118,6 +118,7 @@ export function createHeritageAtlas({onTravel, getModels = () => [], onModel, ge
  function render() {
   const list=routes(), total=list.reduce((sum,r)=>sum+r.done,0), count=list.reduce((sum,r)=>sum+r.total,0);
   $('atlasStats').textContent=`${list.length} 条可玩路线 · ${total} / ${count} 处发现已入册`;
+  document.querySelector('#map .map-note').textContent=`地图上的 ${list.length} 处古建均已开放主题路线，共 ${count} 处观察点；点击地名，选择这一程。艺术地图用于游戏选关，非实地导航；场景为原创 MC 风格概括。`;
   $('atlas').setAttribute('aria-label',`中国访古艺术地图，${ART_PINS.length} 处建筑可点击选择，含 ${list.length} 条可玩路线`);
   $('atlasProgress').value=total; $('atlasProgress').max=count;
   $('atlasProgress').setAttribute('aria-label',`游记收集 ${total}/${count}`);

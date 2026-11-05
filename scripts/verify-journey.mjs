@@ -9,27 +9,32 @@ function memoryStorage(initial) {
 }
 const results = [];
 function check(name, action) { action(); results.push(name); }
+const TOTAL_PAGES = 28;
 const first = JOURNEYS[0].points[0], position = [0, 0, 15], here = {x: 0, z: 15};
 const submit = (state, point = first, player = here, where = position) => state.submit(point.id, point.answer, player, where);
 
-check('All 27 tasks have unique ids, valid choices, existing references and matched scene prefixes', () => {
+check('All 28 tasks have unique ids, valid choices, existing references and matched scene prefixes', () => {
   assert.equal(JOURNEYS.length, 9);
   assert.deepEqual(JOURNEYS.slice(0, 4).map(route => route.id), ['shisi', 'yungang', 'xuankong', 'yingxian']);
   const ids = new Set();
   for (const journey of JOURNEYS) {
-    assert.equal(journey.points.length, 3);
+    assert(journey.points.length > 0, `${journey.id}: no observation points`);
     journey.points.forEach((point, i) => {
       assert.equal(point.id, `${journey.id}-${i + 1}`);
       assert(!ids.has(point.id)); ids.add(point.id);
       assert.equal(point.options.length, 3);
       assert(Number.isInteger(point.answer) && point.answer >= 0 && point.answer < point.options.length);
       const reference = point.reference || journey.reference;
+      const referenceKind = point.referenceKind || journey.referenceKind || 'game';
+      assert(['map', 'photo', 'game'].includes(referenceKind), `${point.id}: unknown reference kind`);
       assert(existsSync(new URL(`../public${reference}`, import.meta.url)), `Missing reference: ${reference}`);
-      if (journey.referenceKind === 'map') assert.equal(reference, '/heritage-map-v2.png');
-      else assert(reference.startsWith('/references/') && reference.endsWith('.jpg'));
+      if (referenceKind === 'map') assert.equal(reference, '/heritage-map-v2.png');
+      else assert(/^\/references\/.+\.(jpg|png)$/.test(reference), `${point.id}: unsupported reference ${reference}`);
     });
   }
-  assert.equal(ids.size, 27);
+  assert.equal(ids.size, TOTAL_PAGES);
+  assert.deepEqual(JOURNEYS.find(route => route.id === 'kaiyuan').points.map(point => point.id),
+    ['kaiyuan-1', 'kaiyuan-2', 'kaiyuan-3', 'kaiyuan-4']);
 });
 
 check('Walking into interaction range is required; the exact 2.4 m boundary is accepted', () => {
@@ -87,20 +92,20 @@ check('Repeated collection is idempotent and returned completion arrays cannot m
   assert.deepEqual(submit(state), {ok: true, reason: 'already-complete', already: true, saved: true});
   state.completed.push('shisi-2');
   assert.deepEqual(state.completed, [first.id]);
-  assert.deepEqual(state.progress(), {done: 1, total: 27});
+  assert.deepEqual(state.progress(), {done: 1, total: TOTAL_PAGES});
 });
 
-check('Complete all nine journeys, close/recreate state, and restore all 27 pages plus current destination', () => {
+check('Complete all nine journeys, close/recreate state, and restore all 28 pages plus current destination', () => {
   const storage = memoryStorage(), state = createJourneyState(storage);
   for (const journey of JOURNEYS) {
     assert(state.travel(journey.id));
     for (const point of journey.points) assert.equal(submit(state, point).saved, true);
-    assert.deepEqual(state.progress(journey.id), {done: 3, total: 3});
+    assert.deepEqual(state.progress(journey.id), {done: journey.points.length, total: journey.points.length});
     assert.equal(state.nextPoint(), null);
   }
   const reopened = createJourneyState(storage);
   assert.equal(reopened.activeId, 'kaiyuan');
-  assert.deepEqual(reopened.progress(), {done: 27, total: 27});
+  assert.deepEqual(reopened.progress(), {done: TOTAL_PAGES, total: TOTAL_PAGES});
   assert.deepEqual(new Set(reopened.completed), new Set(state.completed));
   const disk = JSON.parse(storage.getItem(JOURNEY_SAVE_KEY));
   assert.equal(disk.version, 1);
@@ -114,22 +119,53 @@ check('Existing four-route saves retain all twelve discoveries and unlock five e
   assert.equal(JOURNEY_SAVE_KEY, 'wukong-journey-v1');
   assert.equal(state.activeId, 'xuankong');
   assert.deepEqual(state.completed, oldIds);
-  assert.deepEqual(state.progress(), {done: 12, total: 27});
+  assert.deepEqual(state.progress(), {done: 12, total: TOTAL_PAGES});
   assert.equal(storage.getItem(JOURNEY_SAVE_KEY), raw, 'loading must not overwrite the existing save');
-  for (const journey of JOURNEYS.slice(4)) assert.deepEqual(state.progress(journey.id), {done: 0, total: 3});
+  for (const journey of JOURNEYS.slice(4)) assert.deepEqual(state.progress(journey.id), {done: 0, total: journey.points.length});
   assert.equal(state.travel('dule'), true);
   assert.equal(submit(state, JOURNEYS.find(route => route.id === 'dule').points[0]).saved, true);
   const restored = createJourneyState(storage);
   assert.equal(restored.activeId, 'dule');
-  assert.deepEqual(restored.progress(), {done: 13, total: 27});
+  assert.deepEqual(restored.progress(), {done: 13, total: TOTAL_PAGES});
   assert(oldIds.every(id => restored.has(id)));
+});
+
+check('Completed 27-page saves retain every discovery, leave Kaiyuan 4 pending, and can finish the new page', () => {
+  // Freeze the legacy ids independently of current data so additions or renamed
+  // points cannot silently change what this old completed save contains.
+  const legacyRoutes = ['shisi', 'yungang', 'xuankong', 'yingxian', 'dule', 'foguang', 'xiaoxitian', 'shuilu', 'kaiyuan'];
+  const oldIds = legacyRoutes.flatMap(id => [1, 2, 3].map(number => `${id}-${number}`));
+  const raw = JSON.stringify({version: 1, activeId: 'kaiyuan', completed: oldIds});
+  const storage = memoryStorage(raw), state = createJourneyState(storage);
+  assert.equal(JOURNEY_SAVE_KEY, 'wukong-journey-v1');
+  assert.equal(state.activeId, 'kaiyuan');
+  assert.deepEqual(state.completed, oldIds);
+  assert.deepEqual(state.progress(), {done: 27, total: TOTAL_PAGES});
+  assert.deepEqual(state.progress('kaiyuan'), {done: 3, total: 4});
+  assert.equal(state.has('kaiyuan-4'), false);
+  assert.equal(state.nextPoint().id, 'kaiyuan-4');
+  assert.equal(storage.getItem(JOURNEY_SAVE_KEY), raw, 'loading must not overwrite the legacy save');
+  for (const id of legacyRoutes.slice(0, -1)) assert.equal(state.nextPoint(id), null, `${id}: lost legacy progress`);
+
+  // A normal save before collecting the addition must retain the old pages too.
+  assert.equal(state.travel('kaiyuan'), true);
+  const pending = createJourneyState(storage);
+  assert.deepEqual(pending.completed, oldIds);
+  assert.equal(pending.nextPoint().id, 'kaiyuan-4');
+  assert.deepEqual(submit(pending, pending.nextPoint()), {ok: true, reason: 'collected', already: false, saved: true});
+  const finished = createJourneyState(storage);
+  assert.equal(finished.activeId, 'kaiyuan');
+  assert.deepEqual(finished.completed, [...oldIds, 'kaiyuan-4']);
+  assert.deepEqual(finished.progress(), {done: TOTAL_PAGES, total: TOTAL_PAGES});
+  assert.deepEqual(finished.progress('kaiyuan'), {done: 4, total: 4});
+  assert.equal(finished.nextPoint(), null);
 });
 
 check('Damaged saves recover safely; known ids are validated and deduplicated', () => {
   for (const raw of ['{', 'null', '[]', 'true', '{"version":0}', '{"version":"1"}']) {
     const state = createJourneyState(memoryStorage(raw));
     assert.equal(state.activeId, 'shisi');
-    assert.deepEqual(state.progress(), {done: 0, total: 27});
+    assert.deepEqual(state.progress(), {done: 0, total: TOTAL_PAGES});
   }
   const storage = memoryStorage(JSON.stringify({version: 1, activeId: 'unknown', completed: [first.id, first.id, 0, null, {}, 'missing']}));
   const state = createJourneyState(storage);

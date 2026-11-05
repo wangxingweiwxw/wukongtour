@@ -262,7 +262,7 @@ export function createJourneyUI({journeys, state, onTravel, onInteract, onAnswer
     hud.classList.toggle('is-complete', Boolean(target.complete));
     hudKicker.textContent = target.complete ? '本程 · 已入册' : '下一处 · 观察';
     targetTitle.textContent = target.complete ? '这一程，已看见。' : target.title || '寻找第一处细节';
-    targetHint.textContent = target.complete ? '三处发现已收好。继续漫游，或翻开路线前往下一站。' : target.hint || '沿金色光点，走到观察圆环。';
+    targetHint.textContent = target.complete ? '本程的发现已收好。继续漫游，或翻开路线前往下一站。' : target.hint || '沿金色光点，走到观察圆环。';
     bearing.hidden = Boolean(target.complete);
     bearingText.textContent = target.ready ? '已到达观察点' : target.direction || '寻找金色圆环';
     distanceText.textContent = target.ready ? '可观察' : distance === null ? '—' : `${distance} m`;
@@ -296,9 +296,11 @@ export function createJourneyUI({journeys, state, onTravel, onInteract, onAnswer
     const journey = journeys.find(entry => entry.points.some(p => p.id === point.id)) || current();
     observationKicker.textContent = `${journey.name} · ${observingCompleted ? '游记重温' : '发现一处细节'}`;
     observationTitle.textContent = point.title;
-    const fromMap = journey.referenceKind === 'map';
+    const referenceKind = point.referenceKind || journey.referenceKind || 'game';
+    const fromMap = referenceKind === 'map';
+    const referenceLabel = fromMap ? '访古地图' : referenceKind === 'photo' ? '建筑照片' : '游戏画面';
     setReferenceImage(referenceViewport, reference, point.reference || journey.reference,
-      `${journey.name}：${point.title} · ${fromMap ? '访古地图' : '游戏画面'}`);
+      `${journey.name}：${point.title} · ${referenceLabel}`);
     referenceCaption.hidden = !fromMap;
     referenceCaption.textContent = fromMap ? '访古地图 · 本程造型参考' : '';
     observationNote.textContent = fromMap ? MAP_REFERENCE_NOTE : REFERENCE_NOTE;

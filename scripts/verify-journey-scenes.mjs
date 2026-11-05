@@ -51,10 +51,12 @@ function assertWalkPath(label, world, start, end) {
   return path;
 }
 
-for (const {id} of JOURNEYS) {
+for (const journey of JOURNEYS) {
+  const {id} = journey;
   const scene = createJourneyScene(id);
   assert.ok(scene.root instanceof THREE.Group);
-  assert.equal(scene.points.length, 3);
+  assert.deepEqual(scene.points.map(point => point.id), journey.points.map(point => point.id),
+    `${id}: scene markers must match every authored observation`);
   const sceneMeshes=[];scene.root.traverse(node=>{if(node.isMesh)sceneMeshes.push(node);});
   assert.ok(sceneMeshes.length <= 25, `${id}: draw call budget`);
   assert.deepEqual(scene.bounds, {minX: MIN_X, maxX: MAX_X, minZ: MIN_Z, maxZ: MAX_Z});
@@ -110,7 +112,7 @@ for (const {id} of JOURNEYS) {
     triangles += mesh.geometry.index.count / 3;
   }
   assert.ok(triangles < 50000, `${id}: triangle budget`);
-  console.log(`${id}: ${sceneMeshes.length} draw batches, ${triangles} triangles; 3 reachable points + all 16 guided paths traversed with the gameplay controller`);
+  console.log(`${id}: ${sceneMeshes.length} draw batches, ${triangles} triangles; ${scene.points.length} reachable points + all ${destinations.length ** 2} guided paths traversed with the gameplay controller`);
   scene.root.traverse(node => { node.geometry?.dispose(); node.material?.dispose(); });
 }
 
