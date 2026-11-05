@@ -1,0 +1,3730 @@
+{
+  "version": 1,
+  "title": "古建筑资料与模型内置库",
+  "snapshotDate": "2026-11-05",
+  "pathsRelativeTo": "directory containing this catalog.json",
+  "identityNote": "候选为人工初筛或主题配置，不代表真实古建身份已确认。",
+  "atlasMeta": {
+    "checkedAt": "2026-11-02",
+    "scope": "公开报道支持的代表地点，非游戏官方完整资产目录",
+    "coordinateNote": "点位为区县 / 地区级近似位置；近邻点分开展示，不可用于实地导航。"
+  },
+  "reuseNote": "按形制、时代感、材质与尺度挑选补充模型。已收录不代表与目标建筑身份一致；不要为了填满空地混入不合主题的地标。",
+  "counts": {
+    "sites": 23,
+    "assets": 43,
+    "converted": 40,
+    "originalDemos": 3,
+    "previews": 40,
+    "glbBytes": 20327024,
+    "previewBytes": 376439,
+    "pending": 1
+  },
+  "sources": {
+    "beijing": {
+      "publisher": "京报网",
+      "date": "2024-08-21",
+      "title": "《黑神话：悟空》中的山西建筑古迹",
+      "url": "https://news.bjd.com.cn/2024/08/21/10873892.shtml"
+    },
+    "hangzhou": {
+      "publisher": "杭州网",
+      "date": "2024-08-31",
+      "title": "《悟空 不止是神话》· 建筑景观",
+      "url": "https://z.hangzhou.com.cn/2024/wukong/content/content_8834292.html"
+    },
+    "xinhua": {
+      "publisher": "新华社",
+      "date": "2024-08-22",
+      "title": "《黑神话：悟空》火了！中国古建“出圈”了！",
+      "url": "https://www.xinhuanet.com/20240822/f7de3658396c46248ccbc3de770756ee/c.html"
+    },
+    "jincheng": {
+      "publisher": "晋城市人民政府",
+      "date": "2024-10-19",
+      "title": "瞧！藏在晋城的秘密都在这里！",
+      "url": "https://www.jcgov.gov.cn/dtxx/ztzl/2018nzt/jcwmw/zxtp/202410/t20241019_2050400.shtml"
+    },
+    "gaoping": {
+      "publisher": "高平市人民政府 · 转人民日报",
+      "date": "2024-08-21",
+      "title": "高平铁佛寺火出圈",
+      "url": "https://www.sxgp.gov.cn/xwzx_358/jcdt_363/202408/t20240821_2023289.shtml"
+    },
+    "paper": {
+      "publisher": "澎湃新闻",
+      "date": "2024-08-21",
+      "title": "原画场景 VS 取景实地",
+      "url": "https://www.thepaper.cn/newsDetail_forward_28478378"
+    },
+    "zhejiang": {
+      "publisher": "浙江省风景名胜区协会",
+      "date": null,
+      "title": "《黑神话：悟空》中的浙江取景地",
+      "url": "https://ppaz.com.cn/newsinfo/8149037.html"
+    },
+    "archive": {
+      "publisher": "浙江在线 · 来源浙江省档案馆",
+      "date": "2025-06-04",
+      "title": "在景宁，竟藏着《黑神话：悟空》的取景地",
+      "url": "https://cs.zjol.com.cn/zt/qtdas/shengyin/sydag/202506/t20250604_31034627.shtml"
+    },
+    "quanzhou": {
+      "publisher": "泉州市人民政府 · 泉州晚报",
+      "date": "2024-09-06",
+      "title": "这两条旅游路线留下“悟空”足迹",
+      "url": "https://www.quanzhou.gov.cn/lyb/lyxw/202409/t20240925_3084650.htm"
+    },
+    "sichuan": {
+      "publisher": "四川日报",
+      "date": "2026-08-14",
+      "title": "千年茗山寺焕新亮相",
+      "url": "https://epaper.scdaily.cn/shtml/scrb/20260814/1086895.html"
+    },
+    "shandong": {
+      "publisher": "山东宣传网",
+      "date": "2024-09-05",
+      "title": "“悟空”带火古建筑，山东家底了解下",
+      "url": "https://www.sdxc.gov.cn/whql/whcc/202409/t20240905_14758288.htm"
+    },
+    "shaanxi": {
+      "publisher": "华商报 · 现场采访文管所",
+      "date": "2024-08-23",
+      "title": "探访《黑神话：悟空》取景地水陆庵",
+      "url": "https://hsb.hspress.net/system/2024/0823/222785.shtml"
+    },
+    "tianjin": {
+      "publisher": "新华社",
+      "date": "2024-11-04",
+      "title": "独乐寺与游戏文化传播报道",
+      "url": "https://www.xinhuanet.com/ci/20241104/e94a177dbea54bad95818d126b23ee84/c.html"
+    }
+  },
+  "sites": [
+    {
+      "id": "foguang",
+      "name": "佛光寺",
+      "province": "山西",
+      "locality": "忻州 · 五台县",
+      "lon": 113.25,
+      "lat": 38.73,
+      "category": "寺庙",
+      "feature": "东大殿、经幢与彩塑",
+      "relationship": "建筑及文物素材",
+      "evidence": "新华社明确提及佛光寺木构与文物元素进入游戏。",
+      "source": {
+        "publisher": "新华社",
+        "date": "2024-08-22",
+        "title": "《黑神话：悟空》火了！中国古建“出圈”了！",
+        "url": "https://www.xinhuanet.com/20240822/f7de3658396c46248ccbc3de770756ee/c.html"
+      },
+      "demoIndex": 0,
+      "coordinatePrecision": "地区近似点",
+      "modelStatus": "仅有通用风格化示范",
+      "sourceId": "xinhua",
+      "candidateAssetIds": [
+        "asset-6e5a13abf5fc"
+      ],
+      "genericDemoAssetIds": [
+        "demo-heritage-hall"
+      ]
+    },
+    {
+      "id": "yingxian",
+      "name": "应县木塔",
+      "province": "山西",
+      "locality": "朔州 · 应县",
+      "lon": 113.19,
+      "lat": 39.55,
+      "category": "古塔",
+      "feature": "高层木构与层叠出檐",
+      "relationship": "取景报道",
+      "evidence": "新华社将应县木塔列入游戏中呈现的古建。",
+      "source": {
+        "publisher": "新华社",
+        "date": "2024-08-22",
+        "title": "《黑神话：悟空》火了！中国古建“出圈”了！",
+        "url": "https://www.xinhuanet.com/20240822/f7de3658396c46248ccbc3de770756ee/c.html"
+      },
+      "demoIndex": 1,
+      "coordinatePrecision": "地区近似点",
+      "modelStatus": "仅有通用风格化示范",
+      "sourceId": "xinhua",
+      "candidateAssetIds": [],
+      "genericDemoAssetIds": [
+        "demo-heritage-tower"
+      ]
+    },
+    {
+      "id": "xiaoxitian",
+      "name": "小西天（千佛庵）",
+      "province": "山西",
+      "locality": "临汾 · 隰县",
+      "lon": 110.94,
+      "lat": 36.69,
+      "category": "彩塑",
+      "feature": "殿内悬塑群",
+      "relationship": "造像 / 装饰素材",
+      "evidence": "新华社明确提到小西天悬塑；不等于整座寺院原样搬入游戏。",
+      "source": {
+        "publisher": "新华社",
+        "date": "2024-08-22",
+        "title": "《黑神话：悟空》火了！中国古建“出圈”了！",
+        "url": "https://www.xinhuanet.com/20240822/f7de3658396c46248ccbc3de770756ee/c.html"
+      },
+      "coordinatePrecision": "地区近似点",
+      "modelStatus": "待制作对应模型",
+      "sourceId": "xinhua",
+      "candidateAssetIds": [
+        "asset-19cca1ae25dc"
+      ],
+      "genericDemoAssetIds": []
+    },
+    {
+      "id": "yuhuang",
+      "name": "泽州玉皇庙",
+      "province": "山西",
+      "locality": "晋城 · 泽州县",
+      "lon": 112.85,
+      "lat": 35.5,
+      "category": "彩塑",
+      "feature": "二十八星宿、亢金龙彩塑",
+      "relationship": "角色造型参考",
+      "evidence": "新华社明确指出亢金龙形象来自这里的二十八星宿彩塑。",
+      "source": {
+        "publisher": "新华社",
+        "date": "2024-08-22",
+        "title": "《黑神话：悟空》火了！中国古建“出圈”了！",
+        "url": "https://www.xinhuanet.com/20240822/f7de3658396c46248ccbc3de770756ee/c.html"
+      },
+      "coordinatePrecision": "地区近似点",
+      "modelStatus": "待制作对应模型",
+      "sourceId": "xinhua",
+      "candidateAssetIds": [],
+      "genericDemoAssetIds": []
+    },
+    {
+      "id": "tiefo",
+      "name": "高平铁佛寺",
+      "province": "山西",
+      "locality": "晋城 · 高平市",
+      "lon": 112.92,
+      "lat": 35.8,
+      "category": "彩塑",
+      "feature": "寺内彩塑造像",
+      "relationship": "造像 / 装饰素材",
+      "evidence": "当地政府报道展示游戏与铁佛寺画面对照。",
+      "source": {
+        "publisher": "高平市人民政府 · 转人民日报",
+        "date": "2024-08-21",
+        "title": "高平铁佛寺火出圈",
+        "url": "https://www.sxgp.gov.cn/xwzx_358/jcdt_363/202408/t20240821_2023289.shtml"
+      },
+      "coordinatePrecision": "地区近似点",
+      "modelStatus": "待制作对应模型",
+      "sourceId": "gaoping",
+      "candidateAssetIds": [],
+      "genericDemoAssetIds": []
+    },
+    {
+      "id": "yungang",
+      "name": "云冈石窟",
+      "province": "山西",
+      "locality": "大同 · 云冈区",
+      "lon": 113.14,
+      "lat": 40.06,
+      "category": "石窟石刻",
+      "feature": "石窟与佛教造像",
+      "relationship": "取景报道",
+      "evidence": "新华社将云冈石窟列入游戏古建、造像素材相关地点。",
+      "source": {
+        "publisher": "新华社",
+        "date": "2024-08-22",
+        "title": "《黑神话：悟空》火了！中国古建“出圈”了！",
+        "url": "https://www.xinhuanet.com/20240822/f7de3658396c46248ccbc3de770756ee/c.html"
+      },
+      "coordinatePrecision": "地区近似点",
+      "modelStatus": "待制作对应模型",
+      "sourceId": "xinhua",
+      "candidateAssetIds": [],
+      "genericDemoAssetIds": []
+    },
+    {
+      "id": "chongfu",
+      "name": "崇福寺",
+      "province": "山西",
+      "locality": "朔州 · 朔城区",
+      "lon": 112.43,
+      "lat": 39.32,
+      "category": "寺庙",
+      "feature": "殿宇木构",
+      "relationship": "取景报道",
+      "evidence": "新华社将崇福寺列入游戏呈现的山西古建。",
+      "source": {
+        "publisher": "新华社",
+        "date": "2024-08-22",
+        "title": "《黑神话：悟空》火了！中国古建“出圈”了！",
+        "url": "https://www.xinhuanet.com/20240822/f7de3658396c46248ccbc3de770756ee/c.html"
+      },
+      "coordinatePrecision": "地区近似点",
+      "modelStatus": "待制作对应模型",
+      "sourceId": "xinhua",
+      "candidateAssetIds": [],
+      "genericDemoAssetIds": []
+    },
+    {
+      "id": "qinglian",
+      "name": "青莲寺",
+      "province": "山西",
+      "locality": "晋城 · 泽州县",
+      "lon": 112.9,
+      "lat": 35.45,
+      "category": "寺庙",
+      "feature": "寺院殿宇与造像",
+      "relationship": "取景报道",
+      "evidence": "高平市政府转载报道将青莲寺列入取景参考地点。",
+      "source": {
+        "publisher": "高平市人民政府 · 转人民日报",
+        "date": "2024-08-21",
+        "title": "高平铁佛寺火出圈",
+        "url": "https://www.sxgp.gov.cn/xwzx_358/jcdt_363/202408/t20240821_2023289.shtml"
+      },
+      "coordinatePrecision": "地区近似点",
+      "modelStatus": "待制作对应模型",
+      "sourceId": "gaoping",
+      "candidateAssetIds": [],
+      "genericDemoAssetIds": []
+    },
+    {
+      "id": "xixi",
+      "name": "西溪二仙庙",
+      "province": "山西",
+      "locality": "晋城 · 陵川县",
+      "lon": 113.28,
+      "lat": 35.78,
+      "category": "寺庙",
+      "feature": "庙宇木构、二仙信仰",
+      "relationship": "取景报道",
+      "evidence": "晋城市政府明确称西溪二仙庙为游戏取景地之一。",
+      "source": {
+        "publisher": "晋城市人民政府",
+        "date": "2024-10-19",
+        "title": "瞧！藏在晋城的秘密都在这里！",
+        "url": "https://www.jcgov.gov.cn/dtxx/ztzl/2018nzt/jcwmw/zxtp/202410/t20241019_2050400.shtml"
+      },
+      "coordinatePrecision": "地区近似点",
+      "modelStatus": "待制作对应模型",
+      "sourceId": "jincheng",
+      "candidateAssetIds": [],
+      "genericDemoAssetIds": []
+    },
+    {
+      "id": "shuanglin",
+      "name": "双林寺",
+      "province": "山西",
+      "locality": "晋中 · 平遥县",
+      "lon": 112.18,
+      "lat": 37.19,
+      "category": "彩塑",
+      "feature": "寺院彩塑",
+      "relationship": "取景报道",
+      "evidence": "高平市政府转载报道将双林寺称为游戏取景地。",
+      "source": {
+        "publisher": "高平市人民政府 · 转人民日报",
+        "date": "2024-08-21",
+        "title": "高平铁佛寺火出圈",
+        "url": "https://www.sxgp.gov.cn/xwzx_358/jcdt_363/202408/t20240821_2023289.shtml"
+      },
+      "coordinatePrecision": "地区近似点",
+      "modelStatus": "待制作对应模型",
+      "sourceId": "gaoping",
+      "candidateAssetIds": [],
+      "genericDemoAssetIds": []
+    },
+    {
+      "id": "nanchan",
+      "name": "南禅寺",
+      "province": "山西",
+      "locality": "忻州 · 五台县",
+      "lon": 113.24,
+      "lat": 38.65,
+      "category": "寺庙",
+      "feature": "古寺木构",
+      "relationship": "媒体画面对照",
+      "evidence": "澎湃新闻援引文旅视频与古建爱好者辨识；暂不作开发商逐项确认。",
+      "source": {
+        "publisher": "澎湃新闻",
+        "date": "2024-08-21",
+        "title": "原画场景 VS 取景实地",
+        "url": "https://www.thepaper.cn/newsDetail_forward_28478378"
+      },
+      "coordinatePrecision": "地区近似点",
+      "modelStatus": "待制作对应模型",
+      "sourceId": "paper",
+      "candidateAssetIds": [],
+      "genericDemoAssetIds": []
+    },
+    {
+      "id": "jinge",
+      "name": "金阁寺",
+      "province": "山西",
+      "locality": "忻州 · 五台山地区",
+      "lon": 113.59,
+      "lat": 39,
+      "category": "寺庙",
+      "feature": "寺院建筑",
+      "relationship": "媒体画面对照",
+      "evidence": "澎湃新闻在文旅视频取景地比对中列出金阁寺。",
+      "source": {
+        "publisher": "澎湃新闻",
+        "date": "2024-08-21",
+        "title": "原画场景 VS 取景实地",
+        "url": "https://www.thepaper.cn/newsDetail_forward_28478378"
+      },
+      "coordinatePrecision": "地区近似点",
+      "modelStatus": "待制作对应模型",
+      "sourceId": "paper",
+      "candidateAssetIds": [],
+      "genericDemoAssetIds": []
+    },
+    {
+      "id": "xuankong",
+      "name": "悬空寺",
+      "province": "山西",
+      "locality": "大同 · 浑源县",
+      "lon": 113.7,
+      "lat": 39.7,
+      "category": "寺庙",
+      "feature": "峭壁上的木构寺院",
+      "relationship": "建筑场景取景",
+      "evidence": "京报网将游戏场景与恒山悬空寺作直接画面对照。",
+      "source": {
+        "publisher": "京报网",
+        "date": "2024-08-21",
+        "title": "《黑神话：悟空》中的山西建筑古迹",
+        "url": "https://news.bjd.com.cn/2024/08/21/10873892.shtml"
+      },
+      "coordinatePrecision": "地区近似点",
+      "modelStatus": "待制作对应模型",
+      "sourceId": "beijing",
+      "candidateAssetIds": [],
+      "genericDemoAssetIds": []
+    },
+    {
+      "id": "guangsheng",
+      "name": "广胜寺飞虹塔",
+      "province": "山西",
+      "locality": "临汾 · 洪洞县",
+      "lon": 111.67,
+      "lat": 36.25,
+      "category": "古塔",
+      "feature": "琉璃塔与层叠塔檐",
+      "relationship": "取景报道",
+      "evidence": "杭州网游戏专题将广胜寺飞虹塔列为游戏古建素材。",
+      "source": {
+        "publisher": "杭州网",
+        "date": "2024-08-31",
+        "title": "《悟空 不止是神话》· 建筑景观",
+        "url": "https://z.hangzhou.com.cn/2024/wukong/content/content_8834292.html"
+      },
+      "coordinatePrecision": "地区近似点",
+      "modelStatus": "待制作对应模型",
+      "sourceId": "hangzhou",
+      "candidateAssetIds": [
+        "asset-5b11437e2619"
+      ],
+      "genericDemoAssetIds": []
+    },
+    {
+      "id": "dule",
+      "name": "独乐寺",
+      "province": "天津",
+      "locality": "蓟州区",
+      "lon": 117.41,
+      "lat": 40.04,
+      "category": "寺庙",
+      "feature": "观音阁、山门木构",
+      "relationship": "场景取景报道",
+      "evidence": "新华社报道将独乐寺与游戏中的亢金龙场景联系起来。",
+      "source": {
+        "publisher": "新华社",
+        "date": "2024-11-04",
+        "title": "独乐寺与游戏文化传播报道",
+        "url": "https://www.xinhuanet.com/ci/20241104/e94a177dbea54bad95818d126b23ee84/c.html"
+      },
+      "demoIndex": 2,
+      "coordinatePrecision": "地区近似点",
+      "modelStatus": "仅有通用风格化示范",
+      "sourceId": "tianjin",
+      "candidateAssetIds": [
+        "asset-9ae945558560"
+      ],
+      "genericDemoAssetIds": [
+        "demo-heritage-pavilion"
+      ]
+    },
+    {
+      "id": "shisi",
+      "name": "时思寺",
+      "province": "浙江",
+      "locality": "丽水 · 景宁畲族自治县",
+      "lon": 119.64,
+      "lat": 27.98,
+      "category": "寺庙",
+      "feature": "古寺木构与院落",
+      "relationship": "实景建模报道",
+      "evidence": "浙江省档案馆来源的报道明确提及实景三维建模及游戏画面对照。",
+      "source": {
+        "publisher": "浙江在线 · 来源浙江省档案馆",
+        "date": "2025-06-04",
+        "title": "在景宁，竟藏着《黑神话：悟空》的取景地",
+        "url": "https://cs.zjol.com.cn/zt/qtdas/shengyin/sydag/202506/t20250604_31034627.shtml"
+      },
+      "coordinatePrecision": "地区近似点",
+      "modelStatus": "待制作对应模型",
+      "sourceId": "archive",
+      "candidateAssetIds": [
+        "asset-f9386ef20d14"
+      ],
+      "genericDemoAssetIds": []
+    },
+    {
+      "id": "feilaifeng",
+      "name": "灵隐飞来峰造像",
+      "province": "浙江",
+      "locality": "杭州 · 西湖区",
+      "lon": 120.1,
+      "lat": 30.24,
+      "category": "石窟石刻",
+      "feature": "金刚手菩萨等石刻",
+      "relationship": "实景扫描 / 造像素材",
+      "evidence": "浙江省风景名胜区协会明确提及团队扫描相关石刻；未据此认定整座灵隐寺复刻。",
+      "source": {
+        "publisher": "浙江省风景名胜区协会",
+        "date": null,
+        "title": "《黑神话：悟空》中的浙江取景地",
+        "url": "https://ppaz.com.cn/newsinfo/8149037.html"
+      },
+      "coordinatePrecision": "地区近似点",
+      "modelStatus": "待制作对应模型",
+      "sourceId": "zhejiang",
+      "candidateAssetIds": [],
+      "genericDemoAssetIds": []
+    },
+    {
+      "id": "kaiyuan",
+      "name": "开元寺东西塔",
+      "province": "福建",
+      "locality": "泉州 · 鲤城区",
+      "lon": 118.59,
+      "lat": 24.91,
+      "category": "古塔",
+      "feature": "镇国塔、仁寿塔",
+      "relationship": "建筑场景取景",
+      "evidence": "泉州市政府报道明确提到游戏出现东西塔。文旅线路中的清净寺、清源山不据此纳入。",
+      "source": {
+        "publisher": "泉州市人民政府 · 泉州晚报",
+        "date": "2024-09-06",
+        "title": "这两条旅游路线留下“悟空”足迹",
+        "url": "https://www.quanzhou.gov.cn/lyb/lyxw/202409/t20240925_3084650.htm"
+      },
+      "coordinatePrecision": "地区近似点",
+      "modelStatus": "待制作对应模型",
+      "sourceId": "quanzhou",
+      "candidateAssetIds": [
+        "asset-d88384dc02b8"
+      ],
+      "genericDemoAssetIds": []
+    },
+    {
+      "id": "dazu",
+      "name": "大足石刻",
+      "province": "重庆",
+      "locality": "大足区",
+      "lon": 105.72,
+      "lat": 29.71,
+      "category": "石窟石刻",
+      "feature": "摩崖造像与石刻群",
+      "relationship": "实景扫描报道",
+      "evidence": "新华社明确提及大足石刻参与游戏实景扫描。",
+      "source": {
+        "publisher": "新华社",
+        "date": "2024-08-22",
+        "title": "《黑神话：悟空》火了！中国古建“出圈”了！",
+        "url": "https://www.xinhuanet.com/20240822/f7de3658396c46248ccbc3de770756ee/c.html"
+      },
+      "coordinatePrecision": "地区近似点",
+      "modelStatus": "待制作对应模型",
+      "sourceId": "xinhua",
+      "candidateAssetIds": [],
+      "genericDemoAssetIds": []
+    },
+    {
+      "id": "mingshan",
+      "name": "茗山寺造像",
+      "province": "四川",
+      "locality": "资阳 · 安岳县",
+      "lon": 105.34,
+      "lat": 30.1,
+      "category": "石窟石刻",
+      "feature": "毗卢遮那佛等宋代造像",
+      "relationship": "造像场景蓝本",
+      "evidence": "四川日报现场报道指出游戏采用毗卢遮那佛站立造像作为场景蓝本。",
+      "source": {
+        "publisher": "四川日报",
+        "date": "2026-08-14",
+        "title": "千年茗山寺焕新亮相",
+        "url": "https://epaper.scdaily.cn/shtml/scrb/20260814/1086895.html"
+      },
+      "coordinatePrecision": "地区近似点",
+      "modelStatus": "待制作对应模型",
+      "sourceId": "sichuan",
+      "candidateAssetIds": [],
+      "genericDemoAssetIds": []
+    },
+    {
+      "id": "shuilu",
+      "name": "水陆庵",
+      "province": "陕西",
+      "locality": "西安 · 蓝田县",
+      "lon": 109.32,
+      "lat": 34.15,
+      "category": "彩塑",
+      "feature": "殿内壁塑与横三世佛",
+      "relationship": "文管所采访",
+      "evidence": "华商报记者采访文管所，取景涉及正面佛像和北山墙壁塑。",
+      "source": {
+        "publisher": "华商报 · 现场采访文管所",
+        "date": "2024-08-23",
+        "title": "探访《黑神话：悟空》取景地水陆庵",
+        "url": "https://hsb.hspress.net/system/2024/0823/222785.shtml"
+      },
+      "coordinatePrecision": "地区近似点",
+      "modelStatus": "待制作对应模型",
+      "sourceId": "shaanxi",
+      "candidateAssetIds": [
+        "asset-19cca1ae25dc"
+      ],
+      "genericDemoAssetIds": []
+    },
+    {
+      "id": "lingyan",
+      "name": "灵岩寺",
+      "province": "山东",
+      "locality": "济南 · 长清区",
+      "lon": 116.75,
+      "lat": 36.55,
+      "category": "寺庙",
+      "feature": "寺院古建与塔林",
+      "relationship": "取景报道",
+      "evidence": "山东宣传网明确列出游戏中出现的灵岩寺。",
+      "source": {
+        "publisher": "山东宣传网",
+        "date": "2024-09-05",
+        "title": "“悟空”带火古建筑，山东家底了解下",
+        "url": "https://www.sdxc.gov.cn/whql/whcc/202409/t20240905_14758288.htm"
+      },
+      "coordinatePrecision": "地区近似点",
+      "modelStatus": "待制作对应模型",
+      "sourceId": "shandong",
+      "candidateAssetIds": [],
+      "genericDemoAssetIds": []
+    },
+    {
+      "id": "simen",
+      "name": "四门塔",
+      "province": "山东",
+      "locality": "济南 · 历城区",
+      "lon": 117.07,
+      "lat": 36.48,
+      "category": "古塔",
+      "feature": "石塔建筑",
+      "relationship": "取景报道",
+      "evidence": "山东宣传网明确列出游戏中出现的四门塔；不与灵岩寺混为一处。",
+      "source": {
+        "publisher": "山东宣传网",
+        "date": "2024-09-05",
+        "title": "“悟空”带火古建筑，山东家底了解下",
+        "url": "https://www.sdxc.gov.cn/whql/whcc/202409/t20240905_14758288.htm"
+      },
+      "coordinatePrecision": "地区近似点",
+      "modelStatus": "待制作对应模型",
+      "sourceId": "shandong",
+      "candidateAssetIds": [],
+      "genericDemoAssetIds": []
+    }
+  ],
+  "assets": [
+    {
+      "id": "asset-fd4c09eab57d",
+      "name": "bns",
+      "category": "殿堂房屋",
+      "file": "models/asset-fd4c09eab57d.glb",
+      "preview": "previews/asset-fd4c09eab57d.jpg",
+      "previewBytes": 10041,
+      "previewSha256": "d1a15a97f6e1254ea46cf7291a6632f9f86dc5377828905594978de1d1bd9899",
+      "bytes": 563608,
+      "sha256": "b7f0b5869be89d6c4b7df0966280cb2ac6b2fa9117bdeafe043b7f97cc0256fc",
+      "bounds": {
+        "min": [
+          -2.9687743186950684,
+          0,
+          -7
+        ],
+        "max": [
+          3.0312256813049316,
+          5.5,
+          7.25
+        ]
+      },
+      "size": [
+        6,
+        5.5,
+        14.25
+      ],
+      "triangles": 8786,
+      "vertices": 17572,
+      "meshes": 1,
+      "nodes": 1,
+      "materials": 1,
+      "embeddedResources": true,
+      "usageTags": [
+        "殿堂房屋"
+      ],
+      "style": "surface-voxel",
+      "identityStatus": "未确认实物身份",
+      "matches": [],
+      "provenance": {
+        "kind": "user-model-library",
+        "originalFile": "bns/bns.fbx",
+        "originalBytes": 1707776,
+        "conversion": "MC 轻量版：镜湖小庙依据参考图重新搭建；其余模型表面体素化、合并面及共享顶点色。原始文件保持不变。",
+        "license": "用户提供的模型库衍生轻量版本；上游许可未在原始清单中声明。"
+      },
+      "scaleNote": "size 和 bounds 是 GLB 实际坐标范围，不代表古建测绘尺寸；按门高、人体和邻接建筑统一尺度后放置。",
+      "navigation": {
+        "kind": "visual-mesh",
+        "note": "无通行元数据；默认作实体或背景，门洞/桥面不能直接宣称可行走。"
+      },
+      "validation": {
+        "structure": {
+          "status": "passed",
+          "scope": "supported uncompressed GLB triangle geometry"
+        },
+        "heritageContract": {
+          "status": "not-present"
+        },
+        "khronos": {
+          "status": "not-run"
+        },
+        "visual": {
+          "status": "not-run"
+        }
+      }
+    },
+    {
+      "id": "asset-e4f6a73e13af",
+      "name": "IFG",
+      "category": "殿堂房屋",
+      "file": "models/asset-e4f6a73e13af.glb",
+      "preview": "previews/asset-e4f6a73e13af.jpg",
+      "previewBytes": 8860,
+      "previewSha256": "78e61fad6e3c242df8be721755f34607f223bfa5a80b63338cd058ac1b420114",
+      "bytes": 480792,
+      "sha256": "a12d151354a91ff0c48a3ba7f338f6fa6e2c672f942767554f086441756d5d36",
+      "bounds": {
+        "min": [
+          -3.6079671382904053,
+          0,
+          -7
+        ],
+        "max": [
+          3.6420328617095947,
+          4.75,
+          7.25
+        ]
+      },
+      "size": [
+        7.25,
+        4.75,
+        14.25
+      ],
+      "triangles": 7492,
+      "vertices": 14984,
+      "meshes": 1,
+      "nodes": 1,
+      "materials": 1,
+      "embeddedResources": true,
+      "usageTags": [
+        "殿堂房屋"
+      ],
+      "style": "surface-voxel",
+      "identityStatus": "未确认实物身份",
+      "matches": [],
+      "provenance": {
+        "kind": "user-model-library",
+        "originalFile": "IFG/lfg.fbx",
+        "originalBytes": 15679424,
+        "conversion": "MC 轻量版：镜湖小庙依据参考图重新搭建；其余模型表面体素化、合并面及共享顶点色。原始文件保持不变。",
+        "license": "用户提供的模型库衍生轻量版本；上游许可未在原始清单中声明。"
+      },
+      "scaleNote": "size 和 bounds 是 GLB 实际坐标范围，不代表古建测绘尺寸；按门高、人体和邻接建筑统一尺度后放置。",
+      "navigation": {
+        "kind": "visual-mesh",
+        "note": "无通行元数据；默认作实体或背景，门洞/桥面不能直接宣称可行走。"
+      },
+      "validation": {
+        "structure": {
+          "status": "passed",
+          "scope": "supported uncompressed GLB triangle geometry"
+        },
+        "heritageContract": {
+          "status": "not-present"
+        },
+        "khronos": {
+          "status": "not-run"
+        },
+        "visual": {
+          "status": "not-run"
+        }
+      }
+    },
+    {
+      "id": "asset-9d5476c46624",
+      "name": "互动大门",
+      "category": "山门牌坊",
+      "file": "models/asset-9d5476c46624.glb",
+      "preview": "previews/asset-9d5476c46624.jpg",
+      "previewBytes": 8768,
+      "previewSha256": "0df3e508cc2fda13949a766d1ffa6b8b81bbab0a4114a8c1d8684aab0550427f",
+      "bytes": 305964,
+      "sha256": "0325f9e4eccf1cac945be5458f3bbad44ac80641c58422db41b722986250e4e1",
+      "bounds": {
+        "min": [
+          -7,
+          0,
+          -2.1326889991760254
+        ],
+        "max": [
+          7.25,
+          6.5,
+          2.3673110008239746
+        ]
+      },
+      "size": [
+        14.25,
+        6.5,
+        4.5
+      ],
+      "triangles": 4760,
+      "vertices": 9520,
+      "meshes": 1,
+      "nodes": 1,
+      "materials": 1,
+      "embeddedResources": true,
+      "usageTags": [
+        "山门牌坊",
+        "山门",
+        "入口",
+        "院落分隔"
+      ],
+      "style": "surface-voxel",
+      "identityStatus": "未确认实物身份",
+      "matches": [],
+      "provenance": {
+        "kind": "user-model-library",
+        "originalFile": "互动大门/互动大门.fbx",
+        "originalBytes": 1615936,
+        "conversion": "MC 轻量版：镜湖小庙依据参考图重新搭建；其余模型表面体素化、合并面及共享顶点色。原始文件保持不变。",
+        "license": "用户提供的模型库衍生轻量版本；上游许可未在原始清单中声明。"
+      },
+      "scaleNote": "size 和 bounds 是 GLB 实际坐标范围，不代表古建测绘尺寸；按门高、人体和邻接建筑统一尺度后放置。",
+      "navigation": {
+        "kind": "visual-mesh",
+        "note": "无通行元数据；默认作实体或背景，门洞/桥面不能直接宣称可行走。"
+      },
+      "validation": {
+        "structure": {
+          "status": "passed",
+          "scope": "supported uncompressed GLB triangle geometry"
+        },
+        "heritageContract": {
+          "status": "not-present"
+        },
+        "khronos": {
+          "status": "not-run"
+        },
+        "visual": {
+          "status": "not-run"
+        }
+      }
+    },
+    {
+      "id": "asset-3f80fc515278",
+      "name": "亭子01",
+      "category": "亭廊楼阁",
+      "file": "models/asset-3f80fc515278.glb",
+      "preview": "previews/asset-3f80fc515278.jpg",
+      "previewBytes": 9295,
+      "previewSha256": "c94bb1730903c946fd7c13c54a9aa3b23cfa131efdc1e41f1b686b52b806f38d",
+      "bytes": 560712,
+      "sha256": "e744b1c6c00d581f8388c4de654a817435fb5c8c119ef9d3c023fcbcab3c0284",
+      "bounds": {
+        "min": [
+          -6.53102445602417,
+          0,
+          -5.698163032531738
+        ],
+        "max": [
+          6.691197872161865,
+          14.38888931274414,
+          5.968503475189209
+        ]
+      },
+      "size": [
+        13.222222328186035,
+        14.38888931274414,
+        11.666666507720947
+      ],
+      "triangles": 8740,
+      "vertices": 17480,
+      "meshes": 1,
+      "nodes": 1,
+      "materials": 1,
+      "embeddedResources": true,
+      "usageTags": [
+        "亭廊楼阁",
+        "亭廊",
+        "院落边界",
+        "沿途停驻"
+      ],
+      "style": "surface-voxel",
+      "identityStatus": "未确认实物身份",
+      "matches": [],
+      "provenance": {
+        "kind": "user-model-library",
+        "originalFile": "亭子01/亭子.fbx",
+        "originalBytes": 5627776,
+        "conversion": "MC 轻量版：镜湖小庙依据参考图重新搭建；其余模型表面体素化、合并面及共享顶点色。原始文件保持不变。",
+        "license": "用户提供的模型库衍生轻量版本；上游许可未在原始清单中声明。"
+      },
+      "scaleNote": "size 和 bounds 是 GLB 实际坐标范围，不代表古建测绘尺寸；按门高、人体和邻接建筑统一尺度后放置。",
+      "navigation": {
+        "kind": "visual-mesh",
+        "note": "无通行元数据；默认作实体或背景，门洞/桥面不能直接宣称可行走。"
+      },
+      "validation": {
+        "structure": {
+          "status": "passed",
+          "scope": "supported uncompressed GLB triangle geometry"
+        },
+        "heritageContract": {
+          "status": "not-present"
+        },
+        "khronos": {
+          "status": "not-run"
+        },
+        "visual": {
+          "status": "not-run"
+        }
+      }
+    },
+    {
+      "id": "asset-6e5a13abf5fc",
+      "name": "偏殿",
+      "category": "殿堂房屋",
+      "file": "models/asset-6e5a13abf5fc.glb",
+      "preview": "previews/asset-6e5a13abf5fc.jpg",
+      "previewBytes": 9097,
+      "previewSha256": "9d26717d293a93aeb79b26fe631e66db0b14e40b15bbaefbc4a1e4969eee9d4b",
+      "bytes": 567480,
+      "sha256": "48e33f02c81dc705c213fe577ede69f3de47238dc58cc405ac4777555228a744",
+      "bounds": {
+        "min": [
+          -7,
+          0,
+          -4.405097007751465
+        ],
+        "max": [
+          7.318181991577148,
+          5.090909004211426,
+          4.503993988037109
+        ]
+      },
+      "size": [
+        14.318181991577148,
+        5.090909004211426,
+        8.909090995788574
+      ],
+      "triangles": 8846,
+      "vertices": 17692,
+      "meshes": 1,
+      "nodes": 1,
+      "materials": 1,
+      "embeddedResources": true,
+      "usageTags": [
+        "殿堂房屋",
+        "院落",
+        "建筑主体",
+        "配殿",
+        "侧院",
+        "背景建筑"
+      ],
+      "style": "surface-voxel",
+      "identityStatus": "未确认实物身份",
+      "matches": [
+        {
+          "siteId": "foguang",
+          "level": "主题配置",
+          "reason": "殿堂模型可用于五台木构主题场景搭建；GYCY 系列命名不证明来自佛光寺。"
+        }
+      ],
+      "provenance": {
+        "kind": "user-model-library",
+        "originalFile": "偏殿/偏殿.fbx",
+        "originalBytes": 46291408,
+        "conversion": "MC 轻量版：镜湖小庙依据参考图重新搭建；其余模型表面体素化、合并面及共享顶点色。原始文件保持不变。",
+        "license": "用户提供的模型库衍生轻量版本；上游许可未在原始清单中声明。"
+      },
+      "scaleNote": "size 和 bounds 是 GLB 实际坐标范围，不代表古建测绘尺寸；按门高、人体和邻接建筑统一尺度后放置。",
+      "navigation": {
+        "kind": "visual-mesh",
+        "note": "无通行元数据；默认作实体或背景，门洞/桥面不能直接宣称可行走。"
+      },
+      "validation": {
+        "structure": {
+          "status": "passed",
+          "scope": "supported uncompressed GLB triangle geometry"
+        },
+        "heritageContract": {
+          "status": "not-present"
+        },
+        "khronos": {
+          "status": "not-run"
+        },
+        "visual": {
+          "status": "not-run"
+        }
+      }
+    },
+    {
+      "id": "asset-f9386ef20d14",
+      "name": "副殿",
+      "category": "殿堂房屋",
+      "file": "models/asset-f9386ef20d14.glb",
+      "preview": "previews/asset-f9386ef20d14.jpg",
+      "previewBytes": 10358,
+      "previewSha256": "48b69925395d2094aeb5e6d0fa747248daaab80fe242bc8ebf08b7526a84cc03",
+      "bytes": 651192,
+      "sha256": "266d57fbbbd47ea3891fccda4e75bd1f1230cf0ccd52082506530fa6b072a5ad",
+      "bounds": {
+        "min": [
+          -7,
+          0,
+          -5.015416145324707
+        ],
+        "max": [
+          7.318181991577148,
+          7.318181991577148,
+          5.1664018630981445
+        ]
+      },
+      "size": [
+        14.318181991577148,
+        7.318181991577148,
+        10.181818008422852
+      ],
+      "triangles": 10154,
+      "vertices": 20308,
+      "meshes": 1,
+      "nodes": 1,
+      "materials": 1,
+      "embeddedResources": true,
+      "usageTags": [
+        "殿堂房屋",
+        "院落",
+        "建筑主体",
+        "配殿",
+        "侧院",
+        "背景建筑"
+      ],
+      "style": "surface-voxel",
+      "identityStatus": "未确认实物身份",
+      "matches": [
+        {
+          "siteId": "shisi",
+          "level": "主题配置",
+          "reason": "作为景宁寺院站的场景殿宇候选，当前没有证据证明与时思寺实物对应。"
+        }
+      ],
+      "provenance": {
+        "kind": "user-model-library",
+        "originalFile": "副殿/副殿.fbx",
+        "originalBytes": 12131904,
+        "conversion": "MC 轻量版：镜湖小庙依据参考图重新搭建；其余模型表面体素化、合并面及共享顶点色。原始文件保持不变。",
+        "license": "用户提供的模型库衍生轻量版本；上游许可未在原始清单中声明。"
+      },
+      "scaleNote": "size 和 bounds 是 GLB 实际坐标范围，不代表古建测绘尺寸；按门高、人体和邻接建筑统一尺度后放置。",
+      "navigation": {
+        "kind": "visual-mesh",
+        "note": "无通行元数据；默认作实体或背景，门洞/桥面不能直接宣称可行走。"
+      },
+      "validation": {
+        "structure": {
+          "status": "passed",
+          "scope": "supported uncompressed GLB triangle geometry"
+        },
+        "heritageContract": {
+          "status": "not-present"
+        },
+        "khronos": {
+          "status": "not-run"
+        },
+        "visual": {
+          "status": "not-run"
+        }
+      }
+    },
+    {
+      "id": "asset-b983cd40bfcb",
+      "name": "回廊",
+      "category": "亭廊楼阁",
+      "file": "models/asset-b983cd40bfcb.glb",
+      "preview": "previews/asset-b983cd40bfcb.jpg",
+      "previewBytes": 10013,
+      "previewSha256": "d64d833d720dbdbb85aa3f5af233690d7d7f5b0b01e45ad9e224fb64821e602f",
+      "bytes": 631352,
+      "sha256": "a602be4ddb9a17cf5bce535cc145c0791860169cbc1c05700eb346abfdbdc0c5",
+      "bounds": {
+        "min": [
+          -6.813682556152344,
+          0,
+          -7
+        ],
+        "max": [
+          6.868135452270508,
+          6.681818008422852,
+          7.318181991577148
+        ]
+      },
+      "size": [
+        13.681818008422852,
+        6.681818008422852,
+        14.318181991577148
+      ],
+      "triangles": 9844,
+      "vertices": 19688,
+      "meshes": 1,
+      "nodes": 1,
+      "materials": 1,
+      "embeddedResources": true,
+      "usageTags": [
+        "亭廊楼阁",
+        "亭廊",
+        "院落边界",
+        "沿途停驻"
+      ],
+      "style": "surface-voxel",
+      "identityStatus": "未确认实物身份",
+      "matches": [],
+      "provenance": {
+        "kind": "user-model-library",
+        "originalFile": "回廊/回廊.fbx",
+        "originalBytes": 27943488,
+        "conversion": "MC 轻量版：镜湖小庙依据参考图重新搭建；其余模型表面体素化、合并面及共享顶点色。原始文件保持不变。",
+        "license": "用户提供的模型库衍生轻量版本；上游许可未在原始清单中声明。"
+      },
+      "scaleNote": "size 和 bounds 是 GLB 实际坐标范围，不代表古建测绘尺寸；按门高、人体和邻接建筑统一尺度后放置。",
+      "navigation": {
+        "kind": "visual-mesh",
+        "note": "无通行元数据；默认作实体或背景，门洞/桥面不能直接宣称可行走。"
+      },
+      "validation": {
+        "structure": {
+          "status": "passed",
+          "scope": "supported uncompressed GLB triangle geometry"
+        },
+        "heritageContract": {
+          "status": "not-present"
+        },
+        "khronos": {
+          "status": "not-run"
+        },
+        "visual": {
+          "status": "not-run"
+        }
+      }
+    },
+    {
+      "id": "asset-44f92b5ba716",
+      "name": "围墙01",
+      "category": "场景部件",
+      "file": "models/asset-44f92b5ba716.glb",
+      "preview": "previews/asset-44f92b5ba716.jpg",
+      "previewBytes": 9521,
+      "previewSha256": "76955627fa704514493bd14c80af892d0b08cb17a343d9cd3bc3ef037d7f149b",
+      "bytes": 352036,
+      "sha256": "80c9df466c18c49e612e48febf343bcb9035f10b2298a55ccbe646a1d64bafe9",
+      "bounds": {
+        "min": [
+          -7,
+          0,
+          -6.822840690612793
+        ],
+        "max": [
+          7.25,
+          3.25,
+          6.927159309387207
+        ]
+      },
+      "size": [
+        14.25,
+        3.25,
+        13.75
+      ],
+      "triangles": 5480,
+      "vertices": 10960,
+      "meshes": 1,
+      "nodes": 1,
+      "materials": 1,
+      "embeddedResources": true,
+      "usageTags": [
+        "场景部件",
+        "围墙",
+        "院落围合",
+        "场地边界"
+      ],
+      "style": "surface-voxel",
+      "identityStatus": "未确认实物身份",
+      "matches": [],
+      "provenance": {
+        "kind": "user-model-library",
+        "originalFile": "围墙01/围墙01.fbx",
+        "originalBytes": 50058240,
+        "conversion": "MC 轻量版：镜湖小庙依据参考图重新搭建；其余模型表面体素化、合并面及共享顶点色。原始文件保持不变。",
+        "license": "用户提供的模型库衍生轻量版本；上游许可未在原始清单中声明。"
+      },
+      "scaleNote": "size 和 bounds 是 GLB 实际坐标范围，不代表古建测绘尺寸；按门高、人体和邻接建筑统一尺度后放置。",
+      "navigation": {
+        "kind": "visual-mesh",
+        "note": "无通行元数据；默认作实体或背景，门洞/桥面不能直接宣称可行走。"
+      },
+      "validation": {
+        "structure": {
+          "status": "passed",
+          "scope": "supported uncompressed GLB triangle geometry"
+        },
+        "heritageContract": {
+          "status": "not-present"
+        },
+        "khronos": {
+          "status": "not-run"
+        },
+        "visual": {
+          "status": "not-run"
+        }
+      }
+    },
+    {
+      "id": "asset-9a329526f353",
+      "name": "围墙03",
+      "category": "场景部件",
+      "file": "models/asset-9a329526f353.glb",
+      "preview": "previews/asset-9a329526f353.jpg",
+      "previewBytes": 8933,
+      "previewSha256": "2c084b6541c86a094827f2ff9bfb321c0cbb3a26bbd797a069a2f2822abf1118",
+      "bytes": 408228,
+      "sha256": "54c1ef3fa821715a48344826508be33a571a1dcef4ff0ac2f5f4de0f1a547a0d",
+      "bounds": {
+        "min": [
+          -6.733205318450928,
+          0,
+          -7
+        ],
+        "max": [
+          6.766794681549072,
+          3.75,
+          7
+        ]
+      },
+      "size": [
+        13.5,
+        3.75,
+        14
+      ],
+      "triangles": 6358,
+      "vertices": 12716,
+      "meshes": 1,
+      "nodes": 1,
+      "materials": 1,
+      "embeddedResources": true,
+      "usageTags": [
+        "场景部件",
+        "围墙",
+        "院落围合",
+        "场地边界"
+      ],
+      "style": "surface-voxel",
+      "identityStatus": "未确认实物身份",
+      "matches": [],
+      "provenance": {
+        "kind": "user-model-library",
+        "originalFile": "围墙03/围墙03.fbx",
+        "originalBytes": 23582960,
+        "conversion": "MC 轻量版：镜湖小庙依据参考图重新搭建；其余模型表面体素化、合并面及共享顶点色。原始文件保持不变。",
+        "license": "用户提供的模型库衍生轻量版本；上游许可未在原始清单中声明。"
+      },
+      "scaleNote": "size 和 bounds 是 GLB 实际坐标范围，不代表古建测绘尺寸；按门高、人体和邻接建筑统一尺度后放置。",
+      "navigation": {
+        "kind": "visual-mesh",
+        "note": "无通行元数据；默认作实体或背景，门洞/桥面不能直接宣称可行走。"
+      },
+      "validation": {
+        "structure": {
+          "status": "passed",
+          "scope": "supported uncompressed GLB triangle geometry"
+        },
+        "heritageContract": {
+          "status": "not-present"
+        },
+        "khronos": {
+          "status": "not-run"
+        },
+        "visual": {
+          "status": "not-run"
+        }
+      }
+    },
+    {
+      "id": "asset-577da3da6b92",
+      "name": "大殿",
+      "category": "殿堂房屋",
+      "file": "models/asset-577da3da6b92.glb",
+      "preview": "previews/asset-577da3da6b92.jpg",
+      "previewBytes": 6700,
+      "previewSha256": "c242b36b5baa73a583abb9199f1af8df9b6110b061c0f0a4a0bf9634f3d3c1c8",
+      "bytes": 472736,
+      "sha256": "76a2d92aeb27885714d39522c4e1654912758e710fe773ea7c563bc1fb399d35",
+      "bounds": {
+        "min": [
+          -3.9371681213378906,
+          0,
+          -7
+        ],
+        "max": [
+          4.062831878662109,
+          3.75,
+          7.25
+        ]
+      },
+      "size": [
+        8,
+        3.75,
+        14.25
+      ],
+      "triangles": 7366,
+      "vertices": 14732,
+      "meshes": 1,
+      "nodes": 1,
+      "materials": 1,
+      "embeddedResources": true,
+      "usageTags": [
+        "殿堂房屋",
+        "院落",
+        "建筑主体",
+        "主殿",
+        "中轴线",
+        "终点地标"
+      ],
+      "style": "surface-voxel",
+      "identityStatus": "未确认实物身份",
+      "matches": [],
+      "provenance": {
+        "kind": "user-model-library",
+        "originalFile": "大殿/大殿.fbx",
+        "originalBytes": 24873296,
+        "conversion": "MC 轻量版：镜湖小庙依据参考图重新搭建；其余模型表面体素化、合并面及共享顶点色。原始文件保持不变。",
+        "license": "用户提供的模型库衍生轻量版本；上游许可未在原始清单中声明。"
+      },
+      "scaleNote": "size 和 bounds 是 GLB 实际坐标范围，不代表古建测绘尺寸；按门高、人体和邻接建筑统一尺度后放置。",
+      "navigation": {
+        "kind": "visual-mesh",
+        "note": "无通行元数据；默认作实体或背景，门洞/桥面不能直接宣称可行走。"
+      },
+      "validation": {
+        "structure": {
+          "status": "passed",
+          "scope": "supported uncompressed GLB triangle geometry"
+        },
+        "heritageContract": {
+          "status": "not-present"
+        },
+        "khronos": {
+          "status": "not-run"
+        },
+        "visual": {
+          "status": "not-run"
+        }
+      }
+    },
+    {
+      "id": "asset-679e96b7fe84",
+      "name": "大门",
+      "category": "山门牌坊",
+      "file": "models/asset-679e96b7fe84.glb",
+      "preview": "previews/asset-679e96b7fe84.jpg",
+      "previewBytes": 11751,
+      "previewSha256": "eb9116b9b4622ac62d23eda3e9bd1b6324e169bfe51c823af311b86cd953e981",
+      "bytes": 582076,
+      "sha256": "dfb5a69582139278f1cdacaedd99d8d65e1254396458d945ee1c1f39e4b314ae",
+      "bounds": {
+        "min": [
+          -7,
+          0,
+          -3.3091795444488525
+        ],
+        "max": [
+          7.318181991577148,
+          11.136363983154297,
+          3.372638702392578
+        ]
+      },
+      "size": [
+        14.318181991577148,
+        11.136363983154297,
+        6.681818246841431
+      ],
+      "triangles": 9074,
+      "vertices": 18148,
+      "meshes": 1,
+      "nodes": 1,
+      "materials": 1,
+      "embeddedResources": true,
+      "usageTags": [
+        "山门牌坊",
+        "山门",
+        "入口",
+        "院落分隔"
+      ],
+      "style": "surface-voxel",
+      "identityStatus": "未确认实物身份",
+      "matches": [],
+      "provenance": {
+        "kind": "user-model-library",
+        "originalFile": "大门/大门.fbx",
+        "originalBytes": 1507744,
+        "conversion": "MC 轻量版：镜湖小庙依据参考图重新搭建；其余模型表面体素化、合并面及共享顶点色。原始文件保持不变。",
+        "license": "用户提供的模型库衍生轻量版本；上游许可未在原始清单中声明。"
+      },
+      "scaleNote": "size 和 bounds 是 GLB 实际坐标范围，不代表古建测绘尺寸；按门高、人体和邻接建筑统一尺度后放置。",
+      "navigation": {
+        "kind": "visual-mesh",
+        "note": "无通行元数据；默认作实体或背景，门洞/桥面不能直接宣称可行走。"
+      },
+      "validation": {
+        "structure": {
+          "status": "passed",
+          "scope": "supported uncompressed GLB triangle geometry"
+        },
+        "heritageContract": {
+          "status": "not-present"
+        },
+        "khronos": {
+          "status": "not-run"
+        },
+        "visual": {
+          "status": "not-run"
+        }
+      }
+    },
+    {
+      "id": "asset-a13532f52c1e",
+      "name": "大门楼",
+      "category": "山门牌坊",
+      "file": "models/asset-a13532f52c1e.glb",
+      "preview": "previews/asset-a13532f52c1e.jpg",
+      "previewBytes": 10985,
+      "previewSha256": "85f76dba52bbaf1a50ccca693f2e8a1cc48ecf4797aea6046cafde799f6d7e10",
+      "bytes": 660672,
+      "sha256": "7e8e683e9addb31020796786119ef60e9d6f2e93cb2c686989c74f4dcbec6d8d",
+      "bounds": {
+        "min": [
+          -7,
+          0,
+          -3.6467342376708984
+        ],
+        "max": [
+          7.318181991577148,
+          8.909090995788574,
+          3.67144775390625
+        ]
+      },
+      "size": [
+        14.318181991577148,
+        8.909090995788574,
+        7.318181991577148
+      ],
+      "triangles": 10302,
+      "vertices": 20604,
+      "meshes": 1,
+      "nodes": 1,
+      "materials": 1,
+      "embeddedResources": true,
+      "usageTags": [
+        "山门牌坊",
+        "山门",
+        "入口",
+        "院落分隔"
+      ],
+      "style": "surface-voxel",
+      "identityStatus": "未确认实物身份",
+      "matches": [],
+      "provenance": {
+        "kind": "user-model-library",
+        "originalFile": "大门楼/大门楼.fbx",
+        "originalBytes": 33004752,
+        "conversion": "MC 轻量版：镜湖小庙依据参考图重新搭建；其余模型表面体素化、合并面及共享顶点色。原始文件保持不变。",
+        "license": "用户提供的模型库衍生轻量版本；上游许可未在原始清单中声明。"
+      },
+      "scaleNote": "size 和 bounds 是 GLB 实际坐标范围，不代表古建测绘尺寸；按门高、人体和邻接建筑统一尺度后放置。",
+      "navigation": {
+        "kind": "visual-mesh",
+        "note": "无通行元数据；默认作实体或背景，门洞/桥面不能直接宣称可行走。"
+      },
+      "validation": {
+        "structure": {
+          "status": "passed",
+          "scope": "supported uncompressed GLB triangle geometry"
+        },
+        "heritageContract": {
+          "status": "not-present"
+        },
+        "khronos": {
+          "status": "not-run"
+        },
+        "visual": {
+          "status": "not-run"
+        }
+      }
+    },
+    {
+      "id": "asset-f4d590395def",
+      "name": "小木屋",
+      "category": "殿堂房屋",
+      "file": "models/asset-f4d590395def.glb",
+      "preview": "previews/asset-f4d590395def.jpg",
+      "previewBytes": 10463,
+      "previewSha256": "01238f52b0a977203200c965d6e84d43bcd65a65886597a4ea8f73b05564b87d",
+      "bytes": 464448,
+      "sha256": "c22309d778b1a2ca159959d53e40aa3917b020dab37e676a9cbff613bc0adff8",
+      "bounds": {
+        "min": [
+          -7,
+          0,
+          -3.795097589492798
+        ],
+        "max": [
+          7.318181991577148,
+          6.363636493682861,
+          3.84126615524292
+        ]
+      },
+      "size": [
+        14.318181991577148,
+        6.363636493682861,
+        7.636363744735718
+      ],
+      "triangles": 7236,
+      "vertices": 14472,
+      "meshes": 1,
+      "nodes": 1,
+      "materials": 1,
+      "embeddedResources": true,
+      "usageTags": [
+        "殿堂房屋",
+        "附属房屋",
+        "生活空间",
+        "侧院"
+      ],
+      "style": "surface-voxel",
+      "identityStatus": "未确认实物身份",
+      "matches": [],
+      "provenance": {
+        "kind": "user-model-library",
+        "originalFile": "小木屋/小木屋.fbx",
+        "originalBytes": 3622352,
+        "conversion": "MC 轻量版：镜湖小庙依据参考图重新搭建；其余模型表面体素化、合并面及共享顶点色。原始文件保持不变。",
+        "license": "用户提供的模型库衍生轻量版本；上游许可未在原始清单中声明。"
+      },
+      "scaleNote": "size 和 bounds 是 GLB 实际坐标范围，不代表古建测绘尺寸；按门高、人体和邻接建筑统一尺度后放置。",
+      "navigation": {
+        "kind": "visual-mesh",
+        "note": "无通行元数据；默认作实体或背景，门洞/桥面不能直接宣称可行走。"
+      },
+      "validation": {
+        "structure": {
+          "status": "passed",
+          "scope": "supported uncompressed GLB triangle geometry"
+        },
+        "heritageContract": {
+          "status": "not-present"
+        },
+        "khronos": {
+          "status": "not-run"
+        },
+        "visual": {
+          "status": "not-run"
+        }
+      }
+    },
+    {
+      "id": "asset-a874c167bd28",
+      "name": "小西天雪僵尸",
+      "category": "角色道具",
+      "file": "models/asset-a874c167bd28.glb",
+      "preview": "previews/asset-a874c167bd28.jpg",
+      "previewBytes": 6728,
+      "previewSha256": "d575e31c84e3a3d57a94821470764a8a0f734cd7bdae873364c6531ae05630c8",
+      "bytes": 273340,
+      "sha256": "5a50bfea5c86dd30e112562a2f1d7b63f984c25812d3e828df60386a4aebdf84",
+      "bounds": {
+        "min": [
+          -1.226380467414856,
+          0,
+          -7
+        ],
+        "max": [
+          1.273619532585144,
+          4,
+          7.25
+        ]
+      },
+      "size": [
+        2.5,
+        4,
+        14.25
+      ],
+      "triangles": 4250,
+      "vertices": 8500,
+      "meshes": 1,
+      "nodes": 1,
+      "materials": 1,
+      "embeddedResources": true,
+      "usageTags": [
+        "角色道具",
+        "小雷音寺",
+        "山寺",
+        "非建筑"
+      ],
+      "style": "surface-voxel",
+      "identityStatus": "未确认实物身份",
+      "matches": [],
+      "provenance": {
+        "kind": "user-model-library",
+        "originalFile": "小西天雪僵尸/小西天雪僵尸.fbx",
+        "originalBytes": 39140160,
+        "conversion": "MC 轻量版：镜湖小庙依据参考图重新搭建；其余模型表面体素化、合并面及共享顶点色。原始文件保持不变。",
+        "license": "用户提供的模型库衍生轻量版本；上游许可未在原始清单中声明。"
+      },
+      "scaleNote": "size 和 bounds 是 GLB 实际坐标范围，不代表古建测绘尺寸；按门高、人体和邻接建筑统一尺度后放置。",
+      "navigation": {
+        "kind": "visual-mesh",
+        "note": "无通行元数据；默认作实体或背景，门洞/桥面不能直接宣称可行走。"
+      },
+      "validation": {
+        "structure": {
+          "status": "passed",
+          "scope": "supported uncompressed GLB triangle geometry"
+        },
+        "heritageContract": {
+          "status": "not-present"
+        },
+        "khronos": {
+          "status": "not-run"
+        },
+        "visual": {
+          "status": "not-run"
+        }
+      }
+    },
+    {
+      "id": "asset-19cca1ae25dc",
+      "name": "护法神龛",
+      "category": "造像陈设",
+      "file": "models/asset-19cca1ae25dc.glb",
+      "preview": "previews/asset-19cca1ae25dc.jpg",
+      "previewBytes": 10317,
+      "previewSha256": "f7ce9288633678308bea3468a9540c56fb8bdae885526c69c92907a4f07aeac1",
+      "bytes": 441648,
+      "sha256": "c571f2276ae421b022b8006ec74e9876bd31112439434fb3b51f594ab0bea7a1",
+      "bounds": {
+        "min": [
+          -7,
+          0,
+          -0.9405570030212402
+        ],
+        "max": [
+          7.25,
+          5.75,
+          1.0594429969787598
+        ]
+      },
+      "size": [
+        14.25,
+        5.75,
+        2
+      ],
+      "triangles": 6880,
+      "vertices": 13760,
+      "meshes": 1,
+      "nodes": 1,
+      "materials": 1,
+      "embeddedResources": true,
+      "usageTags": [
+        "造像陈设",
+        "陈设",
+        "宗教装饰",
+        "近景"
+      ],
+      "style": "surface-voxel",
+      "identityStatus": "未确认实物身份",
+      "matches": [
+        {
+          "siteId": "shuilu",
+          "level": "待考证候选",
+          "reason": "预览为成组彩色壁塑，适合与水陆庵壁塑对照；文件仅有 Hufashenkan 名称，不能确认是该寺扫描件。"
+        },
+        {
+          "siteId": "xiaoxitian",
+          "level": "主题配置",
+          "reason": "可用于临汾站的彩塑展示空间；游戏小西天与现实千佛庵不等同，此文件不是已确认的千佛庵悬塑。"
+        }
+      ],
+      "provenance": {
+        "kind": "user-model-library",
+        "originalFile": "护法神龛/护法神龛.fbx",
+        "originalBytes": 6947680,
+        "conversion": "MC 轻量版：镜湖小庙依据参考图重新搭建；其余模型表面体素化、合并面及共享顶点色。原始文件保持不变。",
+        "license": "用户提供的模型库衍生轻量版本；上游许可未在原始清单中声明。"
+      },
+      "scaleNote": "size 和 bounds 是 GLB 实际坐标范围，不代表古建测绘尺寸；按门高、人体和邻接建筑统一尺度后放置。",
+      "navigation": {
+        "kind": "visual-mesh",
+        "note": "无通行元数据；默认作实体或背景，门洞/桥面不能直接宣称可行走。"
+      },
+      "validation": {
+        "structure": {
+          "status": "passed",
+          "scope": "supported uncompressed GLB triangle geometry"
+        },
+        "heritageContract": {
+          "status": "not-present"
+        },
+        "khronos": {
+          "status": "not-run"
+        },
+        "visual": {
+          "status": "not-run"
+        }
+      }
+    },
+    {
+      "id": "asset-70459e010bf6",
+      "name": "木门寺 · 版本2",
+      "category": "山门牌坊",
+      "file": "models/asset-70459e010bf6.glb",
+      "preview": "previews/asset-70459e010bf6.jpg",
+      "previewBytes": 10102,
+      "previewSha256": "2123e5fb13e75abd6a3fe2ae00896c7ce44b72d96e7d07bf92cb4470a9ce84d8",
+      "bytes": 429008,
+      "sha256": "db36492fba51232a791ff90ebd80d8be763774c9b1ca00d9724e65ae81a4b4b8",
+      "bounds": {
+        "min": [
+          -7,
+          0,
+          -3.294260025024414
+        ],
+        "max": [
+          7.318181991577148,
+          12.090909004211426,
+          3.3875579833984375
+        ]
+      },
+      "size": [
+        14.318181991577148,
+        12.090909004211426,
+        6.681818008422852
+      ],
+      "triangles": 6682,
+      "vertices": 13364,
+      "meshes": 1,
+      "nodes": 1,
+      "materials": 1,
+      "embeddedResources": true,
+      "usageTags": [
+        "山门牌坊",
+        "院落",
+        "建筑主体",
+        "山门",
+        "入口",
+        "院落分隔"
+      ],
+      "style": "surface-voxel",
+      "identityStatus": "未确认实物身份",
+      "matches": [],
+      "provenance": {
+        "kind": "user-model-library",
+        "originalFile": "木门寺/木门寺(1).fbx",
+        "originalBytes": 6153344,
+        "conversion": "MC 轻量版：镜湖小庙依据参考图重新搭建；其余模型表面体素化、合并面及共享顶点色。原始文件保持不变。",
+        "license": "用户提供的模型库衍生轻量版本；上游许可未在原始清单中声明。"
+      },
+      "scaleNote": "size 和 bounds 是 GLB 实际坐标范围，不代表古建测绘尺寸；按门高、人体和邻接建筑统一尺度后放置。",
+      "navigation": {
+        "kind": "visual-mesh",
+        "note": "无通行元数据；默认作实体或背景，门洞/桥面不能直接宣称可行走。"
+      },
+      "validation": {
+        "structure": {
+          "status": "passed",
+          "scope": "supported uncompressed GLB triangle geometry"
+        },
+        "heritageContract": {
+          "status": "not-present"
+        },
+        "khronos": {
+          "status": "not-run"
+        },
+        "visual": {
+          "status": "not-run"
+        }
+      }
+    },
+    {
+      "id": "asset-656b64cfba06",
+      "name": "木门寺",
+      "category": "山门牌坊",
+      "file": "models/asset-656b64cfba06.glb",
+      "preview": "previews/asset-656b64cfba06.jpg",
+      "previewBytes": 10097,
+      "previewSha256": "55bdb1b8460eb2c4432dd7e3c2a935a5dee5f53bd0a69c9aff794869912ece1e",
+      "bytes": 428996,
+      "sha256": "576eab2908964e2e0ed2503390ad2af643129896a65be1f3a05568bf081b4801",
+      "bounds": {
+        "min": [
+          -7,
+          0,
+          -3.2942612171173096
+        ],
+        "max": [
+          7.318181991577148,
+          12.090909004211426,
+          3.387557029724121
+        ]
+      },
+      "size": [
+        14.318181991577148,
+        12.090909004211426,
+        6.681818246841431
+      ],
+      "triangles": 6682,
+      "vertices": 13364,
+      "meshes": 1,
+      "nodes": 1,
+      "materials": 1,
+      "embeddedResources": true,
+      "usageTags": [
+        "山门牌坊",
+        "院落",
+        "建筑主体",
+        "山门",
+        "入口",
+        "院落分隔"
+      ],
+      "style": "surface-voxel",
+      "identityStatus": "未确认实物身份",
+      "matches": [],
+      "provenance": {
+        "kind": "user-model-library",
+        "originalFile": "木门寺/木门寺.fbx",
+        "originalBytes": 6898480,
+        "conversion": "MC 轻量版：镜湖小庙依据参考图重新搭建；其余模型表面体素化、合并面及共享顶点色。原始文件保持不变。",
+        "license": "用户提供的模型库衍生轻量版本；上游许可未在原始清单中声明。"
+      },
+      "scaleNote": "size 和 bounds 是 GLB 实际坐标范围，不代表古建测绘尺寸；按门高、人体和邻接建筑统一尺度后放置。",
+      "navigation": {
+        "kind": "visual-mesh",
+        "note": "无通行元数据；默认作实体或背景，门洞/桥面不能直接宣称可行走。"
+      },
+      "validation": {
+        "structure": {
+          "status": "passed",
+          "scope": "supported uncompressed GLB triangle geometry"
+        },
+        "heritageContract": {
+          "status": "not-present"
+        },
+        "khronos": {
+          "status": "not-run"
+        },
+        "visual": {
+          "status": "not-run"
+        }
+      }
+    },
+    {
+      "id": "asset-f90d71587afd",
+      "name": "枯井",
+      "category": "场景部件",
+      "file": "models/asset-f90d71587afd.glb",
+      "preview": "previews/asset-f90d71587afd.jpg",
+      "previewBytes": 10812,
+      "previewSha256": "5f819239fc45bfda07953d50191b0b3fe902a0ad218f571c2c17cfacc7ae32a3",
+      "bytes": 668704,
+      "sha256": "9d2729edd6c1655a7c12f89bbc232bacb09c2c4c1627e7c35c452189e7cd97be",
+      "bounds": {
+        "min": [
+          -7,
+          0,
+          -3.663480281829834
+        ],
+        "max": [
+          7.25,
+          12,
+          3.836519718170166
+        ]
+      },
+      "size": [
+        14.25,
+        12,
+        7.5
+      ],
+      "triangles": 10428,
+      "vertices": 20856,
+      "meshes": 1,
+      "nodes": 1,
+      "materials": 1,
+      "embeddedResources": true,
+      "usageTags": [
+        "场景部件",
+        "水井",
+        "庭院陈设",
+        "近景"
+      ],
+      "style": "surface-voxel",
+      "identityStatus": "未确认实物身份",
+      "matches": [],
+      "provenance": {
+        "kind": "user-model-library",
+        "originalFile": "枯井/枯井.fbx",
+        "originalBytes": 1278896,
+        "conversion": "MC 轻量版：镜湖小庙依据参考图重新搭建；其余模型表面体素化、合并面及共享顶点色。原始文件保持不变。",
+        "license": "用户提供的模型库衍生轻量版本；上游许可未在原始清单中声明。"
+      },
+      "scaleNote": "size 和 bounds 是 GLB 实际坐标范围，不代表古建测绘尺寸；按门高、人体和邻接建筑统一尺度后放置。",
+      "navigation": {
+        "kind": "visual-mesh",
+        "note": "无通行元数据；默认作实体或背景，门洞/桥面不能直接宣称可行走。"
+      },
+      "validation": {
+        "structure": {
+          "status": "passed",
+          "scope": "supported uncompressed GLB triangle geometry"
+        },
+        "heritageContract": {
+          "status": "not-present"
+        },
+        "khronos": {
+          "status": "not-run"
+        },
+        "visual": {
+          "status": "not-run"
+        }
+      }
+    },
+    {
+      "id": "asset-2907a2633db5",
+      "name": "棚屋",
+      "category": "殿堂房屋",
+      "file": "models/asset-2907a2633db5.glb",
+      "preview": "previews/asset-2907a2633db5.jpg",
+      "previewBytes": 10259,
+      "previewSha256": "e33879d1b670d37e0222b4bd60e997bc66495a485f76550a3794dfa874d89bf0",
+      "bytes": 667576,
+      "sha256": "311a61fc191ee162a6a15bb35b07e6a2f65f53437e57b0a261f63b820dc9d007",
+      "bounds": {
+        "min": [
+          -7,
+          0,
+          -5.961268901824951
+        ],
+        "max": [
+          7.318181991577148,
+          9.545454978942871,
+          6.129640102386475
+        ]
+      },
+      "size": [
+        14.318181991577148,
+        9.545454978942871,
+        12.090909004211426
+      ],
+      "triangles": 10410,
+      "vertices": 20820,
+      "meshes": 1,
+      "nodes": 1,
+      "materials": 1,
+      "embeddedResources": true,
+      "usageTags": [
+        "殿堂房屋",
+        "附属房屋",
+        "生活空间",
+        "侧院"
+      ],
+      "style": "surface-voxel",
+      "identityStatus": "未确认实物身份",
+      "matches": [],
+      "provenance": {
+        "kind": "user-model-library",
+        "originalFile": "棚屋/棚屋.fbx",
+        "originalBytes": 6732672,
+        "conversion": "MC 轻量版：镜湖小庙依据参考图重新搭建；其余模型表面体素化、合并面及共享顶点色。原始文件保持不变。",
+        "license": "用户提供的模型库衍生轻量版本；上游许可未在原始清单中声明。"
+      },
+      "scaleNote": "size 和 bounds 是 GLB 实际坐标范围，不代表古建测绘尺寸；按门高、人体和邻接建筑统一尺度后放置。",
+      "navigation": {
+        "kind": "visual-mesh",
+        "note": "无通行元数据；默认作实体或背景，门洞/桥面不能直接宣称可行走。"
+      },
+      "validation": {
+        "structure": {
+          "status": "passed",
+          "scope": "supported uncompressed GLB triangle geometry"
+        },
+        "heritageContract": {
+          "status": "not-present"
+        },
+        "khronos": {
+          "status": "not-run"
+        },
+        "visual": {
+          "status": "not-run"
+        }
+      }
+    },
+    {
+      "id": "asset-37d6c7a4e30e",
+      "name": "水榭凉亭",
+      "category": "亭廊楼阁",
+      "file": "models/asset-37d6c7a4e30e.glb",
+      "preview": "previews/asset-37d6c7a4e30e.jpg",
+      "previewBytes": 9481,
+      "previewSha256": "ffc52646a9e3cd9526353975da9b86fb2ba264dd877e7027395e11c00ca57413",
+      "bytes": 528584,
+      "sha256": "7efdf2bf5866969d7bd1d5d18cbc7cd322e2d43935b74ca4a17a9cab4713eb32",
+      "bounds": {
+        "min": [
+          -7,
+          0,
+          -6.944301605224609
+        ],
+        "max": [
+          7.388888835906982,
+          13.61111068725586,
+          7.055698394775391
+        ]
+      },
+      "size": [
+        14.388888835906982,
+        13.61111068725586,
+        14
+      ],
+      "triangles": 8238,
+      "vertices": 16476,
+      "meshes": 1,
+      "nodes": 1,
+      "materials": 1,
+      "embeddedResources": true,
+      "usageTags": [
+        "亭廊楼阁",
+        "亭廊",
+        "院落边界",
+        "沿途停驻"
+      ],
+      "style": "surface-voxel",
+      "identityStatus": "未确认实物身份",
+      "matches": [],
+      "provenance": {
+        "kind": "user-model-library",
+        "originalFile": "水榭凉亭/水榭凉亭.fbx",
+        "originalBytes": 8573520,
+        "conversion": "MC 轻量版：镜湖小庙依据参考图重新搭建；其余模型表面体素化、合并面及共享顶点色。原始文件保持不变。",
+        "license": "用户提供的模型库衍生轻量版本；上游许可未在原始清单中声明。"
+      },
+      "scaleNote": "size 和 bounds 是 GLB 实际坐标范围，不代表古建测绘尺寸；按门高、人体和邻接建筑统一尺度后放置。",
+      "navigation": {
+        "kind": "visual-mesh",
+        "note": "无通行元数据；默认作实体或背景，门洞/桥面不能直接宣称可行走。"
+      },
+      "validation": {
+        "structure": {
+          "status": "passed",
+          "scope": "supported uncompressed GLB triangle geometry"
+        },
+        "heritageContract": {
+          "status": "not-present"
+        },
+        "khronos": {
+          "status": "not-run"
+        },
+        "visual": {
+          "status": "not-run"
+        }
+      }
+    },
+    {
+      "id": "asset-1546af0a6e51",
+      "name": "水榭大门",
+      "category": "山门牌坊",
+      "file": "models/asset-1546af0a6e51.glb",
+      "preview": "previews/asset-1546af0a6e51.jpg",
+      "previewBytes": 10701,
+      "previewSha256": "fab486a1687484f5062b3a51b2fc208e7c013eecaaa9f405a4676b648e4f8546",
+      "bytes": 532556,
+      "sha256": "40b1165d0259eb476cc32939530bd21c2b9a10ca53a0d54c1b4c2805f11e3def",
+      "bounds": {
+        "min": [
+          -7,
+          0,
+          -3.4300050735473633
+        ],
+        "max": [
+          7.318181991577148,
+          7.318181991577148,
+          3.5699949264526367
+        ]
+      },
+      "size": [
+        14.318181991577148,
+        7.318181991577148,
+        7
+      ],
+      "triangles": 8300,
+      "vertices": 16600,
+      "meshes": 1,
+      "nodes": 1,
+      "materials": 1,
+      "embeddedResources": true,
+      "usageTags": [
+        "山门牌坊",
+        "山门",
+        "入口",
+        "院落分隔"
+      ],
+      "style": "surface-voxel",
+      "identityStatus": "未确认实物身份",
+      "matches": [],
+      "provenance": {
+        "kind": "user-model-library",
+        "originalFile": "水榭大门/水榭大门.fbx",
+        "originalBytes": 10005552,
+        "conversion": "MC 轻量版：镜湖小庙依据参考图重新搭建；其余模型表面体素化、合并面及共享顶点色。原始文件保持不变。",
+        "license": "用户提供的模型库衍生轻量版本；上游许可未在原始清单中声明。"
+      },
+      "scaleNote": "size 和 bounds 是 GLB 实际坐标范围，不代表古建测绘尺寸；按门高、人体和邻接建筑统一尺度后放置。",
+      "navigation": {
+        "kind": "visual-mesh",
+        "note": "无通行元数据；默认作实体或背景，门洞/桥面不能直接宣称可行走。"
+      },
+      "validation": {
+        "structure": {
+          "status": "passed",
+          "scope": "supported uncompressed GLB triangle geometry"
+        },
+        "heritageContract": {
+          "status": "not-present"
+        },
+        "khronos": {
+          "status": "not-run"
+        },
+        "visual": {
+          "status": "not-run"
+        }
+      }
+    },
+    {
+      "id": "asset-5b11437e2619",
+      "name": "浮屠塔",
+      "category": "塔",
+      "file": "models/asset-5b11437e2619.glb",
+      "preview": "previews/asset-5b11437e2619.jpg",
+      "previewBytes": 8129,
+      "previewSha256": "7af8134affd39549dcd01493438a563f9f64fe2d3587e671678ffda9378eae44",
+      "bytes": 381652,
+      "sha256": "5f9bccd2cea8aba95f96e1bdb793cb4a20a11f6bc977859fa41ee13924a431b5",
+      "bounds": {
+        "min": [
+          -2.5896568298339844,
+          0,
+          -2.5703346729278564
+        ],
+        "max": [
+          2.8194339275360107,
+          14.318181991577148,
+          2.8387560844421387
+        ]
+      },
+      "size": [
+        5.409090757369995,
+        14.318181991577148,
+        5.409090757369995
+      ],
+      "triangles": 5942,
+      "vertices": 11884,
+      "meshes": 1,
+      "nodes": 1,
+      "materials": 1,
+      "embeddedResources": true,
+      "usageTags": [
+        "塔",
+        "远景地标",
+        "层次轮廓"
+      ],
+      "style": "surface-voxel",
+      "identityStatus": "未确认实物身份",
+      "matches": [
+        {
+          "siteId": "guangsheng",
+          "level": "待考证候选",
+          "reason": "预览为高层密集塔檐，供洪洞飞虹塔主题比对；LYS_FuTuTa 是游戏资产名，层数、材质与细部仍需核验。"
+        }
+      ],
+      "provenance": {
+        "kind": "user-model-library",
+        "originalFile": "浮屠塔/浮屠塔.fbx",
+        "originalBytes": 5281552,
+        "conversion": "MC 轻量版：镜湖小庙依据参考图重新搭建；其余模型表面体素化、合并面及共享顶点色。原始文件保持不变。",
+        "license": "用户提供的模型库衍生轻量版本；上游许可未在原始清单中声明。"
+      },
+      "scaleNote": "size 和 bounds 是 GLB 实际坐标范围，不代表古建测绘尺寸；按门高、人体和邻接建筑统一尺度后放置。",
+      "navigation": {
+        "kind": "visual-mesh",
+        "note": "无通行元数据；默认作实体或背景，门洞/桥面不能直接宣称可行走。"
+      },
+      "validation": {
+        "structure": {
+          "status": "passed",
+          "scope": "supported uncompressed GLB triangle geometry"
+        },
+        "heritageContract": {
+          "status": "not-present"
+        },
+        "khronos": {
+          "status": "not-run"
+        },
+        "visual": {
+          "status": "not-run"
+        }
+      }
+    },
+    {
+      "id": "asset-fb84043a098a",
+      "name": "火焰山牌坊",
+      "category": "山门牌坊",
+      "file": "models/asset-fb84043a098a.glb",
+      "preview": "previews/asset-fb84043a098a.jpg",
+      "previewBytes": 8960,
+      "previewSha256": "23267e188cc80e18100947eb5f26994aeed119c5065b795f8fabf6cc19a0592f",
+      "bytes": 526680,
+      "sha256": "d71824e79de9925ebe78b0cf1d215d341968710fb036d0d8a1dbbbb6c501595e",
+      "bounds": {
+        "min": [
+          -6.177934646606445,
+          0,
+          -3.9980924129486084
+        ],
+        "max": [
+          6.322065353393555,
+          14.25,
+          4.0019073486328125
+        ]
+      },
+      "size": [
+        12.5,
+        14.25,
+        7.999999761581421
+      ],
+      "triangles": 8208,
+      "vertices": 16416,
+      "meshes": 1,
+      "nodes": 1,
+      "materials": 1,
+      "embeddedResources": true,
+      "usageTags": [
+        "山门牌坊",
+        "山门",
+        "入口",
+        "院落分隔"
+      ],
+      "style": "surface-voxel",
+      "identityStatus": "未确认实物身份",
+      "matches": [],
+      "provenance": {
+        "kind": "user-model-library",
+        "originalFile": "火焰山牌坊/火焰山牌坊.fbx",
+        "originalBytes": 14901632,
+        "conversion": "MC 轻量版：镜湖小庙依据参考图重新搭建；其余模型表面体素化、合并面及共享顶点色。原始文件保持不变。",
+        "license": "用户提供的模型库衍生轻量版本；上游许可未在原始清单中声明。"
+      },
+      "scaleNote": "size 和 bounds 是 GLB 实际坐标范围，不代表古建测绘尺寸；按门高、人体和邻接建筑统一尺度后放置。",
+      "navigation": {
+        "kind": "visual-mesh",
+        "note": "无通行元数据；默认作实体或背景，门洞/桥面不能直接宣称可行走。"
+      },
+      "validation": {
+        "structure": {
+          "status": "passed",
+          "scope": "supported uncompressed GLB triangle geometry"
+        },
+        "heritageContract": {
+          "status": "not-present"
+        },
+        "khronos": {
+          "status": "not-run"
+        },
+        "visual": {
+          "status": "not-run"
+        }
+      }
+    },
+    {
+      "id": "asset-61df0a431ef3",
+      "name": "火焰山罗刹卧榻",
+      "category": "殿堂房屋",
+      "file": "models/asset-61df0a431ef3.glb",
+      "preview": "previews/asset-61df0a431ef3.jpg",
+      "previewBytes": 9723,
+      "previewSha256": "8cd2dc49dc343e9aa864959f7a0adac86e9e4f1ad44bfedb3322cd339e2c0a5e",
+      "bytes": 393672,
+      "sha256": "9c87a23827bbce72f54c8bbf9406bfa897d89c171bf78a59d40a7def8441196f",
+      "bounds": {
+        "min": [
+          -7,
+          0,
+          -5.46391487121582
+        ],
+        "max": [
+          7.5,
+          14,
+          5.53608512878418
+        ]
+      },
+      "size": [
+        14.5,
+        14,
+        11
+      ],
+      "triangles": 6130,
+      "vertices": 12260,
+      "meshes": 1,
+      "nodes": 1,
+      "materials": 1,
+      "embeddedResources": true,
+      "usageTags": [
+        "殿堂房屋",
+        "陈设",
+        "宗教装饰",
+        "近景"
+      ],
+      "style": "surface-voxel",
+      "identityStatus": "未确认实物身份",
+      "matches": [],
+      "provenance": {
+        "kind": "user-model-library",
+        "originalFile": "火焰山罗刹卧榻/火焰山罗刹卧榻.fbx",
+        "originalBytes": 42446160,
+        "conversion": "MC 轻量版：镜湖小庙依据参考图重新搭建；其余模型表面体素化、合并面及共享顶点色。原始文件保持不变。",
+        "license": "用户提供的模型库衍生轻量版本；上游许可未在原始清单中声明。"
+      },
+      "scaleNote": "size 和 bounds 是 GLB 实际坐标范围，不代表古建测绘尺寸；按门高、人体和邻接建筑统一尺度后放置。",
+      "navigation": {
+        "kind": "visual-mesh",
+        "note": "无通行元数据；默认作实体或背景，门洞/桥面不能直接宣称可行走。"
+      },
+      "validation": {
+        "structure": {
+          "status": "passed",
+          "scope": "supported uncompressed GLB triangle geometry"
+        },
+        "heritageContract": {
+          "status": "not-present"
+        },
+        "khronos": {
+          "status": "not-run"
+        },
+        "visual": {
+          "status": "not-run"
+        }
+      }
+    },
+    {
+      "id": "asset-788b6e4b7bc5",
+      "name": "灵虚观夜寺02",
+      "category": "殿堂房屋",
+      "file": "models/asset-788b6e4b7bc5.glb",
+      "preview": "previews/asset-788b6e4b7bc5.jpg",
+      "previewBytes": 10966,
+      "previewSha256": "d65a9f662c981ac80fbcd233a2a75a9818d9670952c6ef5336e0502271195b70",
+      "bytes": 611164,
+      "sha256": "4c71ce5fb30626501786bacb37be9545b6400749c6659d44d0ea279d029fedc9",
+      "bounds": {
+        "min": [
+          -7,
+          0,
+          -3.9955358505249023
+        ],
+        "max": [
+          7.318181991577148,
+          11.136363983154297,
+          4.277191638946533
+        ]
+      },
+      "size": [
+        14.318181991577148,
+        11.136363983154297,
+        8.272727489471436
+      ],
+      "triangles": 9528,
+      "vertices": 19056,
+      "meshes": 1,
+      "nodes": 1,
+      "materials": 1,
+      "embeddedResources": true,
+      "usageTags": [
+        "殿堂房屋",
+        "院落",
+        "建筑主体",
+        "配殿",
+        "侧院",
+        "背景建筑"
+      ],
+      "style": "surface-voxel",
+      "identityStatus": "未确认实物身份",
+      "matches": [],
+      "provenance": {
+        "kind": "user-model-library",
+        "originalFile": "灵虚观夜寺02/灵虚观夜寺02.fbx",
+        "originalBytes": 5955248,
+        "conversion": "MC 轻量版：镜湖小庙依据参考图重新搭建；其余模型表面体素化、合并面及共享顶点色。原始文件保持不变。",
+        "license": "用户提供的模型库衍生轻量版本；上游许可未在原始清单中声明。"
+      },
+      "scaleNote": "size 和 bounds 是 GLB 实际坐标范围，不代表古建测绘尺寸；按门高、人体和邻接建筑统一尺度后放置。",
+      "navigation": {
+        "kind": "visual-mesh",
+        "note": "无通行元数据；默认作实体或背景，门洞/桥面不能直接宣称可行走。"
+      },
+      "validation": {
+        "structure": {
+          "status": "passed",
+          "scope": "supported uncompressed GLB triangle geometry"
+        },
+        "heritageContract": {
+          "status": "not-present"
+        },
+        "khronos": {
+          "status": "not-run"
+        },
+        "visual": {
+          "status": "not-run"
+        }
+      }
+    },
+    {
+      "id": "asset-4f0fb2e3824a",
+      "name": "灵虚观大门",
+      "category": "山门牌坊",
+      "file": "models/asset-4f0fb2e3824a.glb",
+      "preview": "previews/asset-4f0fb2e3824a.jpg",
+      "previewBytes": 8719,
+      "previewSha256": "8ec41637262250e9480af42a129669c49c10bec6bbcbdd169608d7d582bcabfe",
+      "bytes": 477244,
+      "sha256": "220abcece2ff7b422d9f6d0863cb9dd469b7d8dbd1b5ecea6eaa56a71d771eb9",
+      "bounds": {
+        "min": [
+          -7,
+          0,
+          -3.1705620288848877
+        ],
+        "max": [
+          7.25,
+          6.75,
+          3.3294379711151123
+        ]
+      },
+      "size": [
+        14.25,
+        6.75,
+        6.5
+      ],
+      "triangles": 7436,
+      "vertices": 14872,
+      "meshes": 1,
+      "nodes": 1,
+      "materials": 1,
+      "embeddedResources": true,
+      "usageTags": [
+        "山门牌坊",
+        "院落",
+        "建筑主体",
+        "山门",
+        "入口",
+        "院落分隔"
+      ],
+      "style": "surface-voxel",
+      "identityStatus": "未确认实物身份",
+      "matches": [],
+      "provenance": {
+        "kind": "user-model-library",
+        "originalFile": "灵虚观大门/灵虚观大门.fbx",
+        "originalBytes": 9651360,
+        "conversion": "MC 轻量版：镜湖小庙依据参考图重新搭建；其余模型表面体素化、合并面及共享顶点色。原始文件保持不变。",
+        "license": "用户提供的模型库衍生轻量版本；上游许可未在原始清单中声明。"
+      },
+      "scaleNote": "size 和 bounds 是 GLB 实际坐标范围，不代表古建测绘尺寸；按门高、人体和邻接建筑统一尺度后放置。",
+      "navigation": {
+        "kind": "visual-mesh",
+        "note": "无通行元数据；默认作实体或背景，门洞/桥面不能直接宣称可行走。"
+      },
+      "validation": {
+        "structure": {
+          "status": "passed",
+          "scope": "supported uncompressed GLB triangle geometry"
+        },
+        "heritageContract": {
+          "status": "not-present"
+        },
+        "khronos": {
+          "status": "not-run"
+        },
+        "visual": {
+          "status": "not-run"
+        }
+      }
+    },
+    {
+      "id": "asset-d88384dc02b8",
+      "name": "石塔",
+      "category": "塔",
+      "file": "models/asset-d88384dc02b8.glb",
+      "preview": "previews/asset-d88384dc02b8.jpg",
+      "previewBytes": 9251,
+      "previewSha256": "984dc75e1c767537b08ba8b83412b33d59f886a64c2909c919189474139f2640",
+      "bytes": 465608,
+      "sha256": "39fc371d05d60853dabdebc0588528a0005909bc3a67f78ca8b9c06479fde309",
+      "bounds": {
+        "min": [
+          -3.093151807785034,
+          0,
+          -2.68000864982605
+        ],
+        "max": [
+          3.270484685897827,
+          14.318181991577148,
+          2.7290821075439453
+        ]
+      },
+      "size": [
+        6.363636493682861,
+        14.318181991577148,
+        5.409090757369995
+      ],
+      "triangles": 7254,
+      "vertices": 14508,
+      "meshes": 1,
+      "nodes": 1,
+      "materials": 1,
+      "embeddedResources": true,
+      "usageTags": [
+        "塔",
+        "远景地标",
+        "层次轮廓"
+      ],
+      "style": "surface-voxel",
+      "identityStatus": "未确认实物身份",
+      "matches": [
+        {
+          "siteId": "kaiyuan",
+          "level": "主题配置",
+          "reason": "石质多层塔可作泉州古塔主题的临时展示模型，不能据此认定为开元寺五层东西塔。"
+        }
+      ],
+      "provenance": {
+        "kind": "user-model-library",
+        "originalFile": "石塔/石塔.fbx",
+        "originalBytes": 7910896,
+        "conversion": "MC 轻量版：镜湖小庙依据参考图重新搭建；其余模型表面体素化、合并面及共享顶点色。原始文件保持不变。",
+        "license": "用户提供的模型库衍生轻量版本；上游许可未在原始清单中声明。"
+      },
+      "scaleNote": "size 和 bounds 是 GLB 实际坐标范围，不代表古建测绘尺寸；按门高、人体和邻接建筑统一尺度后放置。",
+      "navigation": {
+        "kind": "visual-mesh",
+        "note": "无通行元数据；默认作实体或背景，门洞/桥面不能直接宣称可行走。"
+      },
+      "validation": {
+        "structure": {
+          "status": "passed",
+          "scope": "supported uncompressed GLB triangle geometry"
+        },
+        "heritageContract": {
+          "status": "not-present"
+        },
+        "khronos": {
+          "status": "not-run"
+        },
+        "visual": {
+          "status": "not-run"
+        }
+      }
+    },
+    {
+      "id": "asset-1b5fcbc116ac",
+      "name": "石墙",
+      "category": "场景部件",
+      "file": "models/asset-1b5fcbc116ac.glb",
+      "preview": "previews/asset-1b5fcbc116ac.jpg",
+      "previewBytes": 8725,
+      "previewSha256": "07406ac1479a5a886e5acd0987db0b565b48f8e58d169d99e77a1d66d6d8e2aa",
+      "bytes": 674336,
+      "sha256": "7fd8fc01e29631eeeee8ee29863867a13ec3ef336555737c8df0154dc4234839",
+      "bounds": {
+        "min": [
+          -6.899747848510742,
+          0,
+          -7
+        ],
+        "max": [
+          7.100252151489258,
+          3.75,
+          7.25
+        ]
+      },
+      "size": [
+        14,
+        3.75,
+        14.25
+      ],
+      "triangles": 10516,
+      "vertices": 21032,
+      "meshes": 1,
+      "nodes": 1,
+      "materials": 1,
+      "embeddedResources": true,
+      "usageTags": [
+        "场景部件",
+        "围墙",
+        "院落围合",
+        "场地边界"
+      ],
+      "style": "surface-voxel",
+      "identityStatus": "未确认实物身份",
+      "matches": [],
+      "provenance": {
+        "kind": "user-model-library",
+        "originalFile": "石墙/石墙.fbx",
+        "originalBytes": 5440480,
+        "conversion": "MC 轻量版：镜湖小庙依据参考图重新搭建；其余模型表面体素化、合并面及共享顶点色。原始文件保持不变。",
+        "license": "用户提供的模型库衍生轻量版本；上游许可未在原始清单中声明。"
+      },
+      "scaleNote": "size 和 bounds 是 GLB 实际坐标范围，不代表古建测绘尺寸；按门高、人体和邻接建筑统一尺度后放置。",
+      "navigation": {
+        "kind": "visual-mesh",
+        "note": "无通行元数据；默认作实体或背景，门洞/桥面不能直接宣称可行走。"
+      },
+      "validation": {
+        "structure": {
+          "status": "passed",
+          "scope": "supported uncompressed GLB triangle geometry"
+        },
+        "heritageContract": {
+          "status": "not-present"
+        },
+        "khronos": {
+          "status": "not-run"
+        },
+        "visual": {
+          "status": "not-run"
+        }
+      }
+    },
+    {
+      "id": "asset-315ee4ec13ff",
+      "name": "石桥",
+      "category": "场景部件",
+      "file": "models/asset-315ee4ec13ff.glb",
+      "preview": "previews/asset-315ee4ec13ff.jpg",
+      "previewBytes": 6278,
+      "previewSha256": "f1bc3599d4c2cab2f3a99ead50089411d25d8af6fd9cdeae704d63d0fe8fc7b3",
+      "bytes": 333216,
+      "sha256": "4f8b989ed3554137ce35b3b8a2d50a221a84f7d8cf2283960f2b2b24549f44bd",
+      "bounds": {
+        "min": [
+          -1.2898963689804077,
+          0,
+          -7
+        ],
+        "max": [
+          1.4601036310195923,
+          3.25,
+          7.25
+        ]
+      },
+      "size": [
+        2.75,
+        3.25,
+        14.25
+      ],
+      "triangles": 5186,
+      "vertices": 10372,
+      "meshes": 1,
+      "nodes": 1,
+      "materials": 1,
+      "embeddedResources": true,
+      "usageTags": [
+        "场景部件",
+        "桥梁",
+        "跨水连接",
+        "路径转折"
+      ],
+      "style": "surface-voxel",
+      "identityStatus": "未确认实物身份",
+      "matches": [],
+      "provenance": {
+        "kind": "user-model-library",
+        "originalFile": "石桥/石桥.fbx",
+        "originalBytes": 673168,
+        "conversion": "MC 轻量版：镜湖小庙依据参考图重新搭建；其余模型表面体素化、合并面及共享顶点色。原始文件保持不变。",
+        "license": "用户提供的模型库衍生轻量版本；上游许可未在原始清单中声明。"
+      },
+      "scaleNote": "size 和 bounds 是 GLB 实际坐标范围，不代表古建测绘尺寸；按门高、人体和邻接建筑统一尺度后放置。",
+      "navigation": {
+        "kind": "visual-mesh",
+        "note": "无通行元数据；默认作实体或背景，门洞/桥面不能直接宣称可行走。"
+      },
+      "validation": {
+        "structure": {
+          "status": "passed",
+          "scope": "supported uncompressed GLB triangle geometry"
+        },
+        "heritageContract": {
+          "status": "not-present"
+        },
+        "khronos": {
+          "status": "not-run"
+        },
+        "visual": {
+          "status": "not-run"
+        }
+      }
+    },
+    {
+      "id": "asset-53666c336c0b",
+      "name": "石门",
+      "category": "山门牌坊",
+      "file": "models/asset-53666c336c0b.glb",
+      "preview": "previews/asset-53666c336c0b.jpg",
+      "previewBytes": 8463,
+      "previewSha256": "b3bbe1c9e28f9db8c5206622e09cee19f9574e8e427d934a8efc30cc9373fc43",
+      "bytes": 629920,
+      "sha256": "1467a4b0d0571bc06e6033988018b192c30ee460f3c4c5bfcd5efe0629f079e9",
+      "bounds": {
+        "min": [
+          -7,
+          0,
+          -3.5106887817382812
+        ],
+        "max": [
+          7,
+          10.5,
+          3.7393112182617188
+        ]
+      },
+      "size": [
+        14,
+        10.5,
+        7.25
+      ],
+      "triangles": 9822,
+      "vertices": 19644,
+      "meshes": 1,
+      "nodes": 1,
+      "materials": 1,
+      "embeddedResources": true,
+      "usageTags": [
+        "山门牌坊",
+        "山门",
+        "入口",
+        "院落分隔"
+      ],
+      "style": "surface-voxel",
+      "identityStatus": "未确认实物身份",
+      "matches": [],
+      "provenance": {
+        "kind": "user-model-library",
+        "originalFile": "石门/石门.fbx",
+        "originalBytes": 1290608,
+        "conversion": "MC 轻量版：镜湖小庙依据参考图重新搭建；其余模型表面体素化、合并面及共享顶点色。原始文件保持不变。",
+        "license": "用户提供的模型库衍生轻量版本；上游许可未在原始清单中声明。"
+      },
+      "scaleNote": "size 和 bounds 是 GLB 实际坐标范围，不代表古建测绘尺寸；按门高、人体和邻接建筑统一尺度后放置。",
+      "navigation": {
+        "kind": "visual-mesh",
+        "note": "无通行元数据；默认作实体或背景，门洞/桥面不能直接宣称可行走。"
+      },
+      "validation": {
+        "structure": {
+          "status": "passed",
+          "scope": "supported uncompressed GLB triangle geometry"
+        },
+        "heritageContract": {
+          "status": "not-present"
+        },
+        "khronos": {
+          "status": "not-run"
+        },
+        "visual": {
+          "status": "not-run"
+        }
+      }
+    },
+    {
+      "id": "asset-91bb486bbef9",
+      "name": "竹木桥",
+      "category": "场景部件",
+      "file": "models/asset-91bb486bbef9.glb",
+      "preview": "previews/asset-91bb486bbef9.jpg",
+      "previewBytes": 8066,
+      "previewSha256": "fb968b92441977aafacfae5dbdd5bb02bd15a84bd917ab0eb0cfe2c6075f36c2",
+      "bytes": 348712,
+      "sha256": "a828e0fca3250d779dedfff77beb298044f002d430294d060cdf2be9d6c00a29",
+      "bounds": {
+        "min": [
+          -3.1674606800079346,
+          0,
+          -7
+        ],
+        "max": [
+          3.3325393199920654,
+          4,
+          7.25
+        ]
+      },
+      "size": [
+        6.5,
+        4,
+        14.25
+      ],
+      "triangles": 5428,
+      "vertices": 10856,
+      "meshes": 1,
+      "nodes": 1,
+      "materials": 1,
+      "embeddedResources": true,
+      "usageTags": [
+        "场景部件",
+        "桥梁",
+        "跨水连接",
+        "路径转折"
+      ],
+      "style": "surface-voxel",
+      "identityStatus": "未确认实物身份",
+      "matches": [],
+      "provenance": {
+        "kind": "user-model-library",
+        "originalFile": "竹木桥/竹木桥.FBX",
+        "originalBytes": 9428816,
+        "conversion": "MC 轻量版：镜湖小庙依据参考图重新搭建；其余模型表面体素化、合并面及共享顶点色。原始文件保持不变。",
+        "license": "用户提供的模型库衍生轻量版本；上游许可未在原始清单中声明。"
+      },
+      "scaleNote": "size 和 bounds 是 GLB 实际坐标范围，不代表古建测绘尺寸；按门高、人体和邻接建筑统一尺度后放置。",
+      "navigation": {
+        "kind": "visual-mesh",
+        "note": "无通行元数据；默认作实体或背景，门洞/桥面不能直接宣称可行走。"
+      },
+      "validation": {
+        "structure": {
+          "status": "passed",
+          "scope": "supported uncompressed GLB triangle geometry"
+        },
+        "heritageContract": {
+          "status": "not-present"
+        },
+        "khronos": {
+          "status": "not-run"
+        },
+        "visual": {
+          "status": "not-run"
+        }
+      }
+    },
+    {
+      "id": "asset-47a040aaf135",
+      "name": "罗刹亭子",
+      "category": "亭廊楼阁",
+      "file": "models/asset-47a040aaf135.glb",
+      "preview": "previews/asset-47a040aaf135.jpg",
+      "previewBytes": 11553,
+      "previewSha256": "be6538fb1cd847e48bc960e38c70aa78fd5d8f33d2c84d879f4602b41d38d7a0",
+      "bytes": 535244,
+      "sha256": "06296fa907ce1c73a54873f4942ff18c174975c13e988036a7a303ce0644c76e",
+      "bounds": {
+        "min": [
+          -5.724587440490723,
+          0,
+          -7
+        ],
+        "max": [
+          5.942079067230225,
+          12.44444465637207,
+          7.388888835906982
+        ]
+      },
+      "size": [
+        11.666666507720947,
+        12.44444465637207,
+        14.388888835906982
+      ],
+      "triangles": 8342,
+      "vertices": 16684,
+      "meshes": 1,
+      "nodes": 1,
+      "materials": 1,
+      "embeddedResources": true,
+      "usageTags": [
+        "亭廊楼阁",
+        "亭廊",
+        "院落边界",
+        "沿途停驻"
+      ],
+      "style": "surface-voxel",
+      "identityStatus": "未确认实物身份",
+      "matches": [],
+      "provenance": {
+        "kind": "user-model-library",
+        "originalFile": "罗刹亭子/罗刹亭子.fbx",
+        "originalBytes": 21699008,
+        "conversion": "MC 轻量版：镜湖小庙依据参考图重新搭建；其余模型表面体素化、合并面及共享顶点色。原始文件保持不变。",
+        "license": "用户提供的模型库衍生轻量版本；上游许可未在原始清单中声明。"
+      },
+      "scaleNote": "size 和 bounds 是 GLB 实际坐标范围，不代表古建测绘尺寸；按门高、人体和邻接建筑统一尺度后放置。",
+      "navigation": {
+        "kind": "visual-mesh",
+        "note": "无通行元数据；默认作实体或背景，门洞/桥面不能直接宣称可行走。"
+      },
+      "validation": {
+        "structure": {
+          "status": "passed",
+          "scope": "supported uncompressed GLB triangle geometry"
+        },
+        "heritageContract": {
+          "status": "not-present"
+        },
+        "khronos": {
+          "status": "not-run"
+        },
+        "visual": {
+          "status": "not-run"
+        }
+      }
+    },
+    {
+      "id": "asset-334194ec2a9d",
+      "name": "罗刹廊桥",
+      "category": "场景部件",
+      "file": "models/asset-334194ec2a9d.glb",
+      "preview": "previews/asset-334194ec2a9d.jpg",
+      "previewBytes": 8876,
+      "previewSha256": "882127081b21116956fedf974b36390439fefb0d51322f278873703d639b0826",
+      "bytes": 368944,
+      "sha256": "0c60cee16d59ebce9eb06c77c266ba5d7c8bea821b61d63dfc564dbaba42f1a6",
+      "bounds": {
+        "min": [
+          -1.840116262435913,
+          0,
+          -7
+        ],
+        "max": [
+          1.909883737564087,
+          7.25,
+          7.25
+        ]
+      },
+      "size": [
+        3.75,
+        7.25,
+        14.25
+      ],
+      "triangles": 5744,
+      "vertices": 11488,
+      "meshes": 1,
+      "nodes": 1,
+      "materials": 1,
+      "embeddedResources": true,
+      "usageTags": [
+        "场景部件",
+        "桥梁",
+        "跨水连接",
+        "路径转折"
+      ],
+      "style": "surface-voxel",
+      "identityStatus": "未确认实物身份",
+      "matches": [],
+      "provenance": {
+        "kind": "user-model-library",
+        "originalFile": "罗刹廊桥/罗刹廊桥.fbx",
+        "originalBytes": 115394960,
+        "conversion": "MC 轻量版：镜湖小庙依据参考图重新搭建；其余模型表面体素化、合并面及共享顶点色。原始文件保持不变。",
+        "license": "用户提供的模型库衍生轻量版本；上游许可未在原始清单中声明。"
+      },
+      "scaleNote": "size 和 bounds 是 GLB 实际坐标范围，不代表古建测绘尺寸；按门高、人体和邻接建筑统一尺度后放置。",
+      "navigation": {
+        "kind": "visual-mesh",
+        "note": "无通行元数据；默认作实体或背景，门洞/桥面不能直接宣称可行走。"
+      },
+      "validation": {
+        "structure": {
+          "status": "passed",
+          "scope": "supported uncompressed GLB triangle geometry"
+        },
+        "heritageContract": {
+          "status": "not-present"
+        },
+        "khronos": {
+          "status": "not-run"
+        },
+        "visual": {
+          "status": "not-run"
+        }
+      }
+    },
+    {
+      "id": "asset-c98acc632d83",
+      "name": "罗刹拱桥",
+      "category": "场景部件",
+      "file": "models/asset-c98acc632d83.glb",
+      "preview": "previews/asset-c98acc632d83.jpg",
+      "previewBytes": 6299,
+      "previewSha256": "63ed6207ba7ada1c99bbc6643f88349ac6ab718c7a7a4b5c9522d1c1e5d66e0f",
+      "bytes": 204332,
+      "sha256": "280e013c78d98e5d04b05df0b815cd69a80e33bd90e819f720169e0dc510f2e0",
+      "bounds": {
+        "min": [
+          -0.852796196937561,
+          0,
+          -7
+        ],
+        "max": [
+          0.897203803062439,
+          3.75,
+          7.25
+        ]
+      },
+      "size": [
+        1.75,
+        3.75,
+        14.25
+      ],
+      "triangles": 3172,
+      "vertices": 6344,
+      "meshes": 1,
+      "nodes": 1,
+      "materials": 1,
+      "embeddedResources": true,
+      "usageTags": [
+        "场景部件",
+        "桥梁",
+        "跨水连接",
+        "路径转折"
+      ],
+      "style": "surface-voxel",
+      "identityStatus": "未确认实物身份",
+      "matches": [],
+      "provenance": {
+        "kind": "user-model-library",
+        "originalFile": "罗刹拱桥/罗刹拱桥.fbx",
+        "originalBytes": 19004272,
+        "conversion": "MC 轻量版：镜湖小庙依据参考图重新搭建；其余模型表面体素化、合并面及共享顶点色。原始文件保持不变。",
+        "license": "用户提供的模型库衍生轻量版本；上游许可未在原始清单中声明。"
+      },
+      "scaleNote": "size 和 bounds 是 GLB 实际坐标范围，不代表古建测绘尺寸；按门高、人体和邻接建筑统一尺度后放置。",
+      "navigation": {
+        "kind": "visual-mesh",
+        "note": "无通行元数据；默认作实体或背景，门洞/桥面不能直接宣称可行走。"
+      },
+      "validation": {
+        "structure": {
+          "status": "passed",
+          "scope": "supported uncompressed GLB triangle geometry"
+        },
+        "heritageContract": {
+          "status": "not-present"
+        },
+        "khronos": {
+          "status": "not-run"
+        },
+        "visual": {
+          "status": "not-run"
+        }
+      }
+    },
+    {
+      "id": "asset-b16a32d1aca6",
+      "name": "转经筒",
+      "category": "造像陈设",
+      "file": "models/asset-b16a32d1aca6.glb",
+      "preview": "previews/asset-b16a32d1aca6.jpg",
+      "previewBytes": 6672,
+      "previewSha256": "7c799a903f0a7a3e512178887ed78d317235dc9050e8b8caae56f23b97279e93",
+      "bytes": 265284,
+      "sha256": "d6b437fe6e3413b429948e83c14afe1e6135073a896c6666f02a2896d3ad34b0",
+      "bounds": {
+        "min": [
+          -1.6154464483261108,
+          0,
+          -1.6154464483261108
+        ],
+        "max": [
+          1.6345535516738892,
+          14.25,
+          1.6345535516738892
+        ]
+      },
+      "size": [
+        3.25,
+        14.25,
+        3.25
+      ],
+      "triangles": 4124,
+      "vertices": 8248,
+      "meshes": 1,
+      "nodes": 1,
+      "materials": 1,
+      "embeddedResources": true,
+      "usageTags": [
+        "造像陈设",
+        "陈设",
+        "宗教装饰",
+        "近景"
+      ],
+      "style": "surface-voxel",
+      "identityStatus": "未确认实物身份",
+      "matches": [],
+      "provenance": {
+        "kind": "user-model-library",
+        "originalFile": "转经筒/转经筒.fbx",
+        "originalBytes": 13070288,
+        "conversion": "MC 轻量版：镜湖小庙依据参考图重新搭建；其余模型表面体素化、合并面及共享顶点色。原始文件保持不变。",
+        "license": "用户提供的模型库衍生轻量版本；上游许可未在原始清单中声明。"
+      },
+      "scaleNote": "size 和 bounds 是 GLB 实际坐标范围，不代表古建测绘尺寸；按门高、人体和邻接建筑统一尺度后放置。",
+      "navigation": {
+        "kind": "visual-mesh",
+        "note": "无通行元数据；默认作实体或背景，门洞/桥面不能直接宣称可行走。"
+      },
+      "validation": {
+        "structure": {
+          "status": "passed",
+          "scope": "supported uncompressed GLB triangle geometry"
+        },
+        "heritageContract": {
+          "status": "not-present"
+        },
+        "khronos": {
+          "status": "not-run"
+        },
+        "visual": {
+          "status": "not-run"
+        }
+      }
+    },
+    {
+      "id": "asset-1ee5c94dc75d",
+      "name": "钟楼",
+      "category": "亭廊楼阁",
+      "file": "models/asset-1ee5c94dc75d.glb",
+      "preview": "previews/asset-1ee5c94dc75d.jpg",
+      "previewBytes": 9814,
+      "previewSha256": "fb02ab485516b5adaa5d405793be6c54b8da5ece0feb820a60cbb9980cc6360c",
+      "bytes": 557496,
+      "sha256": "efd1ab072ecf45b13c33a386cc23869bf9b3928759e9e8b5306af52c477dbeee",
+      "bounds": {
+        "min": [
+          -6.849400997161865,
+          0,
+          -7
+        ],
+        "max": [
+          7.150599002838135,
+          12.833333015441895,
+          7.388888835906982
+        ]
+      },
+      "size": [
+        14,
+        12.833333015441895,
+        14.388888835906982
+      ],
+      "triangles": 8690,
+      "vertices": 17380,
+      "meshes": 1,
+      "nodes": 1,
+      "materials": 1,
+      "embeddedResources": true,
+      "usageTags": [
+        "亭廊楼阁",
+        "钟楼",
+        "侧院",
+        "地标"
+      ],
+      "style": "surface-voxel",
+      "identityStatus": "未确认实物身份",
+      "matches": [],
+      "provenance": {
+        "kind": "user-model-library",
+        "originalFile": "钟楼/钟楼.fbx",
+        "originalBytes": 10372352,
+        "conversion": "MC 轻量版：镜湖小庙依据参考图重新搭建；其余模型表面体素化、合并面及共享顶点色。原始文件保持不变。",
+        "license": "用户提供的模型库衍生轻量版本；上游许可未在原始清单中声明。"
+      },
+      "scaleNote": "size 和 bounds 是 GLB 实际坐标范围，不代表古建测绘尺寸；按门高、人体和邻接建筑统一尺度后放置。",
+      "navigation": {
+        "kind": "visual-mesh",
+        "note": "无通行元数据；默认作实体或背景，门洞/桥面不能直接宣称可行走。"
+      },
+      "validation": {
+        "structure": {
+          "status": "passed",
+          "scope": "supported uncompressed GLB triangle geometry"
+        },
+        "heritageContract": {
+          "status": "not-present"
+        },
+        "khronos": {
+          "status": "not-run"
+        },
+        "visual": {
+          "status": "not-run"
+        }
+      }
+    },
+    {
+      "id": "asset-9ae945558560",
+      "name": "镜湖小庙",
+      "category": "殿堂房屋",
+      "file": "models/asset-9ae945558560.glb",
+      "preview": "previews/asset-9ae945558560.jpg",
+      "previewBytes": 12237,
+      "previewSha256": "8422b6a1f34755c4e9bb54710f83b191f521d54b7980770baaa6d98078befaa6",
+      "bytes": 837716,
+      "sha256": "4fa2486f9a77a2bb4c685c1dde9c0d0a28d39f0a38fab9e512e0366168583ed8",
+      "bounds": {
+        "min": [
+          -5.570000171661377,
+          0,
+          -3.680000066757202
+        ],
+        "max": [
+          5.570000171661377,
+          7.590000152587891,
+          5.25
+        ]
+      },
+      "size": [
+        11.140000343322754,
+        7.590000152587891,
+        8.930000066757202
+      ],
+      "triangles": 13716,
+      "vertices": 27432,
+      "meshes": 13,
+      "nodes": 14,
+      "materials": 38,
+      "embeddedResources": true,
+      "usageTags": [
+        "殿堂房屋",
+        "院落",
+        "建筑主体"
+      ],
+      "style": "authored-mc-reference",
+      "identityStatus": "未确认实物身份",
+      "matches": [
+        {
+          "siteId": "dule",
+          "level": "待考证候选",
+          "reason": "文件为 LYS_ShanMen03 系列；既有资料将独乐寺与亢金龙场景联系。可作为天津站山门候选，但预览形制不足以确认实物身份。"
+        }
+      ],
+      "provenance": {
+        "kind": "user-model-library",
+        "originalFile": "镜湖小庙/镜湖小庙.fbx",
+        "originalBytes": 6642784,
+        "conversion": "MC 轻量版：镜湖小庙依据参考图重新搭建；其余模型表面体素化、合并面及共享顶点色。原始文件保持不变。",
+        "license": "用户提供的模型库衍生轻量版本；上游许可未在原始清单中声明。"
+      },
+      "scaleNote": "size 和 bounds 是 GLB 实际坐标范围，不代表古建测绘尺寸；按门高、人体和邻接建筑统一尺度后放置。",
+      "navigation": {
+        "kind": "visual-mesh",
+        "note": "无通行元数据；默认作实体或背景，门洞/桥面不能直接宣称可行走。"
+      },
+      "validation": {
+        "structure": {
+          "status": "passed",
+          "scope": "supported uncompressed GLB triangle geometry"
+        },
+        "heritageContract": {
+          "status": "not-present"
+        },
+        "khronos": {
+          "status": "not-run"
+        },
+        "visual": {
+          "status": "not-run"
+        }
+      }
+    },
+    {
+      "id": "asset-db02f9712379",
+      "name": "雷音寺偏殿",
+      "category": "殿堂房屋",
+      "file": "models/asset-db02f9712379.glb",
+      "preview": "previews/asset-db02f9712379.jpg",
+      "previewBytes": 9463,
+      "previewSha256": "44c370946ca607902ba2fa7d820f1b0a429e16b91020ead045b6432349a88019",
+      "bytes": 567500,
+      "sha256": "509aa160d1ff89e47db20769382a99544cff51500852df5a5619141ecdf7e511",
+      "bounds": {
+        "min": [
+          -6.599311828613281,
+          0,
+          -7
+        ],
+        "max": [
+          6.622910499572754,
+          8.166666984558105,
+          7.388888835906982
+        ]
+      },
+      "size": [
+        13.222222328186035,
+        8.166666984558105,
+        14.388888835906982
+      ],
+      "triangles": 8846,
+      "vertices": 17692,
+      "meshes": 1,
+      "nodes": 1,
+      "materials": 1,
+      "embeddedResources": true,
+      "usageTags": [
+        "殿堂房屋",
+        "院落",
+        "建筑主体",
+        "配殿",
+        "侧院",
+        "背景建筑",
+        "小雷音寺",
+        "山寺"
+      ],
+      "style": "surface-voxel",
+      "identityStatus": "未确认实物身份",
+      "matches": [],
+      "provenance": {
+        "kind": "user-model-library",
+        "originalFile": "雷音寺偏殿/偏殿.fbx",
+        "originalBytes": 10814368,
+        "conversion": "MC 轻量版：镜湖小庙依据参考图重新搭建；其余模型表面体素化、合并面及共享顶点色。原始文件保持不变。",
+        "license": "用户提供的模型库衍生轻量版本；上游许可未在原始清单中声明。"
+      },
+      "scaleNote": "size 和 bounds 是 GLB 实际坐标范围，不代表古建测绘尺寸；按门高、人体和邻接建筑统一尺度后放置。",
+      "navigation": {
+        "kind": "visual-mesh",
+        "note": "无通行元数据；默认作实体或背景，门洞/桥面不能直接宣称可行走。"
+      },
+      "validation": {
+        "structure": {
+          "status": "passed",
+          "scope": "supported uncompressed GLB triangle geometry"
+        },
+        "heritageContract": {
+          "status": "not-present"
+        },
+        "khronos": {
+          "status": "not-run"
+        },
+        "visual": {
+          "status": "not-run"
+        }
+      }
+    },
+    {
+      "id": "asset-60863a416fd6",
+      "name": "黑风山廊亭",
+      "category": "亭廊楼阁",
+      "file": "models/asset-60863a416fd6.glb",
+      "preview": "previews/asset-60863a416fd6.jpg",
+      "previewBytes": 10862,
+      "previewSha256": "0571c3d62a326a952cc1dfbfa1424fdcde0e14f1017033621adf580c6319387e",
+      "bytes": 605012,
+      "sha256": "217606688bfb060e8882baadfe537e94263ed2786ed8cced984109ba79c19f03",
+      "bounds": {
+        "min": [
+          -7,
+          0,
+          -3.9955358505249023
+        ],
+        "max": [
+          7.318181991577148,
+          11.136363983154297,
+          4.277191638946533
+        ]
+      },
+      "size": [
+        14.318181991577148,
+        11.136363983154297,
+        8.272727489471436
+      ],
+      "triangles": 9432,
+      "vertices": 18864,
+      "meshes": 1,
+      "nodes": 1,
+      "materials": 1,
+      "embeddedResources": true,
+      "usageTags": [
+        "亭廊楼阁",
+        "亭廊",
+        "院落边界",
+        "沿途停驻",
+        "黑风山",
+        "山寺"
+      ],
+      "style": "surface-voxel",
+      "identityStatus": "未确认实物身份",
+      "matches": [],
+      "provenance": {
+        "kind": "user-model-library",
+        "originalFile": "黑风山廊亭/黑风山廊亭.fbx",
+        "originalBytes": 5534512,
+        "conversion": "MC 轻量版：镜湖小庙依据参考图重新搭建；其余模型表面体素化、合并面及共享顶点色。原始文件保持不变。",
+        "license": "用户提供的模型库衍生轻量版本；上游许可未在原始清单中声明。"
+      },
+      "scaleNote": "size 和 bounds 是 GLB 实际坐标范围，不代表古建测绘尺寸；按门高、人体和邻接建筑统一尺度后放置。",
+      "navigation": {
+        "kind": "visual-mesh",
+        "note": "无通行元数据；默认作实体或背景，门洞/桥面不能直接宣称可行走。"
+      },
+      "validation": {
+        "structure": {
+          "status": "passed",
+          "scope": "supported uncompressed GLB triangle geometry"
+        },
+        "heritageContract": {
+          "status": "not-present"
+        },
+        "khronos": {
+          "status": "not-run"
+        },
+        "visual": {
+          "status": "not-run"
+        }
+      }
+    },
+    {
+      "id": "asset-c92e9911731a",
+      "name": "黑风山钟楼",
+      "category": "亭廊楼阁",
+      "file": "models/asset-c92e9911731a.glb",
+      "preview": "previews/asset-c92e9911731a.jpg",
+      "previewBytes": 10101,
+      "previewSha256": "05282cdd88ab7dba6317a649fe9f6506dc408b696618af0aec239b4cded2a52d",
+      "bytes": 674888,
+      "sha256": "ab0da4e526230202d071851fe475140d09eeb1e2a1dd1098cfdc3b0c3128cc6a",
+      "bounds": {
+        "min": [
+          -6.84940242767334,
+          0,
+          -7
+        ],
+        "max": [
+          7.15059757232666,
+          12.833333015441895,
+          7.388888835906982
+        ]
+      },
+      "size": [
+        14,
+        12.833333015441895,
+        14.388888835906982
+      ],
+      "triangles": 10524,
+      "vertices": 21048,
+      "meshes": 1,
+      "nodes": 1,
+      "materials": 1,
+      "embeddedResources": true,
+      "usageTags": [
+        "亭廊楼阁",
+        "钟楼",
+        "侧院",
+        "地标",
+        "黑风山",
+        "山寺"
+      ],
+      "style": "surface-voxel",
+      "identityStatus": "未确认实物身份",
+      "matches": [],
+      "provenance": {
+        "kind": "user-model-library",
+        "originalFile": "黑风山钟楼/钟楼.fbx",
+        "originalBytes": 13212928,
+        "conversion": "MC 轻量版：镜湖小庙依据参考图重新搭建；其余模型表面体素化、合并面及共享顶点色。原始文件保持不变。",
+        "license": "用户提供的模型库衍生轻量版本；上游许可未在原始清单中声明。"
+      },
+      "scaleNote": "size 和 bounds 是 GLB 实际坐标范围，不代表古建测绘尺寸；按门高、人体和邻接建筑统一尺度后放置。",
+      "navigation": {
+        "kind": "visual-mesh",
+        "note": "无通行元数据；默认作实体或背景，门洞/桥面不能直接宣称可行走。"
+      },
+      "validation": {
+        "structure": {
+          "status": "passed",
+          "scope": "supported uncompressed GLB triangle geometry"
+        },
+        "heritageContract": {
+          "status": "not-present"
+        },
+        "khronos": {
+          "status": "not-run"
+        },
+        "visual": {
+          "status": "not-run"
+        }
+      }
+    },
+    {
+      "id": "demo-heritage-hall",
+      "name": "通用木构殿堂示范",
+      "category": "殿堂房屋",
+      "file": "models/demo-heritage-hall.glb",
+      "bytes": 45368,
+      "sha256": "8013307267638cb4edad75cc54f7cf5e9a324aab653242a52ece12536bc8c942",
+      "bounds": {
+        "min": [
+          -5.875,
+          0,
+          -3.8499999046325684
+        ],
+        "max": [
+          5.875,
+          4.28000020980835,
+          4.474999904632568
+        ]
+      },
+      "size": [
+        11.75,
+        4.28000020980835,
+        8.324999809265137
+      ],
+      "triangles": 648,
+      "vertices": 1296,
+      "meshes": 6,
+      "nodes": 7,
+      "materials": 15,
+      "embeddedResources": true,
+      "usageTags": [
+        "殿堂房屋",
+        "院落",
+        "建筑主体"
+      ],
+      "style": "original-stylized-demo",
+      "identityStatus": "通用风格化示范，非实物复原",
+      "matches": [
+        {
+          "siteId": "foguang",
+          "level": "通用示范",
+          "reason": "保留项目资料页的旧版通用示范关联，不认定为该处古建模型。"
+        }
+      ],
+      "provenance": {
+        "kind": "project-original-demo",
+        "originalFile": "models/heritage-hall.glb",
+        "conversion": "项目原创通用风格化示范，非对应古建测绘模型。",
+        "license": "项目原创资源；本快照未附独立许可文件。"
+      },
+      "scaleNote": "size 和 bounds 是 GLB 实际坐标范围，不代表古建测绘尺寸；按门高、人体和邻接建筑统一尺度后放置。",
+      "navigation": {
+        "kind": "visual-mesh",
+        "note": "无通行元数据；默认作实体或背景，门洞/桥面不能直接宣称可行走。"
+      },
+      "validation": {
+        "structure": {
+          "status": "passed",
+          "scope": "supported uncompressed GLB triangle geometry"
+        },
+        "heritageContract": {
+          "status": "not-present"
+        },
+        "khronos": {
+          "status": "not-run"
+        },
+        "visual": {
+          "status": "not-run"
+        }
+      }
+    },
+    {
+      "id": "demo-heritage-tower",
+      "name": "通用层檐塔示范",
+      "category": "塔",
+      "file": "models/demo-heritage-tower.glb",
+      "bytes": 117364,
+      "sha256": "2dddbff2a124181c5f00d1067a80f152ae90740c3b34a2419e9b1c82de71d0d2",
+      "bounds": {
+        "min": [
+          -3.875,
+          0,
+          -3.8499999046325684
+        ],
+        "max": [
+          3.875,
+          10.279999732971191,
+          4.474999904632568
+        ]
+      },
+      "size": [
+        7.75,
+        10.279999732971191,
+        8.324999809265137
+      ],
+      "triangles": 1848,
+      "vertices": 3696,
+      "meshes": 6,
+      "nodes": 7,
+      "materials": 15,
+      "embeddedResources": true,
+      "usageTags": [
+        "塔",
+        "远景地标",
+        "层次轮廓"
+      ],
+      "style": "original-stylized-demo",
+      "identityStatus": "通用风格化示范，非实物复原",
+      "matches": [
+        {
+          "siteId": "yingxian",
+          "level": "通用示范",
+          "reason": "保留项目资料页的旧版通用示范关联，不认定为该处古建模型。"
+        }
+      ],
+      "provenance": {
+        "kind": "project-original-demo",
+        "originalFile": "models/heritage-tower.glb",
+        "conversion": "项目原创通用风格化示范，非对应古建测绘模型。",
+        "license": "项目原创资源；本快照未附独立许可文件。"
+      },
+      "scaleNote": "size 和 bounds 是 GLB 实际坐标范围，不代表古建测绘尺寸；按门高、人体和邻接建筑统一尺度后放置。",
+      "navigation": {
+        "kind": "visual-mesh",
+        "note": "无通行元数据；默认作实体或背景，门洞/桥面不能直接宣称可行走。"
+      },
+      "validation": {
+        "structure": {
+          "status": "passed",
+          "scope": "supported uncompressed GLB triangle geometry"
+        },
+        "heritageContract": {
+          "status": "not-present"
+        },
+        "khronos": {
+          "status": "not-run"
+        },
+        "visual": {
+          "status": "not-run"
+        }
+      }
+    },
+    {
+      "id": "demo-heritage-pavilion",
+      "name": "通用亭阁示范",
+      "category": "亭廊楼阁",
+      "file": "models/demo-heritage-pavilion.glb",
+      "bytes": 33964,
+      "sha256": "6169073f7b9450f99212cf55274b81daa9016e28091a975862d26d080adbfa1b",
+      "bounds": {
+        "min": [
+          -3.875,
+          0,
+          -3.8499999046325684
+        ],
+        "max": [
+          3.875,
+          4.28000020980835,
+          4.474999904632568
+        ]
+      },
+      "size": [
+        7.75,
+        4.28000020980835,
+        8.324999809265137
+      ],
+      "triangles": 468,
+      "vertices": 936,
+      "meshes": 5,
+      "nodes": 6,
+      "materials": 15,
+      "embeddedResources": true,
+      "usageTags": [
+        "亭廊楼阁"
+      ],
+      "style": "original-stylized-demo",
+      "identityStatus": "通用风格化示范，非实物复原",
+      "matches": [
+        {
+          "siteId": "dule",
+          "level": "通用示范",
+          "reason": "保留项目资料页的旧版通用示范关联，不认定为该处古建模型。"
+        }
+      ],
+      "provenance": {
+        "kind": "project-original-demo",
+        "originalFile": "models/heritage-pavilion.glb",
+        "conversion": "项目原创通用风格化示范，非对应古建测绘模型。",
+        "license": "项目原创资源；本快照未附独立许可文件。"
+      },
+      "scaleNote": "size 和 bounds 是 GLB 实际坐标范围，不代表古建测绘尺寸；按门高、人体和邻接建筑统一尺度后放置。",
+      "navigation": {
+        "kind": "visual-mesh",
+        "note": "无通行元数据；默认作实体或背景，门洞/桥面不能直接宣称可行走。"
+      },
+      "validation": {
+        "structure": {
+          "status": "passed",
+          "scope": "supported uncompressed GLB triangle geometry"
+        },
+        "heritageContract": {
+          "status": "not-present"
+        },
+        "khronos": {
+          "status": "not-run"
+        },
+        "visual": {
+          "status": "not-run"
+        }
+      }
+    }
+  ],
+  "pending": [
+    {
+      "name": "屋顶",
+      "reason": "仅有 MAX 格式，需要先从 3ds Max 导出 FBX。"
+    }
+  ]
+}

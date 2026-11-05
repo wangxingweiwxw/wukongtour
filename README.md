@@ -62,7 +62,9 @@ node scripts/update-zhihu-knowledge.mjs --cli "<官方 setup 返回的 binary_pa
 
 首页“中国漫游地图”底部固定显示“导入建筑 GLB”，打开导入指南，提供技能介绍与安装包、可复制的调用示例、三步导入说明，以及普通模型和可漫游群落的接口区别。页面可下载[完整接口说明](public/downloads/heritage-glb-interface.md)和[三建筑布局参数](public/downloads/heritage-layout-example.json)。选择文件按钮始终保留在底部；取消文件选择可继续阅读，导入失败会在页内显示原因并允许重试。从首页关闭指南会返回原地图，成功导入后进入场景；游玩中的原入口仍可使用。
 
-独立技能位于 [`skills/image-to-heritage-glb`](skills/image-to-heritage-glb/SKILL.md)，包含原创建筑群参考 GLB、三建筑与十三建筑参数模板、无 npm 依赖的 Node.js 建模/校验脚本和独立预览器。将整个文件夹复制到个人 skills 目录即可使用；技能不读取本项目源码，也不依赖本项目安装。发行 ZIP 为 [`public/downloads/image-to-heritage-glb.zip`](public/downloads/image-to-heritage-glb.zip)。
+独立技能位于 [`skills/image-to-heritage-glb`](skills/image-to-heritage-glb/SKILL.md)，包含项目实际使用的小雷音寺完整参考 GLB、23 处古建资料、40 个模型库 GLB 与 3 个原创通用示范、40 张预览，以及三建筑、十三建筑和林谷配景参数模板。无 npm 依赖的 Node.js 脚本支持建模、植被、库模型合并、校验、场景分析和独立预览；整个目录可独立复制使用，不读取本项目源码。发行 ZIP 为 [`public/downloads/image-to-heritage-glb.zip`](public/downloads/image-to-heritage-glb.zip)。
+
+技能要求实际分析完整基准，联网查阅建筑形制并记录采用的结论，再按主题选择库模型；`libraryInstances` 把所选网格内嵌到最终 GLB，保留用途/来源与实体碰撞，避免把外观模型误作可入内建筑。`analyze_scene.mjs` 对比基准、布局和输出，提示围合、配景及长空白路段；视觉质量仍须多视角与人眼高度检查。维护库可运行 `node scripts/sync-skill-library.mjs`；使用技能无需该维护脚本。`node skills/image-to-heritage-glb/scripts/catalog.mjs verify` 校验随包资源。
 
 技能在写入 GLB 前检查完整通行矩形边界、节点归属、站位和路径连通性，拒绝“站位在边界内、整块地面却越界”的输出。生成或校验失败会写入 `ok:false` 的报告，保留已有模型；成功报告分别列出结构、契约、参考控制器路径检查，官方规范与实际目视检查需另行完成。`npm run test:skill-output` 对照实际网页导入器验证越界、断路、节点关系和失败重试行为。
 

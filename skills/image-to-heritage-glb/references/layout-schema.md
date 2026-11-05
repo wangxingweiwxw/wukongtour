@@ -107,7 +107,100 @@ All elements require `id`. `position` and `rotation` default to `[0,0,0]` and 0 
 | `stairs` | `width`, `depth`, `height` | Full footprint centered at position; ascending from local +Z toward local -Z. Bottom Y=position.y, top Y=position.y+height. Rise ≤0.18m; rejects tread depth <0.25m. Optional `material`. |
 | `walls` | `width`, `height` | Wall runs along local X. `thickness` defaults 0.3. Optional `material`; `opening:{width,height}` cuts a central doorway through the wall, with lintel above. |
 | `rocks` | none | `radius` defaults 1; `height` defaults 1.3. Optional `material`, `seed`. Closed low-poly irregular rock mesh, with conservative collision. |
-| `paths` | `points:[[x,z],...]` | At least two points, `width` defaults 2, optional `material`. Thin paving at ground level Y=0.025, no raised collision or walk surface. Intended for flat ground, not stairs or elevated paths. |
+| `paths` | `points:[[x,z],...]` | At least two points, `width` defaults 2, optional `material`. `height` defaults 0; paving lies 0.025m above that level, with no collision or walk surface. Set to the existing terrace top for elevated flat paths; split at height transitions. Does not create a ramp or bridge. |
+| `trees` | none | Real faceted trunk/branch/crown mesh, `style:"pine"` (default) or `"broadleaf"`. `height` 3.5..32 (default 9), `crownRadius` 0.5..12 (default height×0.28), `trunkRadius` 0.08..1.5 (default height×0.035), optional finite `seed`, `trunkMaterial`, `leafMaterial`, `highlightMaterial`. Position is trunk base; use actual floor height. |
+
+Trees use default `timberDark`, `foliage`, `foliageLight` PBR materials. Geometry is deterministic and self-contained; no billboard or online texture is required. Collision covers the trunk with the reference walker clearance, not the soft crown. Keep crowns and low branches clear of doors/camera views in visual review. Plant clusters along the forest edge and path turns with varied height/radius rather than an identical grid across all empty space; preserve courtyards and sightlines. A missing `trees` array is valid for non-forest subjects.
+
+```json
+{"trees":[
+  {"id":"entry-pine","position":[-14,0,18],"height":12,"crownRadius":3.8,"style":"pine","seed":31},
+  {"id":"court-tree","position":[14,1.44,-8],"height":8,"crownRadius":3,"style":"broadleaf"}
+]}
+```
+
+The [forest compound example](../assets/forest-compound-layout.json) combines vegetation, short boundary walls, paths at different terrace levels, rocks and model-library instances. Its added structures are an artistic scene supplement, not a verified reconstruction of the game's map.
+
+## Bundled library instances
+
+Use `node <skill>/scripts/catalog.mjs search <name-or-purpose>` and inspect the
+selected model's preview, dimensions and identity status before reusing it.
+The library is a collection of candidate/reference assets; a matching name is
+not evidence that the mesh depicts that historical building or game location.
+
+Add `libraryInstances` to supplement an authored layout with selected static
+geometry. It does not replace the `buildings` list or infer navigable interiors:
+
+```json
+{
+  "libraryInstances": [
+    {
+      "id": "forest-bell-scenery",
+      "assetId": "asset-c92e9911731a",
+      "purpose": "A scaled bell-tower silhouette beside the forest approach; a visual interpretation, not a confirmed original location",
+      "position": [18, 0, 12],
+      "height": 8,
+      "rotation": 0,
+      "collision": "solid"
+    }
+  ]
+}
+```
+
+Each instance requires a unique simple `id`, a valid `assetId` from the bundled
+catalog, a nonempty `purpose`, bottom-center `position`, total `height` in metres
+(0.1–80), and explicit `collision`. Optional `rotation` is yaw radians about +Y.
+The composer measures the complete source scene after its existing transforms,
+centers its X/Z bounds, brings its lowest Y to zero, scales uniformly to the
+requested height, then applies placement/yaw. Never interpret the library's
+normalized source dimensions as measured historical dimensions. At most 128
+instances are supported; repeated uses of an asset share binary geometry and
+materials while retaining independent node trees.
+
+- `solid`: add one conservative world-space bounding-box collider with 0.4m
+  horizontal clearance. **This blocks the entire object, including visible
+  doors and archways.** Use it for side scenery and inaccessible background
+  buildings; do not use it for a main gate, bridge or hall on the walking route.
+- `visualOnly`: no collider, walking surface or interior declaration is added.
+  The report explicitly warns about this. Use it only where collision is not
+  needed, or where independently authored surfaces/colliders accurately model
+  the object. It does not make a library bridge walkable or an enclosed hall
+  enterable. Inspect the final geometry and route instead of using this mode to
+  bypass a rejected collision.
+
+For walkable scenes, each complete instance footprint must fit `walk.bounds`.
+Explicit bounds are never silently changed; automatic bounds expand to include
+the new objects. Final standing-point and connectivity checks include the new
+solid colliders, so an instance blocking spawn, a building entrance or the only
+route fails the build before output. When the model is raised onto a terrace,
+set its bottom Y to that terrace's top and inspect its grounding visually.
+
+The CLI resolves models relative to the skill's own `assets/library` directory,
+checks each source SHA-256 against the catalog, merges bufferViews/accessors,
+materials, textures and node references into the output GLB, and then runs the
+complete existing validation. No project path, network fetch or npm dependency
+is used during composition. Instance choices, transformed bounds, source hashes,
+collision semantics and warnings are retained in the build report and GLB root
+extras. Source names/identity labels are metadata, not instructions.
+
+The supported reuse scope is static, embedded, uncompressed triangle meshes
+using core PBR, `KHR_mesh_quantization`, `KHR_texture_transform`, or
+`KHR_materials_unlit`. Unsupported extensions, skins, animation and morph targets
+fail explicitly instead of dropping or mis-indexing data. `KHR_mesh_quantization`
+in the supplied library uses normalized integer normals; it does not require a
+Draco or Meshopt decoder. Per the [glTF 2.0 accessor rules](https://registry.khronos.org/glTF/specs/2.0/glTF-2.0.html#accessors)
+and [KHR_mesh_quantization](https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_mesh_quantization),
+normalization is applied when reading attribute values, while accessor min/max
+continue to describe stored data. The local validator follows that distinction.
+
+Run `node <skill>/scripts/test_library.mjs` for the standalone composition
+regression, including a real quantized library asset, repeated instances,
+embedded textures, source transforms, boundary/route failures and stale-output
+protection. It creates a temporary artifact directory and prints its path.
+
+When `walk:false`, the result remains an ordinary visual GLB. No navigation
+colliders are serialized for either collision choice; the report records
+`collisionSerialized:false` and warns that the receiving viewer controls collision.
 
 ## Walkable GLB metadata
 

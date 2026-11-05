@@ -3,6 +3,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import {buildArchitecture} from './lib/architecture.mjs';
 import {validateGlb} from './lib/validate.mjs';
+import {composeLibraryInstances} from './lib/library-compose.mjs';
 const pathKey=value=>process.platform==='win32'?value.toLowerCase():value;
 
 function options(args){
@@ -21,9 +22,11 @@ try{
   args=options(process.argv.slice(2));stage='read-layout';
   const spec=JSON.parse(await fs.readFile(args.spec,'utf8'));
   stage='build';const generated=buildArchitecture(spec);
+  stage='library-composition';const composed=await composeLibraryInstances(generated.binary,spec);generated.binary=composed.binary;
   stage='validation';const validation=validateGlb(generated.binary);
   stage='write-model';await fs.mkdir(path.dirname(args.out),{recursive:true});await fs.writeFile(args.out,generated.binary);artifactWritten=true;
-  const report={...generated.summary,...validation,spec:args.spec,output:args.out};
+  const report={...generated.summary,...validation,meshCount:validation.meshes,nodeCount:validation.nodes,materialCount:validation.materials,
+    libraryInstances:composed.instances,warnings:[...validation.warnings,...composed.warnings],spec:args.spec,output:args.out};
   stage='write-report';
   if(args.report){await fs.mkdir(path.dirname(args.report),{recursive:true});await fs.writeFile(args.report,JSON.stringify(report,null,2)+'\n');}
   console.log(JSON.stringify(report,null,2));

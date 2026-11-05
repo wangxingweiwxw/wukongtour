@@ -1,6 +1,6 @@
 import './import-guide.css';
 
-const SKILL_PROMPT = '使用 $image-to-heritage-glb，根据我提供的古建筑照片或地图生成自包含 GLB。先分析建筑形制与院落布局，参考内置古建群，搜索一手资料补足细节。附布局 JSON、校验报告和多角度预览；需要入内漫游时，输出 extras.heritageScene 通行元数据，并验证门洞、台阶和导览路线。';
+const SKILL_PROMPT = '使用 $image-to-heritage-glb，根据我提供的古建筑照片或地图生成自包含 GLB。实际分析内置小雷音寺完整古建群，联网研究建筑形制，从23处资料与43个库模型中挑选合适配景，补齐院落、树石与地形层次。附布局 JSON、来源与设计依据、场景检查、校验报告和多角度预览；需要入内漫游时，输出 extras.heritageScene 通行元数据，并验证门洞、台阶和导览路线。';
 
 /** A local-file guide: model generation happens in the user's agent. */
 export function createImportGuide({triggers, fileInput, clearInput}) {
@@ -19,8 +19,8 @@ export function createImportGuide({triggers, fileInput, clearInput}) {
           <h3 id="importSkillTitle">一张参考图，<br>一座可探索的古建。</h3>
           <code class="import-skill-name">image-to-heritage-glb</code>
           <p>让 agent 读懂古建筑照片、游戏地图或概念图，分析屋顶、柱梁、门洞与院落关系，再生成真正的三维网格。</p>
-          <ul><li>支持单体古建与多院落建筑群</li><li>内置原创古建群 GLB，供尺度与结构对照</li><li>调用 agent 网络搜索，参考建筑与导出资料</li><li>独立运行，建模与基础校验仅需 Node.js 22+</li></ul>
-          <a class="import-skill-download" href="/downloads/image-to-heritage-glb.zip" download>下载技能安装包 <span>ZIP · 3.5 MiB ↓</span></a>
+          <ul><li>内置小雷音寺完整古建群与林谷配景示例</li><li>23 处古建资料、43 个模型与对应预览</li><li>联网研究形制，按需复用模型并补齐树石环境</li><li>独立运行，建模与基础校验仅需 Node.js 22+</li></ul>
+          <a class="import-skill-download" href="/downloads/image-to-heritage-glb.zip" download>下载技能安装包 <span>ZIP · 含参考模型库 ↓</span></a>
           <p class="import-skill-note">模型由你的 agent 生成。本页负责导入；单张图片未展示的背面与尺寸，需要合理补全。</p>
         </section>
         <section class="import-steps" aria-labelledby="importStepsTitle">

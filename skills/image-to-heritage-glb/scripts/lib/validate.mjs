@@ -66,7 +66,13 @@ export function validateGlb(bytes){
       check(Number.isFinite(value),`Accessor ${id} contains NaN/Infinity`);values.push(value);
     }
     for(const bound of ['min','max'])if(a[bound]!==undefined)finiteArray(a[bound],width,`accessor ${id}.${bound}`);
-    const result={definition:a,values,width};cache.set(id,result);return result;
+    if(a.normalized!==undefined)check(typeof a.normalized==='boolean',`Invalid normalized flag in accessor ${id}`);
+    if(a.normalized)check([5120,5121,5122,5123].includes(a.componentType),`Only byte/short accessors may be normalized (${id})`);
+    // glTF min/max describe stored integers; only decoded attribute values are
+    // normalized. Preserve raw values for bounds and index validation.
+    const decoded=a.normalized?values.map(value=>a.componentType===5120?Math.max(value/127,-1)
+      :a.componentType===5121?value/255:a.componentType===5122?Math.max(value/32767,-1):value/65535):values;
+    const result={definition:a,values,decoded,width};cache.set(id,result);return result;
   }
   // Read even unused accessors so malformed unreachable geometry cannot hide.
   accessors.forEach((_,i)=>readAccessor(i));
@@ -86,12 +92,15 @@ export function validateGlb(bytes){
         const attribute=readAccessor(id);check(attribute.definition.count===position.definition.count,`${semantic} attribute count mismatch`);
         if(semantic==='NORMAL'){
           check(attribute.width===3,'NORMAL must be VEC3');
-          for(let i=0;i<attribute.values.length;i+=3)check(Math.abs(Math.hypot(...attribute.values.slice(i,i+3))-1)<.01,'Non-unit normal');
+          check(attribute.definition.componentType===5126||([5120,5122].includes(attribute.definition.componentType)
+            &&attribute.definition.normalized&&(doc.extensionsRequired??[]).includes('KHR_mesh_quantization')),
+          'Integer NORMAL requires normalized signed bytes/shorts and KHR_mesh_quantization');
+          for(let i=0;i<attribute.decoded.length;i+=3)check(Math.abs(Math.hypot(...attribute.decoded.slice(i,i+3))-1)<.01,'Non-unit normal');
         }
       }
       if(p.material!==undefined)index(p.material,materials,'primitive.material');
       let count=position.definition.count;
-      if(p.indices!==undefined){const ix=readAccessor(p.indices);check(ix.width===1&&[5121,5123,5125].includes(ix.definition.componentType),'Indices must be unsigned SCALAR');
+      if(p.indices!==undefined){const ix=readAccessor(p.indices);check(ix.width===1&&[5121,5123,5125].includes(ix.definition.componentType)&&!ix.definition.normalized,'Indices must be unsigned, non-normalized SCALAR');
         check(ix.values.every(i=>i>=0&&i<position.definition.count),'Primitive index exceeds vertex count');count=ix.definition.count;}
       check(count%3===0,'Triangle count is not divisible by three');triangles+=count/3;vertices+=position.definition.count;
     }

@@ -1,4 +1,5 @@
 import {Asset,Geometry} from './mesh.mjs';
+import {addVegetation} from './vegetation.mjs';
 
 const DEFAULT_MATERIALS={
   stone:{color:'#b6b09e',roughness:.96},stoneDark:{color:'#8e938a',roughness:1},
@@ -6,6 +7,7 @@ const DEFAULT_MATERIALS={
   red:{color:'#924c3b',roughness:.91},plaster:{color:'#c8b899',roughness:.97},
   tile:{color:'#626c66',roughness:.9},tileLight:{color:'#859085',roughness:.88},
   rock:{color:'#939582',roughness:1},path:{color:'#b2a58b',roughness:1},
+  foliage:{color:'#344c35',roughness:1},foliageLight:{color:'#667843',roughness:1},
 };
 const finite=(v,label)=>{if(typeof v!=='number'||!Number.isFinite(v))throw Error(`${label} must be a finite number`);return v;};
 const range=(v,min,max,label)=>{finite(v,label);if(v<min||v>max)throw Error(`${label} must be between ${min} and ${max}`);return v;};
@@ -210,11 +212,12 @@ function landscape(site,spec){
     const f=site.frame({...item,position:[0,0,0],rotation:0},'paths'),g=new Geometry(),points=list(item.points,`${f.id}.points`);
     if(points.length<2)throw Error(`${f.id}.points needs at least two [x,z] pairs`);
     const w=range(item.width??2,.3,30,`${f.id}.width`),m=site.material(item.material,'path');
+    const y=range(item.height??0,-20,128,`${f.id}.height`)+.025;
     const normalized=points.map((p,i)=>{if(!Array.isArray(p)||p.length!==2)throw Error(`${f.id}.points[${i}] must be [x,z]`);return [finite(p[0],'path x'),finite(p[1],'path z')];});
     for(let i=1;i<normalized.length;i++){
       const a=normalized[i-1],b=normalized[i],dx=b[0]-a[0],dz=b[1]-a[1],length=Math.hypot(dx,dz);if(length<1e-6)continue;
       const nx=-dz/length*w/2,nz=dx/length*w/2;
-      g.quad([a[0]+nx,.025,a[1]+nz],[b[0]+nx,.025,b[1]+nz],[b[0]-nx,.025,b[1]-nz],[a[0]-nx,.025,a[1]-nz],m,[0,1,0]);
+      g.quad([a[0]+nx,y,a[1]+nz],[b[0]+nx,y,b[1]+nz],[b[0]-nx,y,b[1]-nz],[a[0]-nx,y,a[1]-nz],m,[0,1,0]);
     }
     site.finish(f,'paving',g);
   }
@@ -225,6 +228,7 @@ export function buildArchitecture(spec){
   if(!items.length)throw Error('At least one building is required');
   for(const item of items)building(site,item);
   landscape(site,spec);
+  addVegetation(site,spec);
   const root=site.asset.nodes[0];root.extras.description=String(spec.description??'Agent-authored architectural interpretation of reference imagery; not a measured reconstruction.');
   root.extras.specVersion=1;
   if(site.walk){
